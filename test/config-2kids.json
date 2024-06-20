@@ -1,0 +1,27 @@
+{
+    "kids":
+    [
+        {
+            "name": "Léonis",
+            "tasks":
+            [
+                {
+                    "desc": "Brosser ses dents",
+                    "due_timestamp": "2024-06-20 07:50",
+                    "icon": "toothbrush"
+                }
+            ]
+        },
+        {
+            "name": "Clélie",
+            "tasks":
+            [
+                {
+                    "desc": "Prendre le petit-déjeuner",
+                    "due_timestamp": "2024-06-20 07:30",
+                    "icon": "cereal"
+                }
+            ]
+        }
+    ]
+}
