@@ -5,6 +5,8 @@ Flow
 {
     property var kid
 
+    spacing: 12
+
     Repeater
     {
         model: kid.tasks

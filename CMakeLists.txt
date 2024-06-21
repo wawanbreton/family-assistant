@@ -13,7 +13,11 @@ qt_add_executable(family-assistant
     main.cpp
     data/kid.h data/kid.cpp
     data/kidmanager.h data/kidmanager.cpp
+    data/preferenceentry.h
+    data/preferences.h data/preferences.cpp
     data/task.h data/task.cpp
+    data/taskscheduler.h data/taskscheduler.cpp
+    data/taskstate.h
     utils/json.h utils/json.cpp
 
     # Other non-sources files

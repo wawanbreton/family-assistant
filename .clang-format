@@ -4,7 +4,7 @@ AlignConsecutiveAssignments: None
 AlignConsecutiveDeclarations: None
 AlignEscapedNewlines: DontAlign
 AlignOperands: AlignAfterOperator
-AlignTrailingComments: false
+AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowAllArgumentsOnNextLine: false
 AllowShortBlocksOnASingleLine: Empty

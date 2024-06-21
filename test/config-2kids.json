@@ -7,7 +7,7 @@
             [
                 {
                     "desc": "Brosser ses dents",
-                    "due_timestamp": "2024-06-20 07:50",
+                    "due_timestamp": "2024-06-21 18:00",
                     "icon": "toothbrush"
                 }
             ]
@@ -20,6 +20,11 @@
                     "desc": "Prendre le petit-déjeuner",
                     "due_timestamp": "2024-06-20 07:30",
                     "icon": "cereal"
+                },
+                {
+                    "desc": "Brosser ses dents",
+                    "due_timestamp": "2024-06-21 22:00",
+                    "icon": "toothbrush"
                 }
             ]
         }

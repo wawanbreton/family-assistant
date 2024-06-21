@@ -6,6 +6,9 @@
 #include <QQmlContext>
 
 #include "data/kidmanager.h"
+#include "data/preferences.h"
+#include "data/taskscheduler.h"
+#include "data/taskstate.h"
 #include "easyqt/datastorage.h"
 #include "easyqt/file.h"
 #include "easyqt/logger.h"
@@ -29,8 +32,12 @@ int main(int argc, char* argv[])
     }
     else
     {
+        qmlRegisterType<TaskState>("FamilyAssistant", 1, 0, "TaskState");
+
         easyqt::DataStorage::init(&app);
         easyqt::Logger::init(&app);
+        Preferences::init(&app);
+        TaskScheduler::init(&app);
 
         KidManager kid_manager;
 
