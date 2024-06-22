@@ -6,7 +6,7 @@ Item
 {
     property var task
 
-    readonly property int clickConfirmDuration: 600
+    readonly property int clickConfirmDuration: 800
     readonly property int shadowOffset: 4
 
     id: root
@@ -93,6 +93,7 @@ Item
                     from: 0
                     to: root.width
                     duration: 1000
+                    onFinished: task.setAccomplished()
                 }
 
                 PropertyAnimation

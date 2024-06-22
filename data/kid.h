@@ -9,7 +9,7 @@ class Kid : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(QQmlListProperty<Task> tasks READ getTasks NOTIFY tasksChanged)
+    Q_PROPERTY(QObjectList tasks READ getTasks NOTIFY tasksChanged)
 
 public:
     explicit Kid(QObject* parent = nullptr);
@@ -20,12 +20,17 @@ public:
 
     void setName(const QString& name);
 
-    QQmlListProperty<Task> getTasks();
+    const QObjectList getTasks() const;
 
 signals:
     void nameChanged(const QString& name);
 
     void tasksChanged();
+
+private:
+    void addTask(Task* task);
+
+    void onTaskAccomplished(Task* task);
 
 private:
     QString name_;

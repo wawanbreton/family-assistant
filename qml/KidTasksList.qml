@@ -1,11 +1,19 @@
 import QtQuick
-import QtQuick.Layouts
 
 Flow
 {
     property var kid
 
     spacing: 12
+    add: Transition
+    {
+        NumberAnimation
+        {
+            properties: "x,y"
+            easing.type: Easing.OutBounce
+            duration: 1000
+        }
+    }
 
     Repeater
     {

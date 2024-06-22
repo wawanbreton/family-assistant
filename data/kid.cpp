@@ -24,7 +24,7 @@ void Kid::load(const QJsonObject& json_object)
         {
             auto task = new Task(this);
             task->load(task_object.toObject());
-            tasks_ << task;
+            addTask(task);
         }
     }
 }
@@ -43,7 +43,35 @@ void Kid::setName(const QString& name)
     }
 }
 
-QQmlListProperty<Task> Kid::getTasks()
+const QObjectList Kid::getTasks() const
 {
-    return QQmlListProperty(this, &tasks_);
+    QObjectList list;
+    for (Task* task : tasks_)
+    {
+        list << task;
+    }
+    return list;
+}
+
+void Kid::addTask(Task* task)
+{
+    task->setParent(this);
+
+    connect(
+        task,
+        &Task::accomplished,
+        this,
+        [this, task]()
+        {
+            onTaskAccomplished(task);
+        });
+
+    tasks_ << task;
+}
+
+void Kid::onTaskAccomplished(Task* task)
+{
+    tasks_.removeOne(task);
+    task->deleteLater();
+    emit tasksChanged();
 }

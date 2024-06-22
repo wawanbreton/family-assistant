@@ -65,6 +65,11 @@ TaskState::Enum Task::getState() const
     return state_;
 }
 
+void Task::setAccomplished()
+{
+    emit accomplished();
+}
+
 void Task::updateState()
 {
     const auto in_progress_delay

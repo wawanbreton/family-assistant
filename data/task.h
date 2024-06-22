@@ -36,10 +36,14 @@ public:
 
     TaskState::Enum getState() const;
 
+    Q_INVOKABLE void setAccomplished();
+
 signals:
     void dueTimestampChanged();
 
     void stateChanged();
+
+    void accomplished();
 
 private:
     void updateState();
