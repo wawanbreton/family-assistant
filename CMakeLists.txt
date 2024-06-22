@@ -17,6 +17,7 @@ qt_add_executable(family-assistant
     data/preferences.h data/preferences.cpp
     data/task.h data/task.cpp
     data/taskscheduler.h data/taskscheduler.cpp
+    data/tasksmodel.h data/tasksmodel.cpp
     data/taskstate.h
     utils/json.h utils/json.cpp
 

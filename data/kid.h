@@ -3,13 +3,16 @@
 #include <QObject>
 #include <QQmlListProperty>
 
+#include "data/tasksmodel.h"
+
 class Task;
+class TasksModel;
 
 class Kid : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(QObjectList tasks READ getTasks NOTIFY tasksChanged)
+    Q_PROPERTY(TasksModel* tasks READ getTasks CONSTANT)
 
 public:
     explicit Kid(QObject* parent = nullptr);
@@ -20,12 +23,10 @@ public:
 
     void setName(const QString& name);
 
-    const QObjectList getTasks() const;
+    TasksModel* getTasks();
 
 signals:
     void nameChanged(const QString& name);
-
-    void tasksChanged();
 
 private:
     void addTask(Task* task);
@@ -34,5 +35,5 @@ private:
 
 private:
     QString name_;
-    QList<Task*> tasks_;
+    TasksModel* const tasks_;
 };

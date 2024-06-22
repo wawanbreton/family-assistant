@@ -4,11 +4,13 @@
 #include <QJsonObject>
 
 #include "data/task.h"
+#include "data/tasksmodel.h"
 #include "utils/json.h"
 
 
 Kid::Kid(QObject* parent)
     : QObject{ parent }
+    , tasks_(new TasksModel(this))
 {
 }
 
@@ -43,14 +45,9 @@ void Kid::setName(const QString& name)
     }
 }
 
-const QObjectList Kid::getTasks() const
+TasksModel* Kid::getTasks()
 {
-    QObjectList list;
-    for (Task* task : tasks_)
-    {
-        list << task;
-    }
-    return list;
+    return tasks_;
 }
 
 void Kid::addTask(Task* task)
@@ -66,12 +63,11 @@ void Kid::addTask(Task* task)
             onTaskAccomplished(task);
         });
 
-    tasks_ << task;
+    tasks_->append(task);
 }
 
 void Kid::onTaskAccomplished(Task* task)
 {
-    tasks_.removeOne(task);
+    tasks_->remove(task);
     task->deleteLater();
-    emit tasksChanged();
 }

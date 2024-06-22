@@ -7,23 +7,10 @@ Item
     property var task
 
     readonly property int clickConfirmDuration: 800
-    readonly property int shadowOffset: 4
 
     id: root
     height: 100
-    width:
-    {
-        switch(task.state)
-        {
-            case TaskState.Early:
-            case TaskState.Soon:
-                return height;
-            case TaskState.InProgress:
-            case TaskState.CloseToEnd:
-            case TaskState.Late:
-                return textDesc.x + textDesc.width + 24;
-        }
-    }
+    opacity: task.state === TaskState.Early ? 0.5 : 1.0
 
     Item
     {
@@ -33,14 +20,22 @@ Item
         MultiEffect
         {
             id: shadowEffect
-            source: mainRectangle
+            source: backgroundRectangle
             anchors.fill: parent
             shadowBlur: 1.0
             shadowEnabled: true
             shadowColor: "black"
             shadowOpacity: 0.7
-            shadowHorizontalOffset: shadowOffset
+            shadowHorizontalOffset: 4
             shadowVerticalOffset: shadowHorizontalOffset
+        }
+
+        Rectangle
+        {
+            id: backgroundRectangle
+            anchors.fill: parent
+            radius: height / 2
+            visible: false
         }
 
         Rectangle
@@ -48,6 +43,7 @@ Item
             id: mainRectangle
             anchors.fill: parent
             radius: height / 2
+            clip: true
             color:
             {
                 switch(task.state)
@@ -63,7 +59,6 @@ Item
                         return "#e74c3c";
                 }
             }
-            opacity: task.state === TaskState.Early ? 0.5 : 1.0
 
             Item
             {
@@ -81,7 +76,7 @@ Item
                     anchors.bottom: parent.bottom
                     width: root.width
                     color: "white"
-                    opacity: 0.7
+                    opacity: 0.5
                     radius: mainRectangle.radius
                 }
 
@@ -93,7 +88,7 @@ Item
                     from: 0
                     to: root.width
                     duration: 1000
-                    onFinished: task.setAccomplished()
+                    onFinished: { animationAccomplish.start(); mouseArea.enabled = false; }
                 }
 
                 PropertyAnimation
@@ -130,7 +125,7 @@ Item
                 id: textDesc
                 anchors.left: iconBubble.right
                 anchors.bottom: parent.verticalCenter
-                anchors.leftMargin: 8
+                anchors.leftMargin: 10
                 anchors.topMargin: 6
                 text: task.desc
                 font.pointSize: 26
@@ -139,6 +134,7 @@ Item
 
             Text
             {
+                id: textTime
                 anchors.left: iconBubble.right
                 anchors.top: parent.verticalCenter
                 anchors.leftMargin: textDesc.anchors.leftMargin
@@ -203,12 +199,61 @@ Item
         }
     }
 
+    states:
+    [
+        State
+        {
+            name: "preview"
+            PropertyChanges { target: root; width: root.height }
+        },
+        State
+        {
+            name: "full"
+            PropertyChanges { target: root; width: textDesc.x + textDesc.width + 24 }
+        }
+    ]
+
+    state:
+    {
+        switch(task.state)
+        {
+            case TaskState.Early:
+            case TaskState.Soon:
+                return "preview";
+            case TaskState.InProgress:
+            case TaskState.CloseToEnd:
+            case TaskState.Late:
+                return "full";
+        }
+    }
+
+    transitions:
+    [
+        Transition
+        {
+            to: "*"
+            PropertyAnimation { target: root; property: "width"; easing.type: Easing.InOutQuad; duration: 300}
+        }
+    ]
+
+    PropertyAnimation
+    {
+        id: animationAccomplish
+        target: root
+        property: "scale"
+        easing.type: Easing.InQuad
+        duration: 300
+        from: 1.0
+        to: 0.0
+        onFinished: task.setAccomplished()
+    }
+
     MouseArea
     {
+        id: mouseArea
         anchors.fill: parent
         onPressed:
         {
-            shadowEffect.shadowHorizontalOffset = 0;
             animationClickCancel.stop();
 
             animationClickProgress.from = clickProgress.width;
@@ -217,12 +262,14 @@ Item
         }
         onReleased:
         {
-            shadowEffect.shadowHorizontalOffset = shadowOffset;
-            animationClickProgress.stop();
+            if(enabled)
+            {
+                animationClickProgress.stop();
 
-            animationClickCancel.from = clickProgress.width;
-            animationClickCancel.duration = (clickConfirmDuration * (clickProgress.width / root.width) / 3);
-            animationClickCancel.start();
+                animationClickCancel.from = clickProgress.width;
+                animationClickCancel.duration = (clickConfirmDuration * (clickProgress.width / root.width) / 3);
+                animationClickCancel.start();
+            }
         }
     }
 }

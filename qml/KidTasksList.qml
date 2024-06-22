@@ -4,14 +4,14 @@ Flow
 {
     property var kid
 
-    spacing: 12
-    add: Transition
+    spacing: 14
+    move: Transition
     {
         NumberAnimation
         {
             properties: "x,y"
             easing.type: Easing.OutBounce
-            duration: 1000
+            duration: 500
         }
     }
 
