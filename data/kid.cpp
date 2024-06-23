@@ -50,6 +50,21 @@ TasksModel* Kid::getTasks()
     return tasks_;
 }
 
+quint32 Kid::getPoints() const
+{
+    return points_;
+}
+
+void Kid::setPoints(const quint32 points)
+{
+    if (points != points_)
+    {
+        const qint32 delta = points - points_;
+        points_ = points;
+        emit pointsChanged(points_, delta);
+    }
+}
+
 void Kid::addTask(Task* task)
 {
     task->setParent(this);

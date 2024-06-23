@@ -73,6 +73,16 @@ TaskState::Enum Task::getState() const
     return state_;
 }
 
+quint32 Task::getReward() const
+{
+    return reward_;
+}
+
+void Task::setReward(quint32 reward)
+{
+    reward_ = reward;
+}
+
 void Task::setAccomplished()
 {
     emit accomplished();

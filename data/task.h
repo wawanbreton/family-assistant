@@ -16,6 +16,7 @@ class Task : public QObject
     Q_PROPERTY(QString icon WRITE setIcon)
     Q_PROPERTY(QString icon_path READ getIconPath NOTIFY dummyChanged)
     Q_PROPERTY(TaskState::Enum state READ getState NOTIFY stateChanged)
+    Q_PROPERTY(quint32 reward READ getReward WRITE setReward NOTIFY dummyChanged)
 
 public:
     explicit Task(QObject* parent = nullptr);
@@ -38,6 +39,10 @@ public:
 
     TaskState::Enum getState() const;
 
+    quint32 getReward() const;
+
+    void setReward(quint32 reward);
+
     Q_INVOKABLE void setAccomplished();
 
 signals:
@@ -57,5 +62,6 @@ private:
     QDateTime due_timestamp_;
     QString icon_path_;
     TaskState::Enum state_{ TaskState::Early };
+    quint32 reward_{ 0 };
     QTimer* const timer_next_update_;
 };

@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Effects
-import FamilyAssistant 1.0
+import FamilyAssistant
 
 Item
 {
     property var task
+
+    signal rewardEarned(amount: int)
 
     readonly property int clickConfirmDuration: 800
 
@@ -88,7 +90,12 @@ Item
                     from: 0
                     to: root.width
                     duration: 1000
-                    onFinished: { animationAccomplish.start(); mouseArea.enabled = false; }
+                    onFinished:
+                    {
+                        animationAccomplish.start();
+                        mouseArea.enabled = false;
+                        root.rewardEarned(task.reward);
+                    }
                 }
 
                 PropertyAnimation

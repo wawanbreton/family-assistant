@@ -4,6 +4,9 @@ Flow
 {
     property var kid
 
+    signal rewardEarned(amount: int, item: var)
+
+    id: root
     spacing: 14
     move: Transition
     {
@@ -22,6 +25,7 @@ Flow
         Task
         {
             task: modelData
+            onRewardEarned: (amount) => root.rewardEarned(amount, this)
         }
     }
 }

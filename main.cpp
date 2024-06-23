@@ -59,6 +59,7 @@ int main(int argc, char* argv[])
 
         QQmlApplicationEngine engine;
         engine.rootContext()->setContextProperty("kid_manager", &kid_manager);
+        engine.rootContext()->setContextProperty("DataStorage", easyqt::DataStorage::access());
         engine.load("qml/Main.qml");
 
         return app.exec();

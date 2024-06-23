@@ -32,6 +32,8 @@ qt_add_executable(family-assistant
     qml/KidTasksView.qml
     qml/KidTasksList.qml
     qml/Task.qml
+    qml/Vault.qml
+    qml/Point.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
