@@ -12,6 +12,7 @@
 #include "easyqt/datastorage.h"
 #include "easyqt/file.h"
 #include "easyqt/logger.h"
+#include "easyqt/resourcetype.h"
 
 
 int main(int argc, char* argv[])
@@ -33,6 +34,7 @@ int main(int argc, char* argv[])
     else
     {
         qmlRegisterType<TaskState>("FamilyAssistant", 1, 0, "TaskState");
+        qmlRegisterType<easyqt::ResourceType>("FamilyAssistant", 1, 0, "ResourceType");
 
         easyqt::DataStorage::init(&app);
         easyqt::Logger::init(&app);

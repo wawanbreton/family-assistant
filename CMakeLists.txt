@@ -4,12 +4,22 @@ project(family-assistant VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Quick ShaderTools)
 find_package(easyqt REQUIRED)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
+set(SHADER_FILES
+    resources/shaders/text_outline.frag
+)
+
 qt_add_executable(family-assistant
+    # Non-sources files
+    credits.md
+    .clang-format
+    test/config-2kids.json
+
+    # CPP source files
     main.cpp
     data/kid.h data/kid.cpp
     data/kidmanager.h data/kidmanager.cpp
@@ -21,10 +31,8 @@ qt_add_executable(family-assistant
     data/taskstate.h
     utils/json.h utils/json.cpp
 
-    # Other non-sources files
-    credits.md
-    .clang-format
-    test/config-2kids.json
+    # Shaders
+    ${SHADER_FILES}
 
     # qml files
     qml/Main.qml
@@ -34,6 +42,19 @@ qt_add_executable(family-assistant
     qml/Task.qml
     qml/Vault.qml
     qml/Point.qml
+    qml/TextOutline.qml
+)
+
+qt6_add_resources(family-assistant "family-assistant"
+    PREFIX
+        "/"
+)
+
+qt6_add_shaders(family-assistant "family-assistant-shaders"
+    PREFIX
+        "/"
+    FILES
+        ${SHADER_FILES}
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

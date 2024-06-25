@@ -30,18 +30,12 @@ Item
         }
     }
 
-    Item
+    Vault
     {
-        anchors.fill: parent
-        clip: true
-
-        Vault
-        {
-            id: vault
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            kid: root.kid
-        }
+        id: vault
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        kid: root.kid
     }
 
     Component

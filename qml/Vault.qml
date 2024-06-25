@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import FamilyAssistant
 
 Item
@@ -10,15 +11,15 @@ Item
 
     Item
     {
-        anchors.right: parent.right
-        anchors.top: parent.top
-        id: button
-        width: 180
-        height: width
+        anchors.fill: parent
+        clip: true
 
         Rectangle
         {
-            anchors.fill: parent
+            anchors.right: parent.right
+            anchors.top: parent.top
+            width: 180
+            height: width
             color: "#008fff"
             radius: width / 2
         }
@@ -34,6 +35,14 @@ Item
         scale: 0.65
     }
 
+    TextOutline
+    {
+        target: textPointsEarned
+        borderWidth: 4
+        blurFactor: 0.5
+        color: "#7d5132"
+    }
+
     Text
     {
         property int pointsEarned: 0
@@ -43,6 +52,7 @@ Item
         anchors.centerIn: image
         font.pointSize: 50
         opacity: 0.0
+        color: "#f2da2c"
 
         Behavior on opacity
         {
@@ -57,8 +67,8 @@ Item
         {
             NumberAnimation
             {
-                easing.type: Easing.InOutQuad
                 duration: 400
+                easing.type: Easing.InOutQuad
             }
         }
 

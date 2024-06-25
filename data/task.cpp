@@ -65,7 +65,7 @@ const QString& Task::getIconPath() const
 
 void Task::setIcon(const QString& icon)
 {
-    icon_path_ = easyqt::DataStorage::findResource(icon, easyqt::DataStorage::ResourceType::Icon, { "png", "svg" });
+    icon_path_ = easyqt::DataStorage::findResource(icon, easyqt::ResourceType::Icon, { "png", "svg" });
 }
 
 TaskState::Enum Task::getState() const
