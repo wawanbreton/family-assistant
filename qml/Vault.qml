@@ -5,19 +5,136 @@ import FamilyAssistant
 Item
 {
     property var kid
+    property int delayHide: 5000
 
-    width: 140
-    height: width
+    id: root
 
     Item
     {
-        anchors.fill: parent
+        id: totalPointsDisplay
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        height: rectanglePointsDisplay.height + 30
         clip: true
+
+        MultiEffect
+        {
+            id: pointsDisplayShadow
+            source: rectanglePointsDisplay
+            anchors.fill: rectanglePointsDisplay
+            shadowBlur: shadowEffect.shadowBlur
+            shadowEnabled: shadowEffect.shadowEnabled
+            shadowColor: shadowEffect.shadowColor
+            shadowOpacity: shadowEffect.shadowOpacity
+        }
 
         Rectangle
         {
-            anchors.right: parent.right
-            anchors.top: parent.top
+            id: rectanglePointsDisplay
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            radius: height / 2
+            color: "#008fff"
+            width: textNbPoints.x + textNbPoints.width + 38
+            height: 100
+
+            Point
+            {
+                id: pointImage
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 170
+            }
+
+            Text
+            {
+                id: textNbPoints
+                text: kid.points
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: pointImage.right
+                anchors.leftMargin: 16
+                font.pointSize: 50
+                color: "white"
+            }
+        }
+
+        state: "hidden"
+        states:
+        [
+            State
+            {
+                name: "hidden"
+                PropertyChanges
+                {
+                    target: totalPointsDisplay
+                    width: 120
+                }
+            },
+            State
+            {
+                name: "displayed"
+                PropertyChanges
+                {
+                    target: totalPointsDisplay
+                    width: pointsDisplayShadow.itemRect.right
+                }
+            }
+        ]
+
+        Behavior on width
+        {
+            NumberAnimation
+            {
+                duration: 600
+                easing.type: Easing.InOutQuad
+            }
+        }
+
+        Timer
+        {
+            id: timerHideTotalPoints
+            interval: root.delayHide
+            onTriggered: totalPointsDisplay.state = "hidden"
+        }
+
+        onStateChanged:
+        {
+            timerHideTotalPoints.stop();
+
+            if(state === "displayed")
+            {
+                timerHideTotalPoints.start();
+            }
+        }
+    }
+
+    Item
+    {
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        width: parent.width * 2
+        height: parent.height * 2
+        clip: true
+
+        MultiEffect
+        {
+            id: shadowEffect
+            source: backgroundRectangle
+            anchors.fill: backgroundRectangle
+            shadowBlur: 1.0
+            shadowEnabled: true
+            shadowColor: "black"
+            shadowOpacity: 0.7
+            shadowScale: 1.03
+        }
+
+        Rectangle
+        {
+            id: backgroundRectangle
+            anchors.left: parent.left
+            anchors.leftMargin: -40
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: -40
             width: 180
             height: width
             color: "#008fff"
@@ -29,8 +146,8 @@ Item
     {
         id: image
         anchors.centerIn: parent
-        anchors.horizontalCenterOffset: -10
-        anchors.verticalCenterOffset: 10
+        anchors.horizontalCenterOffset: -8
+        anchors.verticalCenterOffset: 6
         source: DataStorage.findResource("treasure", DataStorage.Icon)
         scale: 0.65
     }
@@ -101,8 +218,8 @@ Item
 
     Timer
     {
-        id: timerHide
-        interval: 5000
+        id: timerHideEarnedPoints
+        interval: root.delayHide
         onTriggered: textPointsEarned.state = "hidden"
     }
 
@@ -113,7 +230,23 @@ Item
         {
             textPointsEarned.state = "displayed"
             textPointsEarned.pointsEarned += delta;
-            timerHide.restart()
+            timerHideEarnedPoints.restart()
+        }
+    }
+
+    MouseArea
+    {
+        anchors.fill: parent
+        onPressed:
+        {
+            if(totalPointsDisplay.state === "displayed")
+            {
+                totalPointsDisplay.state = "hidden"
+            }
+            else
+            {
+                totalPointsDisplay.state = "displayed"
+            }
         }
     }
 }

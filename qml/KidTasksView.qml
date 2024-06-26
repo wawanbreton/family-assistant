@@ -7,6 +7,12 @@ Item
 
     id: root
 
+    Rectangle
+    {
+        anchors.fill: parent
+        color: "white"
+    }
+
     ColumnLayout
     {
         anchors.fill: parent
@@ -35,6 +41,8 @@ Item
         id: vault
         anchors.left: parent.left
         anchors.bottom: parent.bottom
+        width: 140
+        height: width
         kid: root.kid
     }
 
