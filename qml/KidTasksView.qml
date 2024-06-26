@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import "components"
 
 Item
 {
@@ -19,12 +20,12 @@ Item
         anchors.margins: spacing
         spacing: 26
 
-        Text
+        LargeText
         {
             text: kid.name
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
-            font.pointSize: 40
+            color: "black"
         }
 
         KidTasksList

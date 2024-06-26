@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Effects
 import FamilyAssistant
+import "components"
 
 Item
 {
@@ -46,19 +47,23 @@ Item
             anchors.fill: parent
             radius: height / 2
             clip: true
-            color:
+            gradient: StyledGradient
             {
-                switch(task.state)
+                color:
                 {
-                    case TaskState.Early:
-                    case TaskState.Soon:
-                        return "#3498db";
-                    case TaskState.InProgress:
-                        return "#2ecc71";
-                    case TaskState.CloseToEnd:
-                        return "#e67e22";
-                    case TaskState.Late:
-                        return "#e74c3c";
+                    switch(task.state)
+                    {
+                        case TaskState.Early:
+                        case TaskState.Soon:
+                            return blue;
+                        case TaskState.InProgress:
+                            return green;
+                        case TaskState.CloseToEnd:
+                            return orange;
+                        case TaskState.Late:
+                            return red;
+                    }
+                    return 0.0;
                 }
             }
 
@@ -127,7 +132,7 @@ Item
                 }
             }
 
-            Text
+            NormalText
             {
                 id: textDesc
                 anchors.left: iconBubble.right
@@ -135,11 +140,9 @@ Item
                 anchors.leftMargin: 10
                 anchors.topMargin: 6
                 text: task.desc
-                font.pointSize: 26
-                color: "white"
             }
 
-            Text
+            NormalText
             {
                 id: textTime
                 anchors.left: iconBubble.right
@@ -147,8 +150,6 @@ Item
                 anchors.leftMargin: textDesc.anchors.leftMargin
                 anchors.topMargin: textDesc.anchors.bottomMargin
                 text: task.due_time_str
-                font.pointSize: textDesc.font.pointSize
-                color: "white"
             }
 
             SequentialAnimation

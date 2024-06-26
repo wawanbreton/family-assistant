@@ -43,6 +43,10 @@ qt_add_executable(family-assistant
     qml/Vault.qml
     qml/Point.qml
     qml/TextOutline.qml
+    qml/StyledGradient.qml
+    qml/components/NormalText.qml
+    qml/components/BaseText.qml
+    qml/components/LargeText.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

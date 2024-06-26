@@ -8,7 +8,7 @@
             [
                 {
                     "desc": "Brosser ses dents",
-                    "due_timestamp": "2025-06-23 08:50",
+                    "due_timestamp": "2025-06-26 08:50",
                     "icon": "toothbrush",
                     "reward": 10
                 }
@@ -21,13 +21,13 @@
             [
                 {
                     "desc": "Prendre le petit-déjeuner",
-                    "due_timestamp": "2024-06-23 11:30",
+                    "due_timestamp": "2024-06-26 21:30",
                     "icon": "cereal",
                     "reward": 11
                 },
                 {
                     "desc": "Brosser ses dents",
-                    "due_timestamp": "2024-06-23 08:50",
+                    "due_timestamp": "2024-06-26 19:50",
                     "icon": "toothbrush",
                     "reward": 3
                 }

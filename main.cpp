@@ -2,6 +2,7 @@
 #include <QGuiApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QPalette>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
@@ -58,6 +59,10 @@ int main(int argc, char* argv[])
                 qWarning() << "Error when parsing JSON data file" << data_file_path << ":" << error.errorString();
             }
         }
+
+        QPalette palette = qApp->palette();
+        palette.setColor(QPalette::Text, Qt::white);
+        qApp->setPalette(palette);
 
         QQmlApplicationEngine engine;
         engine.rootContext()->setContextProperty("kid_manager", &kid_manager);

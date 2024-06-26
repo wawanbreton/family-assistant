@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Effects
 import FamilyAssistant
+import "components"
 
 Item
 {
@@ -34,9 +35,10 @@ Item
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             radius: height / 2
-            color: "#008fff"
             width: textNbPoints.x + textNbPoints.width + 38
             height: 100
+
+            gradient: StyledGradient {}
 
             Point
             {
@@ -46,15 +48,13 @@ Item
                 anchors.leftMargin: 170
             }
 
-            Text
+            LargeText
             {
                 id: textNbPoints
                 text: kid.points
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: pointImage.right
                 anchors.leftMargin: 16
-                font.pointSize: 50
-                color: "white"
             }
         }
 
@@ -139,6 +139,8 @@ Item
             height: width
             color: "#008fff"
             radius: width / 2
+
+            gradient: StyledGradient {}
         }
     }
 
@@ -160,14 +162,13 @@ Item
         color: "#7d5132"
     }
 
-    Text
+    LargeText
     {
         property int pointsEarned: 0
 
         id: textPointsEarned
         text: "+" + pointsEarned
         anchors.centerIn: image
-        font.pointSize: 50
         opacity: 0.0
         color: "#f2da2c"
 

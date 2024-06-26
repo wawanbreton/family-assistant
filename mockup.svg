@@ -25,15 +25,16 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.97"
-     inkscape:cx="476.18106"
-     inkscape:cy="217.57811"
-     inkscape:window-width="1430"
-     inkscape:window-height="874"
-     inkscape:window-x="309"
-     inkscape:window-y="60"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="layer1"
-     showguides="true" />
+     inkscape:cx="405.51741"
+     inkscape:cy="207.05177"
+     inkscape:window-width="1920"
+     inkscape:window-height="1007"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2"
+     showguides="true"
+     inkscape:snap-global="true" />
   <defs
      id="defs2">
     <linearGradient
@@ -164,7 +165,7 @@
        r="33.400764" />
   </defs>
   <g
-     inkscape:label="Calque 1"
+     inkscape:label="Main view"
      inkscape:groupmode="layer"
      id="layer1">
     <rect
@@ -1450,8 +1451,92 @@ UaNyBBjA6BE6t4+KfLe8GPnx/9DL6k0VlVMdAAAAAElFTkSuQmCC
        id="text27936"><tspan
          sodipodi:role="line"
          id="tspan27934"
-         style="stroke-width:0.264583;fill:#fbfbfb;fill-opacity:1"
+         style="fill:#fbfbfb;fill-opacity:1;stroke-width:0.264583"
          x="39.070793"
          y="130.45491">55</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Rewards"
+     style="display:inline">
+    <rect
+       style="opacity:0.683316;fill:#ffffff;fill-opacity:1;stroke-width:0.265;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect31238"
+       width="217.17999"
+       height="135.96001"
+       x="0"
+       y="0"
+       rx="0"
+       ry="0" />
+    <rect
+       style="opacity:1;fill:#3498db;fill-opacity:1;stroke-width:0.264999;stroke-linecap:square"
+       id="rect31134"
+       width="73.962852"
+       height="11.793068"
+       x="8.1333561"
+       y="10.56419"
+       rx="0"
+       ry="5.896534" />
+    <rect
+       style="opacity:1;fill:#3498db;fill-opacity:1;stroke-width:0.229951;stroke-linecap:square"
+       id="rect29035"
+       width="148.26398"
+       height="117.97839"
+       x="58.786938"
+       y="10.56419"
+       rx="0"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.19994px;line-height:1.25;font-family:sans-serif;fill:#f5f5f5;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="14.05583"
+       y="18.320391"
+       id="text32510"><tspan
+         sodipodi:role="line"
+         id="tspan32508"
+         style="font-size:5.19994px;fill:#f5f5f5;fill-opacity:1;stroke-width:0.264583"
+         x="14.05583"
+         y="18.320391">Fonds simples</tspan></text>
+    <rect
+       style="opacity:1;fill:#3498db;fill-opacity:1;stroke-width:0.264999;stroke-linecap:square"
+       id="rect35040"
+       width="73.962852"
+       height="11.793068"
+       x="8.1333561"
+       y="22.357258"
+       rx="0"
+       ry="5.896534" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.19994px;line-height:1.25;font-family:sans-serif;fill:#f5f5f5;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="14.05583"
+       y="30.113459"
+       id="text35044"><tspan
+         sodipodi:role="line"
+         id="tspan35042"
+         style="font-size:5.19994px;fill:#f5f5f5;fill-opacity:1;stroke-width:0.264583"
+         x="14.05583"
+         y="30.113459">Fonds animés</tspan></text>
+    <rect
+       style="opacity:1;fill:#3498db;fill-opacity:1;stroke-width:0.264999;stroke-linecap:square"
+       id="rect36708"
+       width="73.962852"
+       height="11.793068"
+       x="8.1333561"
+       y="34.150326"
+       rx="0"
+       ry="5.896534" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.19994px;line-height:1.25;font-family:sans-serif;fill:#f5f5f5;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="14.05583"
+       y="41.906525"
+       id="text36712"><tspan
+         sodipodi:role="line"
+         id="tspan36710"
+         style="font-size:5.19994px;fill:#f5f5f5;fill-opacity:1;stroke-width:0.264583"
+         x="14.05583"
+         y="41.906525">Texte</tspan></text>
   </g>
 </svg>
