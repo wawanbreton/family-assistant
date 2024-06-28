@@ -8,6 +8,8 @@ Item
     property var kid
     property int delayHide: 5000
 
+    signal displayRewards()
+
     id: root
 
     Item
@@ -95,6 +97,12 @@ Item
             id: timerHideTotalPoints
             interval: root.delayHide
             onTriggered: totalPointsDisplay.state = "hidden"
+        }
+
+        MouseArea
+        {
+            anchors.fill: parent
+            onPressed: root.displayRewards()
         }
 
         onStateChanged:

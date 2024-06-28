@@ -35,6 +35,10 @@ qt_add_executable(family-assistant
     ${SHADER_FILES}
 
     # qml files
+    qml/components/NormalText.qml
+    qml/components/BaseText.qml
+    qml/components/LargeText.qml
+    qml/components/StyledGradient.qml
     qml/Main.qml
     qml/TasksView.qml
     qml/KidTasksView.qml
@@ -43,10 +47,9 @@ qt_add_executable(family-assistant
     qml/Vault.qml
     qml/Point.qml
     qml/TextOutline.qml
-    qml/StyledGradient.qml
-    qml/components/NormalText.qml
-    qml/components/BaseText.qml
-    qml/components/LargeText.qml
+    qml/Rewards.qml
+    qml/components/VerticalTabView.qml
+    qml/components/Tab.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

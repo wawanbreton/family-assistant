@@ -10,6 +10,7 @@ Gradient
     readonly property real red: 0.0
     readonly property real orange: 0.064
     readonly property real pink: 0.828
+    readonly property var colors: [blue, green, yellow, orange, red, pink]
 
     id: root
 

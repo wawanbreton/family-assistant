@@ -8,6 +8,7 @@ Window
 
     TasksView
     {
+        id: tasksView
         anchors.fill: parent
     }
 }

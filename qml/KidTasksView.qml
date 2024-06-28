@@ -6,6 +6,8 @@ Item
 {
     property var kid
 
+    signal displayRewards()
+
     id: root
 
     Rectangle
@@ -45,6 +47,8 @@ Item
         width: 140
         height: width
         kid: root.kid
+
+        onDisplayRewards: root.displayRewards()
     }
 
     Component
