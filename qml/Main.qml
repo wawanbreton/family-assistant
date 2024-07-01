@@ -11,4 +11,12 @@ Window
         id: tasksView
         anchors.fill: parent
     }
+
+    Component.onCompleted:
+    {
+        if (fullscreen)
+        {
+            showFullScreen()
+        }
+    }
 }

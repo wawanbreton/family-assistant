@@ -26,6 +26,9 @@ int main(int argc, char* argv[])
     QCommandLineOption option_data_file("data", "Path of the JSON data file to load", "file_path");
     commands_line_parser.addOption(option_data_file);
 
+    QCommandLineOption option_fullscreen("fullscreen", "Display the application in full screen");
+    commands_line_parser.addOption(option_fullscreen);
+
     commands_line_parser.parse(app.arguments());
 
     if (commands_line_parser.isSet(option_help))
@@ -67,6 +70,7 @@ int main(int argc, char* argv[])
         QQmlApplicationEngine engine;
         engine.rootContext()->setContextProperty("kid_manager", &kid_manager);
         engine.rootContext()->setContextProperty("DataStorage", easyqt::DataStorage::access());
+        engine.rootContext()->setContextProperty("fullscreen", commands_line_parser.isSet("fullscreen"));
         engine.load("qml/Main.qml");
 
         return app.exec();

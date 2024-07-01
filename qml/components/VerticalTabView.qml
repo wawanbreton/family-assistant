@@ -23,7 +23,7 @@ Item
             {
                 height: 100
                 Layout.fillWidth: true
-                z: stack.currentIndex == index ? 1.0 : 0.0
+                z: stack.currentIndex == index ? 1.0 : 0.5
 
                 Rectangle
                 {
@@ -33,6 +33,8 @@ Item
                     gradient: StyledGradient
                     {
                         color: colors[index % colors.length]
+                        positionTop: ((buttonRectangle.y + buttonRectangle.height) / buttons.height) * buttonRectangle.height
+                        positionBottom: (buttonRectangle.y / buttons.height) * buttonRectangle.height
                     }
 
                     NormalText
@@ -81,20 +83,35 @@ Item
         {
             model: tabs
 
-            Rectangle
+            Item
             {
-                id: contentRect
-
-                gradient: StyledGradient
+                Rectangle
                 {
-                    color: colors[index % colors.length]
+                    id: contentRect
+                    anchors.fill: parent
+
+                    gradient: StyledGradient
+                    {
+                        color: colors[index % colors.length]
+                    }
+
+                    Component.onCompleted:
+                    {
+                        children = [modelData];
+                        modelData.anchors.fill = contentRect;
+                    }
                 }
 
-                Component.onCompleted:
+                MultiEffect
                 {
-                    children = [modelData];
-                    modelData.anchors.fill = contentRect;
+                    source: contentRect
+                    anchors.fill: parent
+                    shadowBlur: 1.0
+                    shadowEnabled: true
+                    shadowColor: "black"
+                    shadowOpacity: 0.7
                 }
+
             }
         }
     }

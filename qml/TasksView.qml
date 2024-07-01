@@ -41,6 +41,8 @@ Item
         {
             NumberAnimation { duration: 300; easing.type: Easing.InOutQuad; }
         }
+
+        onBlurChanged: if(blur === 0.0) { enabled = false; }
     }
 
     MouseArea
@@ -66,25 +68,25 @@ Item
             width: parent.width * 0.8
             height: parent.height * 0.8
             anchors.centerIn: parent
+            opacity: 0.0
+            Component.onCompleted: opacity = 1.0
+            onOpacityChanged:
+            {
+                if(opacity === 0.0)
+                {
+                    destroy()
+                }
+            }
+
+            Behavior on opacity
+            {
+                NumberAnimation { duration: 300; easing.type: Easing.InOutQuad; }
+            }
 
             Rewards
             {
                 id: rewards
                 anchors.fill: parent
-                opacity: 0.0
-                Component.onCompleted: opacity = 1.0
-                onOpacityChanged:
-                {
-                    if(opacity === 0.0)
-                    {
-                        destroy()
-                    }
-                }
-
-                Behavior on opacity
-                {
-                    NumberAnimation { duration: 300; easing.type: Easing.InOutQuad; }
-                }
             }
         }
     }

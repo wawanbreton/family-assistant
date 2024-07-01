@@ -1,8 +1,11 @@
 import QtQuick
+import QtQuick.Shapes
 
-Gradient
+LinearGradient
 {
     property real color: blue
+    property alias positionTop: gradientStopTop.position
+    property alias positionBottom: gradientStopBottom.position
 
     readonly property real blue: 0.536
     readonly property real green: 0.383
@@ -16,12 +19,14 @@ Gradient
 
     GradientStop
     {
+        id: gradientStopTop
         position: 1.0
         color: Qt.hsva(root.color, 0.694, 0.898, 1.0)
 
     }
     GradientStop
     {
+        id: gradientStopBottom
         position: 0.0
         color: Qt.hsva(root.color + 0.042, 0.663, 0.886, 1.0)
     }
