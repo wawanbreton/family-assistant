@@ -20,15 +20,10 @@ Item
         id: mainContainer
         anchors.fill: parent
 
-        MultiEffect
+        ButtonShadow
         {
-            id: shadowEffect
             source: backgroundRectangle
-            anchors.fill: parent
-            shadowBlur: 1.0
-            shadowEnabled: true
-            shadowColor: "black"
-            shadowOpacity: 0.7
+            shadowScale: 1.0
             shadowHorizontalOffset: 4
             shadowVerticalOffset: shadowHorizontalOffset
         }

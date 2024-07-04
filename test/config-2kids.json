@@ -12,7 +12,11 @@
                     "icon": "toothbrush",
                     "reward": 10
                 }
-            ]
+            ],
+            "theme":
+            {
+                "point": "StarCoin"
+            }
         },
         {
             "name": "Clélie",
@@ -31,7 +35,11 @@
                     "icon": "toothbrush",
                     "reward": 3
                 }
-            ]
+            ],
+            "theme":
+            {
+                "point": "DollarCoin"
+            }
         }
     ]
 }

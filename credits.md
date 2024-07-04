@@ -6,3 +6,7 @@
 <a href="https://www.flaticon.com/free-icons/cleaning" title="cleaning icons">Cleaning icons created by Smashicons - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/shower-head" title="shower head icons">Shower head icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/coin" title="coin icons">Coin icons created by Good Ware - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/back" title="back icons">Back icons created by Rizki Ahmad Fauzi - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/coin" title="coin icons">Coin icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/next" title="next icons">Next icons created by Jesus Chavarria - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/money" title="money icons">Money icons created by DinosoftLabs - Flaticon</a>

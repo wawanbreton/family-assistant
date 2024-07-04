@@ -44,8 +44,6 @@ Item
         id: vault
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        width: 140
-        height: width
         kid: root.kid
 
         onDisplayRewards: root.displayRewards()
@@ -54,7 +52,7 @@ Item
     Component
     {
         id: componentPoint
-        Point {}
+        Point { kid: root.kid }
     }
 
     function triggerEarnPoints(amount: int, item: var)
@@ -62,7 +60,7 @@ Item
         var item_rect = root.mapFromItem(item, 0, 0, item.width, item.height)
         for (var i=0 ; i<amount ; ++i)
         {
-            var point_item = componentPoint.createObject(root)
+            var point_item = componentPoint.createObject(root, {kid: kid})
             point_item.kid = root.kid
 
             var x_center = item_rect.x + Math.random() * item.width

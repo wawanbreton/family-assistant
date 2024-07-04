@@ -4,15 +4,16 @@
 #include <QQmlListProperty>
 
 #include "data/tasksmodel.h"
+#include "data/theme.h"
 
 class Task;
-class TasksModel;
 
 class Kid : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(TasksModel* tasks READ getTasks CONSTANT)
+    Q_PROPERTY(Theme* theme READ getTheme CONSTANT)
     Q_PROPERTY(quint32 points READ getPoints WRITE setPoints NOTIFY pointsChanged)
 
 public:
@@ -25,6 +26,8 @@ public:
     void setName(const QString& name);
 
     TasksModel* getTasks();
+
+    Theme* getTheme();
 
     quint32 getPoints() const;
 
@@ -43,5 +46,6 @@ private:
 private:
     QString name_;
     TasksModel* const tasks_;
+    Theme* const theme_;
     quint32 points_{ 0 };
 };

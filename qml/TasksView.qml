@@ -4,8 +4,6 @@ import QtQuick.Layouts
 
 Item
 {
-    property var popup
-
     id: root
 
     RowLayout
@@ -29,47 +27,18 @@ Item
         }
     }
 
-    MultiEffect
-    {
-        id: blurEffect
-        source: views
-        anchors.fill: views
-        blur: 1.0
-        blurEnabled: true
-
-        Behavior on blur
-        {
-            NumberAnimation { duration: 300; easing.type: Easing.InOutQuad; }
-        }
-
-        onBlurChanged: if(blur === 0.0) { enabled = false; }
-    }
-
-    MouseArea
-    {
-        id: mouseEventsCatcher
-        anchors.fill: parent
-        onPressed:
-        {
-            root.state = "normal";
-            root.popup.opacity = 0.0
-        }
-    }
-
     Component
     {
         id: componentRewards
 
-        MouseArea
+        Rewards
         {
-            property alias kid: rewards.kid
-
-            id: mouseEventsBlocker
-            width: parent.width * 0.8
-            height: parent.height * 0.8
-            anchors.centerIn: parent
+            id: rewards
+            anchors.fill: parent
             opacity: 0.0
+
             Component.onCompleted: opacity = 1.0
+            onDone: opacity = 0.0
             onOpacityChanged:
             {
                 if(opacity === 0.0)
@@ -83,55 +52,12 @@ Item
                 NumberAnimation { duration: 300; easing.type: Easing.InOutQuad; }
             }
 
-            Rewards
-            {
-                id: rewards
-                anchors.fill: parent
-            }
         }
     }
 
-    state: "normal"
-    states:
-    [
-        State
-        {
-            name: "normal"
-
-            PropertyChanges
-            {
-                target: blurEffect
-                blur: 0.0
-            }
-
-            PropertyChanges
-            {
-                target: mouseEventsCatcher
-                enabled: false
-            }
-        },
-        State
-        {
-            name: "popup"
-
-            PropertyChanges
-            {
-                target: blurEffect
-                blur: 1.0
-            }
-
-            PropertyChanges
-            {
-                target: mouseEventsCatcher
-                enabled: true
-            }
-        }
-    ]
-
     function displayRewards(kid: var)
     {
-        root.popup = componentRewards.createObject(root, {kid: kid});
-        root.state = "popup";
+        componentRewards.createObject(root, {kid: kid});
     }
 
     Component.onCompleted: displayRewards(kid_manager.kids[0])

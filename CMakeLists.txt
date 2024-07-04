@@ -29,6 +29,7 @@ qt_add_executable(family-assistant
     data/taskscheduler.h data/taskscheduler.cpp
     data/tasksmodel.h data/tasksmodel.cpp
     data/taskstate.h
+    data/theme.h data/theme.cpp
     utils/json.h utils/json.cpp
 
     # Shaders
@@ -39,6 +40,11 @@ qt_add_executable(family-assistant
     qml/components/BaseText.qml
     qml/components/LargeText.qml
     qml/components/StyledGradient.qml
+    qml/components/VerticalTabView.qml
+    qml/components/Tab.qml
+    qml/components/CornerButton.qml
+    qml/components/TextOutline.qml
+    qml/components/ButtonShadow.qml
     qml/Main.qml
     qml/TasksView.qml
     qml/KidTasksView.qml
@@ -46,10 +52,12 @@ qt_add_executable(family-assistant
     qml/Task.qml
     qml/Vault.qml
     qml/Point.qml
-    qml/TextOutline.qml
     qml/Rewards.qml
-    qml/components/VerticalTabView.qml
-    qml/components/Tab.qml
+    qml/theme/points/DollarCoin.qml
+    qml/theme/points/StarCoin.qml
+    qml/theme/points/Cash.qml
+    qml/rewards/Points.qml
+    qml/components/Carousel.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

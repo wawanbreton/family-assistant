@@ -10,6 +10,7 @@
 #include "data/preferences.h"
 #include "data/taskscheduler.h"
 #include "data/taskstate.h"
+#include "data/theme.h"
 #include "easyqt/datastorage.h"
 #include "easyqt/file.h"
 #include "easyqt/logger.h"
@@ -46,6 +47,7 @@ int main(int argc, char* argv[])
         TaskScheduler::init(&app);
 
         KidManager kid_manager;
+        Theme global_theme;
 
         if (commands_line_parser.isSet(option_data_file))
         {
@@ -70,6 +72,7 @@ int main(int argc, char* argv[])
         QQmlApplicationEngine engine;
         engine.rootContext()->setContextProperty("kid_manager", &kid_manager);
         engine.rootContext()->setContextProperty("DataStorage", easyqt::DataStorage::access());
+        engine.rootContext()->setContextProperty("Theme", &global_theme);
         engine.rootContext()->setContextProperty("fullscreen", commands_line_parser.isSet("fullscreen"));
         engine.load("qml/Main.qml");
 

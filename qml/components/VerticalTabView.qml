@@ -106,11 +106,12 @@ Item
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
+                visible: index == root.currentTab
 
                 Component.onCompleted:
                 {
-                    children = [modelData];
-                    modelData.anchors.fill = contentArea;
+                    children = modelData.children;
+                    children[0].anchors.fill = contentArea;
                 }
             }
         }

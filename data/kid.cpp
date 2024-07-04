@@ -5,12 +5,14 @@
 
 #include "data/task.h"
 #include "data/tasksmodel.h"
+#include "data/theme.h"
 #include "utils/json.h"
 
 
 Kid::Kid(QObject* parent)
     : QObject{ parent }
     , tasks_(new TasksModel(this))
+    , theme_(new Theme(this))
 {
 }
 
@@ -28,6 +30,12 @@ void Kid::load(const QJsonObject& json_object)
             task->load(task_object.toObject());
             addTask(task);
         }
+    }
+
+    iterator = json_object.constFind("theme");
+    if (iterator != json_object.constEnd())
+    {
+        theme_->load(iterator.value().toObject());
     }
 }
 
@@ -48,6 +56,11 @@ void Kid::setName(const QString& name)
 TasksModel* Kid::getTasks()
 {
     return tasks_;
+}
+
+Theme* Kid::getTheme()
+{
+    return theme_;
 }
 
 quint32 Kid::getPoints() const

@@ -1,14 +1,19 @@
 import QtQuick
 import FamilyAssistant
 
-Image
+Item
 {
     property var kid
 
     id: root
-    source: DataStorage.findResource("point", DataStorage.Icon)
     width: 60
     height: width
+
+    Loader
+    {
+        anchors.fill: parent
+        source: Theme.getItemFilePath("points", kid.theme.point)
+    }
 
     ParallelAnimation
     {

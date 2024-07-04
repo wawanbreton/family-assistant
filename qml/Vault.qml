@@ -11,6 +11,8 @@ Item
     signal displayRewards()
 
     id: root
+    width: buttonVault.width
+    height: buttonVault.height
 
     Item
     {
@@ -20,15 +22,10 @@ Item
         height: rectanglePointsDisplay.height + 30
         clip: true
 
-        MultiEffect
+        ButtonShadow
         {
             id: pointsDisplayShadow
             source: rectanglePointsDisplay
-            anchors.fill: rectanglePointsDisplay
-            shadowBlur: shadowEffect.shadowBlur
-            shadowEnabled: shadowEffect.shadowEnabled
-            shadowColor: shadowEffect.shadowColor
-            shadowOpacity: shadowEffect.shadowOpacity
         }
 
         Rectangle
@@ -48,6 +45,7 @@ Item
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 170
+                kid: root.kid
             }
 
             LargeText
@@ -116,50 +114,25 @@ Item
         }
     }
 
-    Item
+    CornerButton
     {
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        width: parent.width * 2
-        height: parent.height * 2
-        clip: true
+        id: buttonVault
+        x: 0
+        y: 0
+        imageSource: DataStorage.findResource("treasure", DataStorage.Icon)
+        imageScale: 0.65
 
-        MultiEffect
+        onPressed:
         {
-            id: shadowEffect
-            source: backgroundRectangle
-            anchors.fill: backgroundRectangle
-            shadowBlur: 1.0
-            shadowEnabled: true
-            shadowColor: "black"
-            shadowOpacity: 0.7
-            shadowScale: 1.03
+            if(totalPointsDisplay.state === "displayed")
+            {
+                totalPointsDisplay.state = "hidden"
+            }
+            else
+            {
+                totalPointsDisplay.state = "displayed"
+            }
         }
-
-        Rectangle
-        {
-            id: backgroundRectangle
-            anchors.left: parent.left
-            anchors.leftMargin: -40
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: -40
-            width: 180
-            height: width
-            color: "#008fff"
-            radius: width / 2
-
-            gradient: StyledGradient {}
-        }
-    }
-
-    Image
-    {
-        id: image
-        anchors.centerIn: parent
-        anchors.horizontalCenterOffset: -8
-        anchors.verticalCenterOffset: 6
-        source: DataStorage.findResource("treasure", DataStorage.Icon)
-        scale: 0.65
     }
 
     TextOutline
@@ -173,10 +146,12 @@ Item
     LargeText
     {
         property int pointsEarned: 0
+        property int verticalOffset: 0
 
         id: textPointsEarned
         text: "+" + pointsEarned
-        anchors.centerIn: image
+        x: buttonVault.visualCenterX - width / 2
+        y: buttonVault.visualCenterY - height / 2 + verticalOffset
         opacity: 0.0
         color: "#f2da2c"
 
@@ -189,7 +164,7 @@ Item
             }
         }
 
-        Behavior on anchors.verticalCenterOffset
+        Behavior on verticalOffset
         {
             NumberAnimation
             {
@@ -198,7 +173,7 @@ Item
             }
         }
 
-        anchors.onVerticalCenterOffsetChanged: if(textPointsEarned.anchors.verticalCenterOffset === 0) { textPointsEarned.pointsEarned = 0 }
+        onVerticalOffsetChanged: if(verticalOffset === 0) { textPointsEarned.pointsEarned = 0 }
 
         states:
         [
@@ -209,7 +184,7 @@ Item
                 {
                     target: textPointsEarned
                     opacity: 0.0
-                    anchors.verticalCenterOffset: 0
+                    verticalOffset: 0
                 }
             },
             State
@@ -219,7 +194,7 @@ Item
                 {
                     target: textPointsEarned
                     opacity: 1.0
-                    anchors.verticalCenterOffset: -120
+                    verticalOffset: -120
                 }
             }
         ]
@@ -240,22 +215,6 @@ Item
             textPointsEarned.state = "displayed"
             textPointsEarned.pointsEarned += delta;
             timerHideEarnedPoints.restart()
-        }
-    }
-
-    MouseArea
-    {
-        anchors.fill: parent
-        onPressed:
-        {
-            if(totalPointsDisplay.state === "displayed")
-            {
-                totalPointsDisplay.state = "hidden"
-            }
-            else
-            {
-                totalPointsDisplay.state = "displayed"
-            }
         }
     }
 }
