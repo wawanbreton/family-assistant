@@ -55,7 +55,30 @@ qt_add_executable(family-assistant
     qml/Rewards.qml
     qml/theme/points/DollarCoin.qml
     qml/theme/points/StarCoin.qml
+    qml/theme/points/Burger.qml
     qml/theme/points/Cash.qml
+    qml/theme/points/ChristmasGiftbox.qml
+    qml/theme/points/Euro.qml
+    qml/theme/points/Flower.qml
+    qml/theme/points/GemRed.qml
+    qml/theme/points/GemRedSparkling.qml
+    qml/theme/points/GemBlue.qml
+    qml/theme/points/GemBlueSparkling.qml
+    qml/theme/points/GemGreen.qml
+    qml/theme/points/GemGreenSparkling.qml
+    qml/theme/points/GemHeart.qml
+    qml/theme/points/GemHeartSparkling.qml
+    qml/theme/points/GiftBox.qml
+    qml/theme/points/Medal.qml
+    qml/theme/points/MoneyBag.qml
+    qml/theme/points/Poop.qml
+    qml/theme/points/Rainbow.qml
+    qml/theme/points/Ruby.qml
+    qml/theme/points/RubySparkling.qml
+    qml/theme/points/Trophy.qml
+    qml/theme/points/Unicorn.qml
+    qml/theme/points/Zirconia.qml
+    qml/theme/points/ZirconiaSparkling.qml
     qml/rewards/Points.qml
     qml/components/Carousel.qml
 )

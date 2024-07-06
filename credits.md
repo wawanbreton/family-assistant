@@ -10,3 +10,15 @@
 <a href="https://www.flaticon.com/free-icons/coin" title="coin icons">Coin icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/next" title="next icons">Next icons created by Jesus Chavarria - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/money" title="money icons">Money icons created by DinosoftLabs - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/gem" title="gem icons">Gem icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/euro" title="euro icons">Euro icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/currency-bag" title="currency bag icons">Currency bag icons created by NajmunNahar - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/poop" title="poop icons">Poop icons created by Smashicons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/rainbow" title="rainbow icons">Rainbow icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/gift" title="gift icons">Gift icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/christmas" title="christmas icons">Christmas icons created by Md Tanvirul Haque - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/reward" title="reward icons">Reward icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/trophy" title="trophy icons">Trophy icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/unicorn" title="unicorn icons">Unicorn icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/hamburger" title="hamburger icons">Hamburger icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/sparkle" title="sparkle icons">Sparkle icons created by kornkun - Flaticon</a>

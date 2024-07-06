@@ -5,6 +5,8 @@ import "../components"
 
 Item
 {
+    property var kid
+
     id: root
 
     ColumnLayout
@@ -19,6 +21,7 @@ Item
             Layout.preferredWidth: root.width * 0.7
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignHCenter
+            currentIndex: Theme.getAvailablePoints().indexOf(kid.theme.point)
 
             Loader
             {

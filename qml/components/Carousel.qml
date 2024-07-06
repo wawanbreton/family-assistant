@@ -4,6 +4,7 @@ Item
 {
     default property alias delegate: view.delegate
     property alias model: view.model
+    property alias currentIndex: view.currentIndex
 
     Image
     {

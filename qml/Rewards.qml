@@ -94,7 +94,7 @@ Item
             Tab
             {
                 title: "Points"
-                Points {}
+                Points { kid: root.kid }
             }
 
             Tab
