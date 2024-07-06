@@ -4,62 +4,84 @@ import FamilyAssistant
 Item
 {
     property var kid
+    property var itemImage
 
     id: root
     width: 60
     height: width
 
-    Loader
+    Component
     {
-        anchors.fill: parent
-        source: Theme.getItemFilePath("points", kid.theme.point)
+        id: componentImage
+
+        Loader
+        {
+            id: loader
+            anchors.fill: parent
+            source: Theme.getItemFilePath("points", kid.theme.point)
+
+            NumberAnimation
+            {
+                id: animationDisappear
+                target: item
+                property: "scale"
+                easing.type: Easing.InBack
+                easing.overshoot: 2
+                duration: 400
+                from: 1.0
+                to: 0.0
+
+                onFinished: destroy()
+            }
+
+            NumberAnimation
+            {
+                id: animationAppear
+                target: item
+                property: "scale"
+                easing.type: Easing.OutQuad
+                easing.overshoot: 2
+                duration: 2000
+                from: 0.0
+                to: 1.0
+            }
+
+            function startAppear()
+            {
+                animationAppear.start()
+            }
+
+            function startDisappear()
+            {
+                animationDisappear.start()
+            }
+        }
     }
 
-    ParallelAnimation
+    Connections
     {
-        id: animationAppear
+         target: root.kid.theme
 
-        PropertyAnimation
-        {
-            target: root
-            property: "scale"
-            duration: 300
-            easing.type: Easing.OutBack
-            from: 0.0
-            to: 1.0
-        }
-
-        PropertyAnimation
-        {
-            id: animationX
-            target: root
-            property: "x"
-            easing.type: Easing.InCubic
-        }
-
-        PropertyAnimation
-        {
-            id: animationY
-            target: root
-            property: "y"
-            easing: animationX.easing
-            duration: animationX.duration
-        }
-
-        onFinished:
-        {
-            kid.points += 1;
-            root.destroy();
-        }
+         function onPointChanged()
+         {
+             setPointImage(true)
+         }
     }
 
-    function moveToVault(x_vault, y_vault)
+    Component.onCompleted: setPointImage(false)
+
+    function setPointImage(animateAppear)
     {
-        animationX.to = x_vault - width / 2;
-        animationX.duration = 400 + Math.random() * 1000
+        if(root.itemImage)
+        {
+            root.itemImage.startDisappear()
+        }
 
-        animationY.to = y_vault - height / 2;
+        root.itemImage = componentImage.createObject(root, { source: Theme.getItemFilePath("points", kid.theme.point) });
 
-        animationAppear.start();
+        if(animateAppear)
+        {
+            root.itemImage.startAppear()
+        }
     }
 }
