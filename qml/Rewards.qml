@@ -27,7 +27,7 @@ Item
         Rectangle
         {
             height: 100
-            width: row.implicitWidth + radius * 2
+            width: row.implicitWidth + radius * 1.2
             Layout.alignment: Qt.AlignHCenter
             radius: height / 2
             gradient: StyledGradient {}
@@ -38,7 +38,7 @@ Item
                 anchors.fill: parent
                 anchors.leftMargin: parent.radius * 0.6
                 anchors.rightMargin: anchors.leftMargin
-                spacing: 0
+                spacing: 40
 
                 LargeText
                 {
@@ -47,20 +47,10 @@ Item
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                Item { Layout.preferredWidth: 10 }
-
-                Point
+                PointsCounter
                 {
-                    kid: root.kid
-                    Layout.preferredWidth: 60
-                    Layout.preferredHeight: Layout.preferredWidth
-                }
-
-                LargeText
-                {
-                    text: kid.points
                     Layout.fillHeight: true
-                    verticalAlignment: Text.AlignVCenter
+                    kid: root.kid
                 }
             }
         }

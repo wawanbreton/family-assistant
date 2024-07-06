@@ -12,14 +12,12 @@ Item
     ColumnLayout
     {
         anchors.fill: parent
-        anchors.margins: 24
-        uniformCellSizes: true
 
-        Carousel
+        ThemeItemSelector
         {
+            kid: root.kid
             model: Theme.getAvailablePoints()
-            Layout.preferredWidth: root.width * 0.7
-            Layout.fillHeight: true
+            Layout.preferredWidth: root.width * 0.6
             Layout.alignment: Qt.AlignHCenter
             currentIndex: Theme.getAvailablePoints().indexOf(kid.theme.point)
 
@@ -29,15 +27,24 @@ Item
                 opacity: PathView.textOpacity
                 scale: PathView.textScale
             }
+
+            onItemSelected: (item) => kid.theme.point = item
         }
 
-        Carousel
+        ThemeItemSelector
         {
-            model: 10
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            kid: root.kid
+            model: Theme.getAvailablePoints()
+            Layout.preferredWidth: root.width * 0.6
+            Layout.alignment: Qt.AlignHCenter
+            currentIndex: Theme.getAvailablePoints().indexOf(kid.theme.point)
 
-            Text { text: index; font.pointSize: 200; opacity: PathView.textOpacity; scale: PathView.textScale; }
+            Loader
+            {
+                source: Theme.getItemFilePath("points", modelData)
+                opacity: PathView.textOpacity
+                scale: PathView.textScale
+            }
         }
     }
 }

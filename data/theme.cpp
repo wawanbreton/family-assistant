@@ -31,6 +31,7 @@ void Theme::setPoint(const QString& point)
 
 QStringList Theme::getAvailablePoints()
 {
+#warning cache this
     QStringList result;
 
     for (const QFileInfo& file_info : QDir("qml/theme/points").entryInfoList({ "*.qml" }, QDir::Files))

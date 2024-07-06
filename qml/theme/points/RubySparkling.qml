@@ -2,6 +2,8 @@ import QtQuick 2.15
 
 Image
 {
+    readonly property int cost: 20
+
     id: root
     source: DataStorage.findResource("ruby", DataStorage.Icon)
 

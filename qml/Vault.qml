@@ -34,27 +34,18 @@ Item
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             radius: height / 2
-            width: textNbPoints.x + textNbPoints.width + 38
+            width: pointsCounter.x + pointsCounter.width + 38
             height: 100
 
             gradient: StyledGradient {}
 
-            Point
+            PointsCounter
             {
-                id: pointImage
+                id: pointsCounter
+                kid: root.kid
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 170
-                kid: root.kid
-            }
-
-            LargeText
-            {
-                id: textNbPoints
-                text: kid.points
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: pointImage.right
-                anchors.leftMargin: 16
             }
         }
 

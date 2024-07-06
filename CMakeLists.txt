@@ -36,6 +36,14 @@ qt_add_executable(family-assistant
     ${SHADER_FILES}
 
     # qml files
+    qml/Main.qml
+    qml/TasksView.qml
+    qml/KidTasksView.qml
+    qml/KidTasksList.qml
+    qml/Task.qml
+    qml/Vault.qml
+    qml/Point.qml
+    qml/Rewards.qml
     qml/components/NormalText.qml
     qml/components/BaseText.qml
     qml/components/LargeText.qml
@@ -45,14 +53,8 @@ qt_add_executable(family-assistant
     qml/components/CornerButton.qml
     qml/components/TextOutline.qml
     qml/components/ButtonShadow.qml
-    qml/Main.qml
-    qml/TasksView.qml
-    qml/KidTasksView.qml
-    qml/KidTasksList.qml
-    qml/Task.qml
-    qml/Vault.qml
-    qml/Point.qml
-    qml/Rewards.qml
+    qml/components/Carousel.qml
+    qml/components/ConfirmButton.qml
     qml/theme/points/DollarCoin.qml
     qml/theme/points/StarCoin.qml
     qml/theme/points/Burger.qml
@@ -80,7 +82,8 @@ qt_add_executable(family-assistant
     qml/theme/points/Zirconia.qml
     qml/theme/points/ZirconiaSparkling.qml
     qml/rewards/Points.qml
-    qml/components/Carousel.qml
+    qml/rewards/ThemeItemSelector.qml
+    qml/PointsCounter.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

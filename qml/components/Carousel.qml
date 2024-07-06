@@ -5,6 +5,9 @@ Item
     default property alias delegate: view.delegate
     property alias model: view.model
     property alias currentIndex: view.currentIndex
+    property alias currentItem: view.currentItem
+
+    implicitHeight: buttonLeft.width * (buttonLeft.implicitHeight / buttonLeft.implicitWidth)
 
     Image
     {
@@ -15,6 +18,7 @@ Item
         anchors.bottom: parent.bottom
         fillMode: Image.PreserveAspectFit
         width: 80
+        height: 0 // Just to kill binding loop, it will be ignored anyway
         visible: false
     }
 
