@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import FamilyAssistant
 import "../components"
 
-Item
+RewardsTab
 {
     property var kid
 
@@ -28,7 +28,7 @@ Item
                 scale: PathView.textScale
             }
 
-            onItemSelected: (item) => kid.theme.point = item
+            onItemSelected: (item, button) => root.pointsSpent(currentItem.item.cost, button, () => { kid.theme.point = item; })
         }
 
         ThemeItemSelector

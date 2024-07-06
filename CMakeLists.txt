@@ -84,6 +84,9 @@ qt_add_executable(family-assistant
     qml/rewards/Points.qml
     qml/rewards/ThemeItemSelector.qml
     qml/PointsCounter.qml
+    qml/KidName.qml
+    qml/PointsTransfer.qml
+    qml/rewards/RewardsTab.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

@@ -8,9 +8,10 @@ Item
     property var kid
     property alias model: carousel.model
     property alias currentIndex: carousel.currentIndex
+    property alias currentItem: carousel.currentItem
     default property alias delegate: carousel.delegate
 
-    signal itemSelected(string item)
+    signal itemSelected(string item, var button)
 
     id: root
     implicitHeight: column.implicitHeight
@@ -38,6 +39,7 @@ Item
 
         ConfirmButton
         {
+            id: button
             width: 300
             Layout.alignment: Qt.AlignHCenter
             enabled: Theme.getAvailablePoints()[carousel.currentIndex] !== kid.theme.point && carousel.currentItem.item.cost <= kid.points
@@ -49,7 +51,7 @@ Item
                 anchors.centerIn: parent
             }
 
-            onTriggered: root.itemSelected(Theme.getAvailablePoints()[carousel.currentIndex])
+            onTriggered: root.itemSelected(Theme.getAvailablePoints()[carousel.currentIndex], button)
         }
     }
 }

@@ -7,6 +7,7 @@ Item
 {
     property var kid
     property int delayHide: 5000
+    property bool pointsAlwaysVisible: false
 
     signal displayRewards()
 
@@ -49,7 +50,7 @@ Item
             }
         }
 
-        state: "hidden"
+        state: pointsAlwaysVisible ? "displayed" : "hidden"
         states:
         [
             State
@@ -98,7 +99,7 @@ Item
         {
             timerHideTotalPoints.stop();
 
-            if(state === "displayed")
+            if(state === "displayed" && !root.pointsAlwaysVisible)
             {
                 timerHideTotalPoints.start();
             }
@@ -115,13 +116,16 @@ Item
 
         onPressed:
         {
-            if(totalPointsDisplay.state === "displayed")
+            if(!root.pointsAlwaysVisible)
             {
-                totalPointsDisplay.state = "hidden"
-            }
-            else
-            {
-                totalPointsDisplay.state = "displayed"
+                if(totalPointsDisplay.state === "displayed")
+                {
+                    totalPointsDisplay.state = "hidden"
+                }
+                else
+                {
+                    totalPointsDisplay.state = "displayed"
+                }
             }
         }
     }
@@ -140,7 +144,7 @@ Item
         property int verticalOffset: 0
 
         id: textPointsEarned
-        text: "+" + pointsEarned
+        text: (pointsEarned > 0 ? "+" : "") + pointsEarned
         x: buttonVault.visualCenterX - width / 2
         y: buttonVault.visualCenterY - height / 2 + verticalOffset
         opacity: 0.0

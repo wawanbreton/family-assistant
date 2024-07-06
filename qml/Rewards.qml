@@ -18,104 +18,109 @@ Item
         color: "white"
     }
 
-    ColumnLayout
+    VerticalTabView
     {
         anchors.fill: parent
-        anchors.margins: spacing
-        spacing: 16
+        anchors.margins: 16
+        anchors.bottomMargin: buttonBack.height + 16
 
-        Rectangle
+        Tab
         {
-            height: 100
-            width: row.implicitWidth + radius * 1.2
-            Layout.alignment: Qt.AlignHCenter
-            radius: height / 2
-            gradient: StyledGradient {}
+            title: "Texte"
 
-            RowLayout
+            Text
             {
-                id: row
-                anchors.fill: parent
-                anchors.leftMargin: parent.radius * 0.6
-                anchors.rightMargin: anchors.leftMargin
-                spacing: 40
+                text: "My Item"
+                anchors.centerIn: parent
+            }
+        }
 
-                LargeText
-                {
-                    text: kid.name
-                    Layout.fillHeight: true
-                    verticalAlignment: Text.AlignVCenter
-                }
+        Tab
+        {
+            title: "Fonds"
 
-                PointsCounter
+            Text
+            {
+                text: "My Other item"
+            }
+        }
+
+        Tab
+        {
+            title: "Points"
+            Points
+            {
+                kid: root.kid
+                onPointsSpent: (amount, button, callback) =>
                 {
-                    Layout.fillHeight: true
-                    kid: root.kid
+                    var item_rect = root.mapFromItem(button, 0, 0, button.width, button.height);
+                    var item_center = Qt.point(item_rect.x + item_rect.width / 2, item_rect.y + item_rect.height / 2);
+                    var transfer = componentTransfer.createObject(root, { amount: amount, targetPosition: item_center });
+                    transfer.onFinished.connect(callback);
                 }
             }
         }
 
-        VerticalTabView
+        Tab
         {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            title: "Temps d'écran"
 
-            Tab
+            Text
             {
-                title: "Texte"
-
-                Text
-                {
-                    text: "My Item"
-                    anchors.centerIn: parent
-                }
+                text: "My Other item"
             }
+        }
 
-            Tab
+        Tab
+        {
+            title: "Spécial"
+
+            Text
             {
-                title: "Fonds"
-
-                Text
-                {
-                    text: "My Other item"
-                }
-            }
-
-            Tab
-            {
-                title: "Points"
-                Points { kid: root.kid }
-            }
-
-            Tab
-            {
-                title: "Temps d'écran"
-
-                Text
-                {
-                    text: "My Other item"
-                }
-            }
-
-            Tab
-            {
-                title: "Spécial"
-
-                Text
-                {
-                    text: "My Other item"
-                }
+                text: "My Other item"
             }
         }
     }
 
+    Vault
+    {
+        id: vault
+        kid: root.kid
+        pointsAlwaysVisible: true
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+    }
+
+    KidName
+    {
+        kid: root.kid
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 16
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
     CornerButton
     {
-        anchors.left: parent.left
+        id: buttonBack
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
         imageSource: DataStorage.findResource("arrow", DataStorage.Icon)
         imageScale: 0.75
+        corner: Qt.BottomRightCorner
 
         onPressed: root.done()
+    }
+
+    Component
+    {
+        id: componentTransfer
+
+        PointsTransfer
+        {
+            kid: root.kid
+            parentObject: root
+            rectStart: Qt.rect(vault.x + vault.width / 2 - 30, vault.y + vault.height / 2 - 30, 60, 60)
+            pointDelta: -1
+        }
     }
 }
