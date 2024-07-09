@@ -4,7 +4,8 @@ import FamilyAssistant
 
 Item
 {
-    property alias imageSource: image.source
+    property alias imageSource: staticImage.source
+    property alias imageComponent: imageItem.source
     property alias imageScale: image.scale
     property alias backgroundScale: buttonShadow.scale
     property int visualCenterX: image.x + image.width / 2
@@ -65,11 +66,25 @@ Item
         }
     }
 
-    Image
+    Item
     {
         id: image
-        anchors.centerIn: parent
-        anchors.horizontalCenterOffset: corner === Qt.BottomRightCorner || corner === Qt.TopRightCorner ? 8 : -8
-        anchors.verticalCenterOffset: 6
+        anchors.fill: parent
+
+        ChangeableImage
+        {
+            id: imageItem
+            anchors.centerIn: parent
+            anchors.horizontalCenterOffset: corner === Qt.BottomRightCorner || corner === Qt.TopRightCorner ? 10 : -10
+            anchors.verticalCenterOffset: 8
+        }
+
+        Image
+        {
+            id: staticImage
+            anchors.centerIn: parent
+            anchors.horizontalCenterOffset: imageItem.anchors.horizontalCenterOffset
+            anchors.verticalCenterOffset: imageItem.anchors.verticalCenterOffset
+        }
     }
 }

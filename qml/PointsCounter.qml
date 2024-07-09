@@ -14,6 +14,8 @@ RowLayout
     {
         id: pointImage
         Layout.alignment: Qt.AlignVCenter
+        Layout.preferredWidth: 60
+        Layout.preferredHeight: Layout.preferredWidth
         kid: root.kid
     }
 

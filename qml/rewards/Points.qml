@@ -16,35 +16,23 @@ RewardsTab
         ThemeItemSelector
         {
             kid: root.kid
-            model: Theme.getAvailablePoints()
             Layout.preferredWidth: root.width * 0.6
             Layout.alignment: Qt.AlignHCenter
-            currentIndex: Theme.getAvailablePoints().indexOf(kid.theme.point)
+            currentKidItem: kid.theme.point
+            themeCategory: ThemeCategory.Points
 
-            Loader
-            {
-                source: Theme.getItemFilePath("points", modelData)
-                opacity: PathView.textOpacity
-                scale: PathView.textScale
-            }
-
-            onItemSelected: (item, button) => root.pointsSpent(currentItem.item.cost, button, () => { kid.theme.point = item; })
+            onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { kid.theme.point = item; })
         }
 
         ThemeItemSelector
         {
             kid: root.kid
-            model: Theme.getAvailablePoints()
             Layout.preferredWidth: root.width * 0.6
             Layout.alignment: Qt.AlignHCenter
-            currentIndex: Theme.getAvailablePoints().indexOf(kid.theme.point)
+            currentKidItem: kid.theme.points_storage
+            themeCategory: ThemeCategory.PointsStorage
 
-            Loader
-            {
-                source: Theme.getItemFilePath("points", modelData)
-                opacity: PathView.textOpacity
-                scale: PathView.textScale
-            }
+            onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { kid.theme.points_storage = item; })
         }
     }
 }

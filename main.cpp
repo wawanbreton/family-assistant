@@ -11,6 +11,7 @@
 #include "data/taskscheduler.h"
 #include "data/taskstate.h"
 #include "data/theme.h"
+#include "data/themecategory.h"
 #include "easyqt/datastorage.h"
 #include "easyqt/file.h"
 #include "easyqt/logger.h"
@@ -39,6 +40,7 @@ int main(int argc, char* argv[])
     else
     {
         qmlRegisterType<TaskState>("FamilyAssistant", 1, 0, "TaskState");
+        qmlRegisterType<ThemeCategory>("FamilyAssistant", 1, 0, "ThemeCategory");
         qmlRegisterType<easyqt::ResourceType>("FamilyAssistant", 1, 0, "ResourceType");
 
         easyqt::DataStorage::init(&app);

@@ -30,6 +30,7 @@ qt_add_executable(family-assistant
     data/tasksmodel.h data/tasksmodel.cpp
     data/taskstate.h
     data/theme.h data/theme.cpp
+    data/themecategory.h
     utils/json.h utils/json.cpp
 
     # Shaders
@@ -81,12 +82,25 @@ qt_add_executable(family-assistant
     qml/theme/points/Unicorn.qml
     qml/theme/points/Zirconia.qml
     qml/theme/points/ZirconiaSparkling.qml
+    qml/theme/points_storage/Bank.qml
+    qml/theme/points_storage/Bank2.qml
+    qml/theme/points_storage/Diamonds.qml
+    qml/theme/points_storage/GoldPile.qml
+    qml/theme/points_storage/PiggyBank.qml
+    qml/theme/points_storage/Refrigerator.qml
+    qml/theme/points_storage/SafeBox.qml
+    qml/theme/points_storage/StrongBox.qml
+    qml/theme/points_storage/Treasure.qml
+    qml/theme/points_storage/Treasure2.qml
+    qml/theme/points_storage/Wallet.qml
+    qml/theme/points_storage/Wealth.qml
     qml/rewards/Points.qml
     qml/rewards/ThemeItemSelector.qml
     qml/PointsCounter.qml
     qml/KidName.qml
     qml/PointsTransfer.qml
     qml/rewards/RewardsTab.qml
+    qml/components/ChangeableImage.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

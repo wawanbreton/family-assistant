@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Layouts
+import QtQuick.Effects
 import "../components"
 import ".."
 
@@ -8,8 +9,10 @@ Item
     property var kid
     property alias model: carousel.model
     property alias currentIndex: carousel.currentIndex
-    property alias currentItem: carousel.currentItem
-    default property alias delegate: carousel.delegate
+    property var currentItem: carousel.currentItem.item
+    property string currentKidItem
+    property int themeCategory
+    default property Component delegate
 
     signal itemSelected(string item, var button)
 
@@ -25,15 +28,87 @@ Item
         Carousel
         {
             id: carousel
-            model: Theme.getAvailablePoints()
+            model: Theme.getAvailableItems(root.themeCategory)
             Layout.fillWidth: true
-            currentIndex: Theme.getAvailablePoints().indexOf(kid.theme.point)
+            currentIndex: Theme.getAvailableItems(root.themeCategory).indexOf(root.currentKidItem)
 
-            Loader
+            Item
             {
-                source: Theme.getItemFilePath("points", modelData)
-                opacity: PathView.textOpacity
-                scale: PathView.textScale
+                property var modelData
+                property alias item: loader.item
+
+                Loader
+                {
+                    id: loader
+                    anchors.centerIn: parent
+                    sourceComponent: root.delegate
+                    source: Theme.getItemFilePath(root.themeCategory, modelData)
+
+                    MultiEffect
+                    {
+                        id: glow
+                        anchors.fill: parent
+                        source: loader.item
+                        blurEnabled: true
+                        z: 1.0
+                        visible: false
+
+                        SequentialAnimation
+                        {
+                            id: animationShine
+
+                            ParallelAnimation
+                            {
+                                PropertyAnimation
+                                {
+                                    target: glow
+                                    easing.type: Easing.InOutQuad
+                                    properties: "brightness,blur"
+                                    to: 0.7
+                                    duration: 1500
+                                }
+
+                                PropertyAnimation
+                                {
+                                    target: glow
+                                    property: "scale"
+                                    easing.type: Easing.InOutQuad
+                                    to: 1.5
+                                    duration: 1500
+                                }
+                            }
+
+                            ParallelAnimation
+                            {
+                                PropertyAnimation
+                                {
+                                    target: glow
+                                    easing.type: Easing.InOutQuad
+                                    properties: "brightness,blur,scale"
+                                    to: 0.0
+                                    duration: 1500
+                                }
+
+                                PropertyAnimation
+                                {
+                                    target: glow
+                                    property: "scale"
+                                    easing.type: Easing.InOutQuad
+                                    to: 1.0
+                                    duration: 1500
+                                }
+                            }
+
+                            onFinished: glow.visible = false
+                        }
+                    }
+                }
+
+                function shine()
+                {
+                    glow.visible = true
+                    animationShine.start();
+                }
             }
         }
 
@@ -42,16 +117,20 @@ Item
             id: button
             width: 300
             Layout.alignment: Qt.AlignHCenter
-            enabled: Theme.getAvailablePoints()[carousel.currentIndex] !== kid.theme.point && carousel.currentItem.item.cost <= kid.points
+            enabled: Theme.getAvailableItems(root.themeCategory)[carousel.currentIndex] !== currentKidItem && root.currentItem.cost <= kid.points
 
             PointsCounter
             {
                 kid: root.kid
-                points: carousel.currentItem.item.cost
+                points: root.currentItem.cost
                 anchors.centerIn: parent
             }
 
-            onTriggered: root.itemSelected(Theme.getAvailablePoints()[carousel.currentIndex], button)
+            onTriggered:
+            {
+                root.itemSelected(Theme.getAvailableItems(root.themeCategory)[carousel.currentIndex], button);
+                carousel.currentItem.shine()
+            }
         }
     }
 }

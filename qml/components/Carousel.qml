@@ -2,11 +2,12 @@ import QtQuick 2.15
 
 Item
 {
-    default property alias delegate: view.delegate
+    default property Component delegate
     property alias model: view.model
     property alias currentIndex: view.currentIndex
-    property alias currentItem: view.currentItem
+    property var currentItem: view.currentItem.loadedItem
 
+    id: root
     implicitHeight: buttonLeft.width * (buttonLeft.implicitHeight / buttonLeft.implicitWidth)
 
     Image
@@ -40,7 +41,6 @@ Item
         pathItemCount: 3
         preferredHighlightBegin: 0.5
         preferredHighlightEnd: 0.5
-        clip: true
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: buttonLeft.right
@@ -50,12 +50,21 @@ Item
         {
             startX: 0
             startY: height / 2
-            PathAttribute { name: "textOpacity"; value: 0.0 }
-            PathAttribute { name: "textScale"; value: 0.2 }
+            PathAttribute { name: "itemOpacity"; value: 0.0 }
+            PathAttribute { name: "itemScale"; value: 0.2 }
             PathLine { x: view.width/2; y: height / 2; }
-            PathAttribute { name: "textOpacity"; value: 1.0 }
-            PathAttribute { name: "textScale"; value: 1.0 }
+            PathAttribute { name: "itemOpacity"; value: 1.0 }
+            PathAttribute { name: "itemScale"; value: 1.0 }
             PathLine { x: view.width; y: height / 2; }
+        }
+
+        delegate: Item
+        {
+            opacity: PathView.itemOpacity
+            scale: PathView.itemScale
+            property var loadedItem
+
+            Component.onCompleted: loadedItem = root.delegate.createObject(this, {"modelData": modelData})
         }
     }
 

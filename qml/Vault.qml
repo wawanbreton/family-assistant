@@ -111,7 +111,7 @@ Item
         id: buttonVault
         x: 0
         y: 0
-        imageSource: DataStorage.findResource("treasure", DataStorage.Icon)
+        imageComponent: Theme.getItemFilePath(ThemeCategory.PointsStorage, kid.theme.points_storage)
         imageScale: 0.65
 
         onPressed:

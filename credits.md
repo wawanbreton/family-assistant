@@ -1,5 +1,3 @@
-<div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-
 <a href="https://www.flaticon.com/free-icons/toothbrush" title="toothbrush icons">Toothbrush icons created by bukeicon - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/cereal" title="cereal icons">Cereal icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/vacuum" title="vacuum icons">Vacuum icons created by Freepik - Flaticon</a>
@@ -22,3 +20,14 @@
 <a href="https://www.flaticon.com/free-icons/unicorn" title="unicorn icons">Unicorn icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/hamburger" title="hamburger icons">Hamburger icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/sparkle" title="sparkle icons">Sparkle icons created by kornkun - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/treasure" title="treasure icons">Treasure icons created by max.icons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/gold" title="gold icons">Gold icons created by wanicon - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/treasure" title="treasure icons">Treasure icons created by Candy Design - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/wealth" title="wealth icons">Wealth icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/vault" title="vault icons">Vault icons created by Iconic Panda - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/vault" title="vault icons">Vault icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/piggy-bank" title="piggy-bank icons">Piggy-bank icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/bank" title="bank icons">Bank icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/bank" title="bank icons">Bank icons created by Smashicons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/wallet" title="wallet icons">Wallet icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/refrigerator" title="refrigerator icons">Refrigerator icons created by Konkapp - Flaticon</a>

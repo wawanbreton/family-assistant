@@ -8,6 +8,17 @@
 Theme::Theme(QObject* parent)
     : QObject{ parent }
 {
+    for (ThemeCategory::Enum category : ThemeCategory::getAllValues())
+    {
+        QStringList items;
+
+        for (const QFileInfo& file_info : QDir(getCategoryFolder(category)).entryInfoList({ "*.qml" }, QDir::Files))
+        {
+            items << file_info.baseName();
+        }
+
+        available_items_[category] = items;
+    }
 }
 
 void Theme::load(const QJsonObject& json_object)
@@ -29,20 +40,41 @@ void Theme::setPoint(const QString& point)
     }
 }
 
-QStringList Theme::getAvailablePoints()
+const QString& Theme::getPointsStorage() const
 {
-#warning cache this
-    QStringList result;
-
-    for (const QFileInfo& file_info : QDir("qml/theme/points").entryInfoList({ "*.qml" }, QDir::Files))
-    {
-        result << file_info.baseName();
-    }
-
-    return result;
+    return points_storage_;
 }
 
-QString Theme::getItemFilePath(const QString& category, const QString& base_name)
+void Theme::setPointsStorage(const QString& points_storage)
 {
-    return QDir().absoluteFilePath(QString("qml/theme/%2/%3.qml").arg(category, base_name));
+    if (points_storage != points_storage_)
+    {
+        points_storage_ = points_storage;
+        emit pointsStorageChanged();
+    }
+}
+
+QStringList Theme::getAvailableItems(ThemeCategory::Enum category)
+{
+    return available_items_.value(category);
+}
+
+QString Theme::getItemFilePath(ThemeCategory::Enum category, const QString& base_name)
+{
+    return QDir().absoluteFilePath(QString("%1/%2.qml").arg(getCategoryFolder(category), base_name));
+}
+
+QString Theme::getCategoryFolder(ThemeCategory::Enum category)
+{
+    QString folder = "qml/theme/%1";
+
+    switch (category)
+    {
+        case ThemeCategory::Points:
+            return folder.arg("points");
+        case ThemeCategory::PointsStorage:
+            return folder.arg("points_storage");
+    }
+
+    return {};
 }
