@@ -56,32 +56,32 @@ qt_add_executable(family-assistant
     qml/components/ButtonShadow.qml
     qml/components/Carousel.qml
     qml/components/ConfirmButton.qml
-    qml/theme/points/DollarCoin.qml
-    qml/theme/points/StarCoin.qml
-    qml/theme/points/Burger.qml
-    qml/theme/points/Cash.qml
-    qml/theme/points/ChristmasGiftbox.qml
-    qml/theme/points/Euro.qml
-    qml/theme/points/Flower.qml
-    qml/theme/points/GemRed.qml
-    qml/theme/points/GemRedSparkling.qml
-    qml/theme/points/GemBlue.qml
-    qml/theme/points/GemBlueSparkling.qml
-    qml/theme/points/GemGreen.qml
-    qml/theme/points/GemGreenSparkling.qml
-    qml/theme/points/GemHeart.qml
-    qml/theme/points/GemHeartSparkling.qml
-    qml/theme/points/GiftBox.qml
-    qml/theme/points/Medal.qml
-    qml/theme/points/MoneyBag.qml
-    qml/theme/points/Poop.qml
-    qml/theme/points/Rainbow.qml
-    qml/theme/points/Ruby.qml
-    qml/theme/points/RubySparkling.qml
-    qml/theme/points/Trophy.qml
-    qml/theme/points/Unicorn.qml
-    qml/theme/points/Zirconia.qml
-    qml/theme/points/ZirconiaSparkling.qml
+    qml/theme/point/DollarCoin.qml
+    qml/theme/point/StarCoin.qml
+    qml/theme/point/Burger.qml
+    qml/theme/point/Cash.qml
+    qml/theme/point/ChristmasGiftbox.qml
+    qml/theme/point/Euro.qml
+    qml/theme/point/Flower.qml
+    qml/theme/point/GemRed.qml
+    qml/theme/point/GemRedSparkling.qml
+    qml/theme/point/GemBlue.qml
+    qml/theme/point/GemBlueSparkling.qml
+    qml/theme/point/GemGreen.qml
+    qml/theme/point/GemGreenSparkling.qml
+    qml/theme/point/GemHeart.qml
+    qml/theme/point/GemHeartSparkling.qml
+    qml/theme/point/GiftBox.qml
+    qml/theme/point/Medal.qml
+    qml/theme/point/MoneyBag.qml
+    qml/theme/point/Poop.qml
+    qml/theme/point/Rainbow.qml
+    qml/theme/point/Ruby.qml
+    qml/theme/point/RubySparkling.qml
+    qml/theme/point/Trophy.qml
+    qml/theme/point/Unicorn.qml
+    qml/theme/point/Zirconia.qml
+    qml/theme/point/ZirconiaSparkling.qml
     qml/theme/points_storage/Bank.qml
     qml/theme/points_storage/Bank2.qml
     qml/theme/points_storage/Diamonds.qml
@@ -96,6 +96,7 @@ qt_add_executable(family-assistant
     qml/theme/points_storage/Wealth.qml
     qml/rewards/Points.qml
     qml/rewards/ThemeItemSelector.qml
+    qml/rewards/Backgrounds.qml
     qml/PointsCounter.qml
     qml/KidName.qml
     qml/PointsTransfer.qml

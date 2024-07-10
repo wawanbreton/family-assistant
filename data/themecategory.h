@@ -10,7 +10,7 @@ class ThemeCategory : public QObject
 public:
     enum Enum
     {
-        Points,
+        Point,
         PointsStorage,
     };
 

@@ -9,5 +9,5 @@ ChangeableImage
     id: root
     width: 60
     height: width
-    source: Theme.getItemFilePath(ThemeCategory.Points, kid.theme.point)
+    source: Theme.getItemFilePath(ThemeCategory.Point, kid.theme.point)
 }

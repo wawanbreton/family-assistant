@@ -37,7 +37,7 @@ void Theme::setPoint(const QString& point)
     {
         point_ = point;
         emit pointChanged();
-        emit itemChanged(ThemeCategory::Points);
+        emit itemChanged(ThemeCategory::Point);
     }
 }
 
@@ -60,7 +60,7 @@ QString Theme::getItem(ThemeCategory::Enum category)
 {
     switch (category)
     {
-        case ThemeCategory::Points:
+        case ThemeCategory::Point:
             return getPoint();
         case ThemeCategory::PointsStorage:
             return getPointsStorage();
@@ -74,7 +74,7 @@ void Theme::setItem(ThemeCategory::Enum category, const QString& item)
 {
     switch (category)
     {
-        case ThemeCategory::Points:
+        case ThemeCategory::Point:
             return setPoint(item);
         case ThemeCategory::PointsStorage:
             return setPointsStorage(item);
@@ -97,8 +97,8 @@ QString Theme::getCategoryFolder(ThemeCategory::Enum category)
 
     switch (category)
     {
-        case ThemeCategory::Points:
-            return folder.arg("points");
+        case ThemeCategory::Point:
+            return folder.arg("point");
         case ThemeCategory::PointsStorage:
             return folder.arg("points_storage");
     }

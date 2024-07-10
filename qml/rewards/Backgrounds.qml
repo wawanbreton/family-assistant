@@ -18,7 +18,7 @@ RewardsTab
             kid: root.kid
             Layout.preferredWidth: root.width * 0.6
             Layout.alignment: Qt.AlignHCenter
-            themeCategory: ThemeCategory.Point
+            themeCategory: ThemeCategory.Points
 
             onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { setSelectedItem(item); })
         }
