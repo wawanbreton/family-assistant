@@ -18,10 +18,9 @@ RewardsTab
             kid: root.kid
             Layout.preferredWidth: root.width * 0.6
             Layout.alignment: Qt.AlignHCenter
-            currentKidItem: kid.theme.point
             themeCategory: ThemeCategory.Points
 
-            onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { kid.theme.point = item; })
+            onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { setSelectedItem(item); })
         }
 
         ThemeItemSelector
@@ -29,10 +28,9 @@ RewardsTab
             kid: root.kid
             Layout.preferredWidth: root.width * 0.6
             Layout.alignment: Qt.AlignHCenter
-            currentKidItem: kid.theme.points_storage
             themeCategory: ThemeCategory.PointsStorage
 
-            onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { kid.theme.points_storage = item; })
+            onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { setSelectedItem(item); })
         }
     }
 }

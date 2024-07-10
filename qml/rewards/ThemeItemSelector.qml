@@ -10,8 +10,8 @@ Item
     property alias model: carousel.model
     property alias currentIndex: carousel.currentIndex
     property var currentItem: carousel.currentItem.item
-    property string currentKidItem
     property int themeCategory
+    property string currentKidItem
     default property Component delegate
 
     signal itemSelected(string item, var button)
@@ -99,13 +99,14 @@ Item
                                 }
                             }
 
-                            onFinished: glow.visible = false
+                            onFinished: { glow.visible = false; loader.item.visible = true; }
                         }
                     }
                 }
 
                 function shine()
                 {
+                    loader.item.visible = false
                     glow.visible = true
                     animationShine.start();
                 }
@@ -126,11 +127,15 @@ Item
                 anchors.centerIn: parent
             }
 
-            onTriggered:
-            {
-                root.itemSelected(Theme.getAvailableItems(root.themeCategory)[carousel.currentIndex], button);
-                carousel.currentItem.shine()
-            }
+            onTriggered: root.itemSelected(Theme.getAvailableItems(root.themeCategory)[carousel.currentIndex], button)
         }
+    }
+
+    Component.onCompleted: currentKidItem = kid.theme.getItem(themeCategory)
+
+    function setSelectedItem(item: string)
+    {
+        carousel.currentItem.shine()
+        kid.theme.setItem(themeCategory, item);
     }
 }

@@ -37,6 +37,7 @@ void Theme::setPoint(const QString& point)
     {
         point_ = point;
         emit pointChanged();
+        emit itemChanged(ThemeCategory::Points);
     }
 }
 
@@ -51,6 +52,32 @@ void Theme::setPointsStorage(const QString& points_storage)
     {
         points_storage_ = points_storage;
         emit pointsStorageChanged();
+        emit itemChanged(ThemeCategory::PointsStorage);
+    }
+}
+
+QString Theme::getItem(ThemeCategory::Enum category)
+{
+    switch (category)
+    {
+        case ThemeCategory::Points:
+            return getPoint();
+        case ThemeCategory::PointsStorage:
+            return getPointsStorage();
+    }
+
+    qCritical() << "Invalid category" << category;
+    return {};
+}
+
+void Theme::setItem(ThemeCategory::Enum category, const QString& item)
+{
+    switch (category)
+    {
+        case ThemeCategory::Points:
+            return setPoint(item);
+        case ThemeCategory::PointsStorage:
+            return setPointsStorage(item);
     }
 }
 

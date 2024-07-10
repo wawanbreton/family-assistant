@@ -23,11 +23,17 @@ public:
 
     void setPointsStorage(const QString& points_storage);
 
+    Q_INVOKABLE QString getItem(ThemeCategory::Enum category);
+
+    Q_INVOKABLE void setItem(ThemeCategory::Enum category, const QString& item);
+
     Q_INVOKABLE QStringList getAvailableItems(ThemeCategory::Enum category);
 
     Q_INVOKABLE QString getItemFilePath(ThemeCategory::Enum category, const QString& base_name);
 
 signals:
+    void itemChanged(ThemeCategory::Enum category);
+
     void pointChanged();
 
     void pointsStorageChanged();
