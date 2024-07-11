@@ -31,3 +31,4 @@
 <a href="https://www.flaticon.com/free-icons/bank" title="bank icons">Bank icons created by Smashicons - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/wallet" title="wallet icons">Wallet icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/refrigerator" title="refrigerator icons">Refrigerator icons created by Konkapp - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/seo" title="seo icons">Seo icons created by Kalashnyk - Flaticon</a>

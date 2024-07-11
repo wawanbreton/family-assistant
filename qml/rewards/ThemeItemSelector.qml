@@ -6,13 +6,15 @@ import ".."
 
 Item
 {
+    default property Component delegate
     property var kid
     property alias model: carousel.model
     property alias currentIndex: carousel.currentIndex
     property var currentItem: carousel.currentItem.item
     property int themeCategory
     property string currentKidItem
-    default property Component delegate
+    property int itemImplicitWidth: -1
+    property int itemImplicitHeight: -1
 
     signal itemSelected(string item, var button)
 
@@ -30,6 +32,7 @@ Item
             id: carousel
             model: Theme.getAvailableItems(root.themeCategory)
             Layout.fillWidth: true
+            Layout.fillHeight: true
             currentIndex: Theme.getAvailableItems(root.themeCategory).indexOf(root.currentKidItem)
 
             Item
@@ -100,6 +103,15 @@ Item
                             }
 
                             onFinished: { glow.visible = false; loader.item.visible = true; }
+                        }
+                    }
+
+                    onLoaded:
+                    {
+                        if(root.itemImplicitWidth >= 0 && root.itemImplicitHeight >= 0)
+                        {
+                            item.implicitWidth = Qt.binding(function() { return root.itemImplicitWidth });
+                            item.implicitHeight = Qt.binding(function() { return root.itemImplicitHeight });
                         }
                     }
                 }

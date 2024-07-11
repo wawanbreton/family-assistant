@@ -39,25 +39,21 @@ Item
         {
             title: "Fonds"
 
-            Text
+            Backgrounds
             {
-                text: "My Other item"
+                kid: root.kid
+                onPointsSpent: (amount, button, callback) => root.transferPoints(amount, button, callback)
             }
         }
 
         Tab
         {
             title: "Points"
+
             Points
             {
                 kid: root.kid
-                onPointsSpent: (amount, button, callback) =>
-                {
-                    var item_rect = root.mapFromItem(button, 0, 0, button.width, button.height);
-                    var item_center = Qt.point(item_rect.x + item_rect.width / 2, item_rect.y + item_rect.height / 2);
-                    var transfer = componentTransfer.createObject(root, { amount: amount, targetPosition: item_center });
-                    transfer.onFinished.connect(callback);
-                }
+                onPointsSpent: (amount, button, callback) => root.transferPoints(amount, button, callback)
             }
         }
 
@@ -122,5 +118,13 @@ Item
             rectStart: Qt.rect(vault.x + vault.width / 2 - 30, vault.y + vault.height / 2 - 30, 60, 60)
             pointDelta: -1
         }
+    }
+
+    function transferPoints(amount, button, callback)
+    {
+        var item_rect = root.mapFromItem(button, 0, 0, button.width, button.height);
+        var item_center = Qt.point(item_rect.x + item_rect.width / 2, item_rect.y + item_rect.height / 2);
+        var transfer = componentTransfer.createObject(root, { amount: amount, targetPosition: item_center });
+        transfer.onFinished.connect(callback);
     }
 }

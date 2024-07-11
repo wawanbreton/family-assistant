@@ -102,6 +102,13 @@ qt_add_executable(family-assistant
     qml/PointsTransfer.qml
     qml/rewards/RewardsTab.qml
     qml/components/ChangeableImage.qml
+    qml/theme/background/White.qml
+    qml/theme/background/Blue.qml
+    qml/theme/background/Green.qml
+    qml/theme/background/Orange.qml
+    qml/theme/background/Pink.qml
+    qml/theme/background/Sky.qml
+    qml/theme/background/SkyWithClouds.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

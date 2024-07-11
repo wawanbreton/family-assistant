@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import FamilyAssistant
 import "components"
 
 Item
@@ -10,10 +11,10 @@ Item
 
     id: root
 
-    Rectangle
+    Loader
     {
         anchors.fill: parent
-        color: "white"
+        source: Theme.getItemFilePath(ThemeCategory.Background, kid.theme.background)
     }
 
     ColumnLayout

@@ -12,6 +12,7 @@ public:
     {
         Point,
         PointsStorage,
+        Background,
     };
 
     ENUM_DEBUG()

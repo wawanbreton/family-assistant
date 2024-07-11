@@ -56,6 +56,21 @@ void Theme::setPointsStorage(const QString& points_storage)
     }
 }
 
+const QString& Theme::getBackground() const
+{
+    return background_;
+}
+
+void Theme::setBackground(const QString& background)
+{
+    if (background != background_)
+    {
+        background_ = background;
+        emit backgroundChanged();
+        emit itemChanged(ThemeCategory::Background);
+    }
+}
+
 QString Theme::getItem(ThemeCategory::Enum category)
 {
     switch (category)
@@ -64,6 +79,8 @@ QString Theme::getItem(ThemeCategory::Enum category)
             return getPoint();
         case ThemeCategory::PointsStorage:
             return getPointsStorage();
+        case ThemeCategory::Background:
+            return getBackground();
     }
 
     qCritical() << "Invalid category" << category;
@@ -78,6 +95,8 @@ void Theme::setItem(ThemeCategory::Enum category, const QString& item)
             return setPoint(item);
         case ThemeCategory::PointsStorage:
             return setPointsStorage(item);
+        case ThemeCategory::Background:
+            return setBackground(item);
     }
 }
 
@@ -101,6 +120,8 @@ QString Theme::getCategoryFolder(ThemeCategory::Enum category)
             return folder.arg("point");
         case ThemeCategory::PointsStorage:
             return folder.arg("points_storage");
+        case ThemeCategory::Background:
+            return folder.arg("background");
     }
 
     return {};

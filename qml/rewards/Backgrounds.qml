@@ -9,28 +9,15 @@ RewardsTab
 
     id: root
 
-    ColumnLayout
+    ThemeItemSelector
     {
+        kid: root.kid
         anchors.fill: parent
+        anchors.margins: 16
+        themeCategory: ThemeCategory.Background
+        itemImplicitWidth: itemImplicitHeight * 0.8
+        itemImplicitHeight: height * 0.8
 
-        ThemeItemSelector
-        {
-            kid: root.kid
-            Layout.preferredWidth: root.width * 0.6
-            Layout.alignment: Qt.AlignHCenter
-            themeCategory: ThemeCategory.Points
-
-            onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { setSelectedItem(item); })
-        }
-
-        ThemeItemSelector
-        {
-            kid: root.kid
-            Layout.preferredWidth: root.width * 0.6
-            Layout.alignment: Qt.AlignHCenter
-            themeCategory: ThemeCategory.PointsStorage
-
-            onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { setSelectedItem(item); })
-        }
+        onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { setSelectedItem(item); })
     }
 }

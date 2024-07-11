@@ -62,6 +62,7 @@ Item
         {
             opacity: PathView.itemOpacity
             scale: PathView.itemScale
+            z: PathView.isCurrentItem ? 1.0 : 0.0
             property var loadedItem
 
             Component.onCompleted: loadedItem = root.delegate.createObject(this, {"modelData": modelData})

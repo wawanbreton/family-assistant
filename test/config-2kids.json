@@ -15,7 +15,8 @@
             ],
             "theme":
             {
-                "point": "Burger"
+                "point": "Burger",
+                "background": "SkyWithClouds"
             }
         },
         {
@@ -38,7 +39,8 @@
             ],
             "theme":
             {
-                "point": "RubySparkling"
+                "point": "RubySparkling",
+                "background": "Pink"
             }
         }
     ]
