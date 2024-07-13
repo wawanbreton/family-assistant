@@ -55,6 +55,7 @@ Item
                         blurEnabled: true
                         z: 1.0
                         visible: false
+                        clip: true
 
                         SequentialAnimation
                         {
@@ -144,6 +145,19 @@ Item
     }
 
     Component.onCompleted: currentKidItem = kid.theme.getItem(themeCategory)
+
+    Connections
+    {
+        target: kid.theme
+
+        function onItemChanged(category)
+        {
+            if(category === themeCategory)
+            {
+                currentKidItem = kid.theme.getItem(themeCategory);
+            }
+        }
+    }
 
     function setSelectedItem(item: string)
     {
