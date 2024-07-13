@@ -1,9 +1,11 @@
 import QtQuick 2.15
+import "../../components"
 
 Sky
 {
     readonly property int cost: 40
     property var clouds: []
+    property int maximumCloudsY: height
 
     id: root
     clip: true
@@ -17,11 +19,7 @@ Sky
             id: cloud
             source: DataStorage.findResource("cloud", DataStorage.Icon)
 
-            transform:
-            [
-                Scale { id: scale; },
-                Translate { id: translate; }
-            ]
+            RandomMirror { }
 
             PropertyAnimation
             {
@@ -44,7 +42,7 @@ Sky
                 cloud.height = (cloud.implicitHeight / cloud.implicitWidth) * cloud.width;
                 var x_left = -cloud.width;
                 var x_right = root.width;
-                y = Math.random() * (root.height - cloud.height);
+                y = Math.random() * (root.maximumCloudsY - cloud.height);
 
                 if(Math.random() > 0.5)
                 {
@@ -55,12 +53,6 @@ Sky
                 {
                     animationTravel.from = x_right;
                     animationTravel.to = x_left;
-                }
-
-                if(Math.random() > 0.5)
-                {
-                    scale.xScale = -1;
-                    translate.x = cloud.width
                 }
 
                 animationTravel.duration = (root.width * 25) * (Math.random() + 0.5);
@@ -93,7 +85,7 @@ Sky
     function makeCloud()
     {
         cloudMaker.createObject(root)
-        timerMakeNextCloud.interval = (Math.random() + 0.5) * 2000
+        timerMakeNextCloud.interval = (Math.random() + 0.5) * 2000 / (maximumCloudsY / height)
         timerMakeNextCloud.start()
     }
 }

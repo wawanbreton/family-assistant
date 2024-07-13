@@ -109,6 +109,8 @@ qt_add_executable(family-assistant
     qml/theme/background/Pink.qml
     qml/theme/background/Sky.qml
     qml/theme/background/SkyWithClouds.qml
+    qml/theme/background/Farm.qml
+    qml/components/RandomMirror.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

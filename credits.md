@@ -32,3 +32,5 @@
 <a href="https://www.flaticon.com/free-icons/wallet" title="wallet icons">Wallet icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/refrigerator" title="refrigerator icons">Refrigerator icons created by Konkapp - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/seo" title="seo icons">Seo icons created by Kalashnyk - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/farm" title="farm icons">Farm icons created by smashingstocks - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/cow" title="cow icons">Cow icons created by surang - Flaticon</a>
