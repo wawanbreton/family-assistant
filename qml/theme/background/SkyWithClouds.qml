@@ -68,7 +68,10 @@ Sky
         onTriggered: root.makeCloud()
     }
 
-    onWidthChanged:
+    onWidthChanged: clearClouds()
+    onHeightChanged: clearClouds()
+
+    function clearClouds()
     {
         for(var i = 0 ; i < clouds.length ; ++i)
         {
@@ -76,16 +79,16 @@ Sky
         }
         clouds = [];
 
-        if(width > 0)
-        {
-            makeCloud();
-        }
+        makeCloud();
     }
 
     function makeCloud()
     {
-        cloudMaker.createObject(root)
-        timerMakeNextCloud.interval = (Math.random() + 0.5) * 2000 / (maximumCloudsY / height)
-        timerMakeNextCloud.start()
+        if(root.width > 0 && root.height > 0)
+        {
+            cloudMaker.createObject(root)
+            timerMakeNextCloud.interval = (Math.random() + 0.5) * 2000 / (maximumCloudsY / height)
+            timerMakeNextCloud.start()
+        }
     }
 }
