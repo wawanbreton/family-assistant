@@ -10,6 +10,8 @@ class Theme : public QObject
     Q_PROPERTY(QString point READ getPoint WRITE setPoint NOTIFY pointChanged)
     Q_PROPERTY(QString points_storage READ getPointsStorage WRITE setPointsStorage NOTIFY pointsStorageChanged)
     Q_PROPERTY(QString background READ getBackground WRITE setBackground NOTIFY backgroundChanged)
+    Q_PROPERTY(QString font READ getFont WRITE setFont NOTIFY fontChanged)
+    Q_PROPERTY(QString textStyle READ getTextStyle WRITE setTextStyle NOTIFY textStyleChanged)
 
 public:
     explicit Theme(QObject* parent = nullptr);
@@ -28,6 +30,14 @@ public:
 
     void setBackground(const QString& background);
 
+    const QString& getFont() const;
+
+    void setFont(const QString& font);
+
+    const QString& getTextStyle() const;
+
+    void setTextStyle(const QString& text_style);
+
     Q_INVOKABLE QString getItem(ThemeCategory::Enum category);
 
     Q_INVOKABLE void setItem(ThemeCategory::Enum category, const QString& item);
@@ -45,6 +55,10 @@ signals:
 
     void backgroundChanged();
 
+    void fontChanged();
+
+    void textStyleChanged();
+
 private:
     static QString getCategoryFolder(ThemeCategory::Enum category);
 
@@ -53,4 +67,6 @@ private:
     QString point_{ "StarCoin" };
     QString points_storage_{ "Treasure" };
     QString background_{ "White" };
+    QString font_{ "Ubuntu" };
+    QString text_style_{ "Black" };
 };

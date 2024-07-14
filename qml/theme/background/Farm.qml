@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import FamilyAssistant
 import "../../components"
 
 SkyWithClouds
@@ -23,7 +24,7 @@ SkyWithClouds
 
         Image
         {
-            source: DataStorage.findResource("barn", DataStorage.Icon)
+            source: DataStorage.findResource("barn", ResourceType.Icon)
             x: 10
             y: -180
             width: 240
@@ -37,7 +38,7 @@ SkyWithClouds
             Image
             {
                 id: cow
-                source: DataStorage.findResource("cow", DataStorage.Icon)
+                source: DataStorage.findResource("cow", ResourceType.Icon)
                 x: Math.random() * (field.width - width)
                 y: Math.random() * (field.height - height)
 

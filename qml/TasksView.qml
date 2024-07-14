@@ -60,5 +60,5 @@ Item
         componentRewards.createObject(root, {kid: kid});
     }
 
-    //Component.onCompleted: displayRewards(kid_manager.kids[0])
+    Component.onCompleted: displayRewards(kid_manager.kids[0])
 }

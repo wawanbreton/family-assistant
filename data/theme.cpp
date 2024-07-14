@@ -19,6 +19,12 @@ Theme::Theme(QObject* parent)
 
         available_items_[category] = items;
     }
+
+    connect(this, &Theme::pointChanged, this, [this] { emit itemChanged(ThemeCategory::Point); });
+    connect(this, &Theme::pointsStorageChanged, this, [this] { emit itemChanged(ThemeCategory::PointsStorage); });
+    connect(this, &Theme::backgroundChanged, this, [this] { emit itemChanged(ThemeCategory::Background); });
+    connect(this, &Theme::fontChanged, this, [this] { emit itemChanged(ThemeCategory::Font); });
+    connect(this, &Theme::textStyleChanged, this, [this] { emit itemChanged(ThemeCategory::TextStyle); });
 }
 
 void Theme::load(const QJsonObject& json_object)
@@ -37,7 +43,6 @@ void Theme::setPoint(const QString& point)
     {
         point_ = point;
         emit pointChanged();
-        emit itemChanged(ThemeCategory::Point);
     }
 }
 
@@ -52,7 +57,6 @@ void Theme::setPointsStorage(const QString& points_storage)
     {
         points_storage_ = points_storage;
         emit pointsStorageChanged();
-        emit itemChanged(ThemeCategory::PointsStorage);
     }
 }
 
@@ -67,7 +71,34 @@ void Theme::setBackground(const QString& background)
     {
         background_ = background;
         emit backgroundChanged();
-        emit itemChanged(ThemeCategory::Background);
+    }
+}
+
+const QString& Theme::getFont() const
+{
+    return font_;
+}
+
+void Theme::setFont(const QString& font)
+{
+    if (font != font_)
+    {
+        font_ = font;
+        emit fontChanged();
+    }
+}
+
+const QString& Theme::getTextStyle() const
+{
+    return text_style_;
+}
+
+void Theme::setTextStyle(const QString& text_style)
+{
+    if (text_style != text_style_)
+    {
+        text_style_ = text_style;
+        emit textStyleChanged();
     }
 }
 
@@ -81,6 +112,10 @@ QString Theme::getItem(ThemeCategory::Enum category)
             return getPointsStorage();
         case ThemeCategory::Background:
             return getBackground();
+        case ThemeCategory::Font:
+            return getFont();
+        case ThemeCategory::TextStyle:
+            return getTextStyle();
     }
 
     qCritical() << "Invalid category" << category;
@@ -97,6 +132,10 @@ void Theme::setItem(ThemeCategory::Enum category, const QString& item)
             return setPointsStorage(item);
         case ThemeCategory::Background:
             return setBackground(item);
+        case ThemeCategory::Font:
+            return setFont(item);
+        case ThemeCategory::TextStyle:
+            return setTextStyle(item);
     }
 }
 
@@ -122,6 +161,10 @@ QString Theme::getCategoryFolder(ThemeCategory::Enum category)
             return folder.arg("points_storage");
         case ThemeCategory::Background:
             return folder.arg("background");
+        case ThemeCategory::Font:
+            return folder.arg("font");
+        case ThemeCategory::TextStyle:
+            return folder.arg("text_style");
     }
 
     return {};

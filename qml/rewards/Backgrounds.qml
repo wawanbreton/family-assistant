@@ -1,12 +1,9 @@
 import QtQuick 2.15
 import QtQuick.Layouts
 import FamilyAssistant
-import "../components"
 
 RewardsTab
 {
-    property var kid
-
     id: root
 
     ThemeItemSelector

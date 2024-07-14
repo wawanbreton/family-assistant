@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import FamilyAssistant
 import "components"
 import "rewards"
 
@@ -28,10 +29,10 @@ Item
         {
             title: "Texte"
 
-            Text
+            NameTexts
             {
-                text: "My Item"
-                anchors.centerIn: parent
+                kid: root.kid
+                onPointsSpent: (amount, button, callback) => root.transferPoints(amount, button, callback)
             }
         }
 
@@ -100,7 +101,7 @@ Item
         id: buttonBack
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        imageSource: DataStorage.findResource("arrow", DataStorage.Icon)
+        imageSource: DataStorage.findResource("arrow", ResourceType.Icon)
         imageScale: 0.75
         corner: Qt.BottomRightCorner
 

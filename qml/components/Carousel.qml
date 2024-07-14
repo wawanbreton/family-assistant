@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import FamilyAssistant
 
 Item
 {
@@ -13,7 +14,7 @@ Item
     Image
     {
         id: buttonLeft
-        source: DataStorage.findResource("arrowhead", DataStorage.Icon)
+        source: DataStorage.findResource("arrowhead", ResourceType.Icon)
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -72,7 +73,7 @@ Item
     Image
     {
         id: buttonRight
-        source: DataStorage.findResource("arrowhead", DataStorage.Icon)
+        source: DataStorage.findResource("arrowhead", ResourceType.Icon)
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom

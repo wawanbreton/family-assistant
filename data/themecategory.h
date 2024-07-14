@@ -13,6 +13,8 @@ public:
         Point,
         PointsStorage,
         Background,
+        Font,
+        TextStyle,
     };
 
     ENUM_DEBUG()

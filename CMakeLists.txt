@@ -111,6 +111,14 @@ qt_add_executable(family-assistant
     qml/theme/background/SkyWithClouds.qml
     qml/theme/background/Farm.qml
     qml/components/RandomMirror.qml
+    qml/rewards/NameTexts.qml
+    qml/theme/font/Ubuntu.qml
+    qml/theme/font/SuperCrafty.qml
+    qml/theme/font/SuperPlayful.qml
+    qml/theme/font/AmberyGarden.qml
+    qml/theme/font/SuperMystery.qml
+    qml/theme/font/SupplyCenter.qml
+
 )
 
 qt6_add_resources(family-assistant "family-assistant"

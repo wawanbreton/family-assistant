@@ -16,7 +16,8 @@
             "theme":
             {
                 "point": "Burger",
-                "background": "Farm"
+                "background": "White",
+                "font": "AmberyGarden"
             }
         },
         {
@@ -40,7 +41,8 @@
             "theme":
             {
                 "point": "RubySparkling",
-                "background": "Pink"
+                "background": "Pink",
+                "font": "SuperMystery"
             }
         }
     ]

@@ -1,8 +1,9 @@
 import QtQuick 2.15
+import FamilyAssistant
 
 Image
 {
     readonly property int cost: 20
 
-    source: DataStorage.findResource("medal", DataStorage.Icon)
+    source: DataStorage.findResource("medal", ResourceType.Icon)
 }

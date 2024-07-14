@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import FamilyAssistant
 import "../../components"
 
 Sky
@@ -17,7 +18,7 @@ Sky
         Image
         {
             id: cloud
-            source: DataStorage.findResource("cloud", DataStorage.Icon)
+            source: DataStorage.findResource("cloud", ResourceType.Icon)
 
             RandomMirror { }
 
@@ -55,7 +56,7 @@ Sky
                     animationTravel.to = x_left;
                 }
 
-                animationTravel.duration = (root.width * 25) * (Math.random() + 0.5);
+                animationTravel.duration = (root.width * 50) * (Math.random() + 0.5);
                 animationTravel.start();
             }
         }
@@ -87,7 +88,7 @@ Sky
         if(root.width > 0 && root.height > 0)
         {
             cloudMaker.createObject(root)
-            timerMakeNextCloud.interval = (Math.random() + 0.5) * 2000 / (maximumCloudsY / height)
+            timerMakeNextCloud.interval = (Math.random() + 0.5) * 4000 / (maximumCloudsY / height)
             timerMakeNextCloud.start()
         }
     }

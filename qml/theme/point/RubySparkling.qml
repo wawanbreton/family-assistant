@@ -1,11 +1,12 @@
 import QtQuick 2.15
+import FamilyAssistant
 
 Image
 {
     readonly property int cost: 20
 
     id: root
-    source: DataStorage.findResource("ruby", DataStorage.Icon)
+    source: DataStorage.findResource("ruby", ResourceType.Icon)
 
     Timer
     {
@@ -24,7 +25,7 @@ Image
         Image
         {
             id: sparkle
-            source: DataStorage.findResource("sparkle", DataStorage.Icon)
+            source: DataStorage.findResource("sparkle", ResourceType.Icon)
 
             SequentialAnimation
             {

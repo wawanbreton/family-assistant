@@ -44,8 +44,8 @@ Item
                 {
                     id: loader
                     anchors.centerIn: parent
-                    sourceComponent: root.delegate
-                    source: Theme.getItemFilePath(root.themeCategory, modelData)
+                    //sourceComponent: root.delegate
+                    //source: root.delegate ? "" : Theme.getItemFilePath(root.themeCategory, modelData)
 
                     MultiEffect
                     {
@@ -114,6 +114,23 @@ Item
                             item.implicitWidth = Qt.binding(function() { return root.itemImplicitWidth });
                             item.implicitHeight = Qt.binding(function() { return root.itemImplicitHeight });
                         }
+
+                        if(root.delegate)
+                        {
+                            item.modelData = modelData;
+                        }
+                    }
+                }
+
+                Component.onCompleted:
+                {
+                    if(root.delegate)
+                    {
+                        loader.sourceComponent = root.delegate;
+                    }
+                    else
+                    {
+                        loader.source = Theme.getItemFilePath(root.themeCategory, modelData);
                     }
                 }
 
