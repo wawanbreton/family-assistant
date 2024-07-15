@@ -118,6 +118,24 @@ qt_add_executable(family-assistant
     qml/theme/font/AmberyGarden.qml
     qml/theme/font/SuperMystery.qml
     qml/theme/font/SupplyCenter.qml
+    qml/theme/font/HappyMemories.qml
+    qml/theme/font/KogniGear.qml
+    qml/theme/font/SuperNormal.qml
+    qml/theme/font/SuperScribble.qml
+    qml/theme/font/ZtTalk.qml
+    qml/theme/font/Agreloy.qml
+    qml/theme/font/BudmoJiggler.qml
+    qml/theme/font/BurnstownDam.qml
+    qml/theme/font/Celtica.qml
+    qml/theme/font/DottyShadow.qml
+    qml/theme/font/GoodTiming.qml
+    qml/theme/font/Heartland.qml
+    qml/theme/font/RetroStereoWide.qml
+    qml/theme/font/Saddlebag.qml
+    qml/theme/font/SnowtopCaps.qml
+    qml/theme/font/TopSecret.qml
+    qml/theme/font/UrbanSlick.qml
+    qml/theme/font/Welbutrin.qml
 
 )
 
