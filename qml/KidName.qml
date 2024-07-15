@@ -2,25 +2,42 @@ import QtQuick
 import FamilyAssistant
 import "components"
 
-LargeText
+Item
 {
     property var kid
     property string fontName: kid.theme.font
-    property alias item: itemLoader.item
+    property alias fontItem: itemLoader.item
+    property string textStyle: kid.theme.text_style
+    property alias styleItem: styleLoader.item
 
-    text: kid.name
-    color: "black"
-    font.family: fontLoader.font.family
+    id: root
+    implicitHeight: text.implicitHeight
+    implicitWidth: text.implicitWidth
+
+    LargeText
+    {
+        id: text
+        anchors.fill: parent
+        text: kid.name
+        font.family: fontLoader.font.family
+
+        Loader
+        {
+            id: itemLoader
+            source: fontName !== "" ? Theme.getItemFilePath(ThemeCategory.Font, fontName) : ""
+        }
+
+        FontLoader
+        {
+            id: fontLoader
+            source: itemLoader.item.font
+        }
+    }
 
     Loader
     {
-        id: itemLoader
-        source: fontName !== "" ? Theme.getItemFilePath(ThemeCategory.Font, fontName) : ""
+        id: styleLoader
     }
 
-    FontLoader
-    {
-        id: fontLoader
-        source: itemLoader.item.font
-    }
+    onTextStyleChanged: styleLoader.setSource(Theme.getItemFilePath(ThemeCategory.TextStyle, textStyle), { "target": text, "parent": this })
 }

@@ -11,7 +11,7 @@ class Theme : public QObject
     Q_PROPERTY(QString points_storage READ getPointsStorage WRITE setPointsStorage NOTIFY pointsStorageChanged)
     Q_PROPERTY(QString background READ getBackground WRITE setBackground NOTIFY backgroundChanged)
     Q_PROPERTY(QString font READ getFont WRITE setFont NOTIFY fontChanged)
-    Q_PROPERTY(QString textStyle READ getTextStyle WRITE setTextStyle NOTIFY textStyleChanged)
+    Q_PROPERTY(QString text_style READ getTextStyle WRITE setTextStyle NOTIFY textStyleChanged)
 
 public:
     explicit Theme(QObject* parent = nullptr);

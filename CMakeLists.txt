@@ -136,6 +136,12 @@ qt_add_executable(family-assistant
     qml/theme/font/TopSecret.qml
     qml/theme/font/UrbanSlick.qml
     qml/theme/font/Welbutrin.qml
+    qml/theme/text_style/Black.qml
+    qml/theme/text_style/Blue.qml
+    qml/theme/text_style/Green.qml
+    qml/theme/text_style/Orange.qml
+    qml/theme/text_style/Pink.qml
+    qml/theme/text_style/White.qml
 
 )
 

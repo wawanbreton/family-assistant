@@ -23,7 +23,7 @@ RewardsTab
             delegate: KidName
             {
                 property var modelData
-                property var cost: item.cost
+                property var cost: fontItem.cost
 
                 kid: root.kid
                 fontName: modelData
@@ -33,11 +33,20 @@ RewardsTab
         ThemeItemSelector
         {
             kid: root.kid
-            Layout.preferredWidth: root.width * 0.9
+            Layout.preferredWidth: root.width - 32
             Layout.alignment: Qt.AlignHCenter
-            themeCategory: ThemeCategory.PointsStorage
+            themeCategory: ThemeCategory.TextStyle
 
             onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { setSelectedItem(item); })
+
+            delegate: KidName
+            {
+                property var modelData
+                property var cost: styleItem.cost
+
+                kid: root.kid
+                textStyle: modelData
+            }
         }
     }
 }
