@@ -15,6 +15,7 @@ Item
     property string currentKidItem
     property int itemImplicitWidth: -1
     property int itemImplicitHeight: -1
+    property bool clipGlowEffect: false
 
     signal itemSelected(string item, var button)
 
@@ -44,8 +45,6 @@ Item
                 {
                     id: loader
                     anchors.centerIn: parent
-                    //sourceComponent: root.delegate
-                    //source: root.delegate ? "" : Theme.getItemFilePath(root.themeCategory, modelData)
 
                     MultiEffect
                     {
@@ -55,7 +54,7 @@ Item
                         blurEnabled: true
                         z: 1.0
                         visible: false
-                        clip: true
+                        clip: root.clipGlowEffect
 
                         SequentialAnimation
                         {

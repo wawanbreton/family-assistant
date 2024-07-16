@@ -15,8 +15,8 @@ Item
     TextOutline
     {
         id: textOutline
-        target: root.target
-        parent: root.target.parent
+        target: root.target.parent
+        parent: root.target.parent.parent
         borderWidth: 4
         blurFactor: 1.0
         color: "white"

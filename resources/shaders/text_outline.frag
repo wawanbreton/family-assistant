@@ -29,14 +29,21 @@ void main()
             {
                 nb_samples++;
                 vec2 texCoord = src_coord + vec2(x, y) / target_size;
-                vec4 col = texture(source, texCoord);
-                if(col.r + col.g + col.b + col.a > 0.01)
+                if(texCoord.x < 0.0 || texCoord.x > 1.0 || texCoord.y < 0.0 || texCoord.y > 1.0)
                 {
-                    diff_in_out++;
+                    diff_in_out--;
                 }
                 else
                 {
-                    diff_in_out--;
+                    vec4 col = texture(source, texCoord);
+                    if(col.r + col.g + col.b + col.a > 0.01)
+                    {
+                        diff_in_out++;
+                    }
+                    else
+                    {
+                        diff_in_out--;
+                    }
                 }
             }
         }

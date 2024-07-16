@@ -14,6 +14,7 @@ RewardsTab
         themeCategory: ThemeCategory.Background
         itemImplicitWidth: itemImplicitHeight * 0.8
         itemImplicitHeight: height * 0.8
+        clipGlowEffect: true
 
         onItemSelected: (item, button) => root.pointsSpent(currentItem.cost, button, () => { setSelectedItem(item); })
     }
