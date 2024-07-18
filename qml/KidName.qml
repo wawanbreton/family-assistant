@@ -9,7 +9,6 @@ Item
     property alias fontItem: itemLoader.item
     property string textStyle: kid.theme.text_style
     property alias styleItem: styleLoader.item
-    readonly property int extraHeight: 30 // Add extra height for some fonts that miss the accents in their metrics
 
     id: root
     implicitHeight: text.implicitHeight
@@ -18,17 +17,13 @@ Item
     Item
     {
         id: textContainer
-        width: text.implicitWidth
-        height: text.implicitHeight + root.extraHeight
-        y: -root.extraHeight
+        width: text.contentWidth
+        height: text.contentHeight
 
         LargeText
         {
             id: text
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            height: implicitHeight
+            anchors.fill: parent
             text: kid.name
             font.family: fontLoader.font.family
 
@@ -51,5 +46,5 @@ Item
         id: styleLoader
     }
 
-    onTextStyleChanged: styleLoader.setSource(Theme.getItemFilePath(ThemeCategory.TextStyle, textStyle), { "target": text, "parent": textContainer })
+    onTextStyleChanged: styleLoader.setSource(Theme.getItemFilePath(ThemeCategory.TextStyle, textStyle), { "target": text })
 }

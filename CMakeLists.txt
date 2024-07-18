@@ -11,6 +11,7 @@ qt_standard_project_setup(REQUIRES 6.5)
 
 set(SHADER_FILES
     resources/shaders/text_outline.frag
+    resources/shaders/text_mask.frag
 )
 
 qt_add_executable(family-assistant
@@ -142,6 +143,8 @@ qt_add_executable(family-assistant
     qml/theme/text_style/Orange.qml
     qml/theme/text_style/Pink.qml
     qml/theme/text_style/White.qml
+    qml/theme/text_style/Rainbow.qml
+    qml/theme/text_style/RainbowAnimated.qml
 
 )
 
