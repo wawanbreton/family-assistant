@@ -3,7 +3,7 @@
     [
         {
             "name": "Léonis",
-            "points": 50,
+            "points": 500,
             "tasks":
             [
                 {
@@ -44,6 +44,50 @@
                 "background": "Pink",
                 "font": "SuperMystery"
             }
+        }
+    ],
+
+    "tasks":
+    [
+        {
+            "desc": "Brosser ses dents",
+            "icon": "toothbrush",
+            "reward": 3,
+            "due_times":
+            [
+                {
+                    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "times": ["08:00", "20:00"]
+                },
+                {
+                    "days": ["Saturday", "Sunday"],
+                    "times": ["10:30", "20:00"]
+                }
+            ]
+        },
+
+        {
+            "desc": "Prendre le petit-déjeuner",
+            "icon": "cereal",
+            "reward": 3,
+            "due_times":
+            [
+                {
+                    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "times": ["07:45"]
+                },
+                {
+                    "days": ["Saturday", "Sunday"],
+                    "times": ["10:00"]
+                }
+            ]
+        },
+
+        {
+            "desc": "Passer l'aspirateur",
+            "icon": "vacuum",
+            "reward": 10,
+            "regular": false
         }
     ]
 }

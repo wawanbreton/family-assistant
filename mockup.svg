@@ -24,15 +24,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.97"
-     inkscape:cx="339.69072"
-     inkscape:cy="304.63918"
+     inkscape:zoom="1.3717872"
+     inkscape:cx="332.77757"
+     inkscape:cy="251.13225"
      inkscape:window-width="1920"
      inkscape:window-height="1007"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer5"
      showguides="true"
      inkscape:snap-global="true" />
   <defs
@@ -560,7 +560,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Rewards"
-     style="display:inline">
+     style="display:none">
     <rect
        style="opacity:0.683316;fill:#ffffff;fill-opacity:1;stroke-width:0.265;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect31238"
@@ -709,4 +709,122 @@
          x="92.185913"
          y="130.19897">Léonis</tspan></text>
   </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Settings"
+     style="display:inline">
+    <path
+       id="path1139"
+       style="display:inline;opacity:1;fill:url(#radialGradient908);fill-opacity:1;stroke-width:0.558151;stroke-linecap:square"
+       d="m 210.12289,112.95402 a 15.474922,15.474922 0 0 1 7.35562,1.87209 v 21.13406 H 196.6122 a 15.474922,15.474922 0 0 1 -1.96462,-7.53085 15.474922,15.474922 0 0 1 15.47531,-15.4753 z" />
+    <image
+       width="15.294124"
+       height="15.294124"
+       preserveAspectRatio="none"
+       xlink:href="data:image/png;base64,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 AElFTkSuQmCC "
+       id="image1141"
+       x="200.42216"
+       y="117.05206"
+       style="display:inline;fill:none;fill-opacity:1" />
+    <rect
+       style="display:inline;opacity:1;fill:#3498db;fill-opacity:1;stroke-width:0.281657;stroke-linecap:square"
+       id="rect1393"
+       width="78.612083"
+       height="12.534369"
+       x="1.8814791"
+       y="3.8011374"
+       rx="0"
+       ry="6.2671843" />
+    <rect
+       style="display:inline;opacity:1;fill:#3498db;fill-opacity:1;stroke-width:0.227624;stroke-linecap:square"
+       id="rect1395"
+       width="157.58401"
+       height="106.01916"
+       x="55.719093"
+       y="3.8011374"
+       rx="0"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.5268px;line-height:1.25;font-family:sans-serif;display:inline;fill:#f5f5f5;fill-opacity:1;stroke:none;stroke-width:0.281214"
+       x="8.1762333"
+       y="12.044885"
+       id="text1399"><tspan
+         sodipodi:role="line"
+         id="tspan1397"
+         style="font-size:5.5268px;fill:#f5f5f5;fill-opacity:1;stroke-width:0.281214"
+         x="8.1762333"
+         y="12.044885">Contrôle</tspan></text>
+    <rect
+       style="display:inline;opacity:1;fill:#3498db;fill-opacity:1;stroke-width:0.281657;stroke-linecap:square"
+       id="rect1401"
+       width="78.612083"
+       height="12.534369"
+       x="1.8814791"
+       y="16.335505"
+       rx="0"
+       ry="6.2671843" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.5268px;line-height:1.25;font-family:sans-serif;display:inline;fill:#f5f5f5;fill-opacity:1;stroke:none;stroke-width:0.281214"
+       x="8.1762333"
+       y="24.579252"
+       id="text1405"><tspan
+         sodipodi:role="line"
+         id="tspan1403"
+         style="font-size:5.5268px;fill:#f5f5f5;fill-opacity:1;stroke-width:0.281214"
+         x="8.1762333"
+         y="24.579252">Tâches</tspan></text>
+    <rect
+       style="display:inline;opacity:1;fill:#3498db;fill-opacity:1;stroke-width:0.281657;stroke-linecap:square"
+       id="rect1407"
+       width="78.612083"
+       height="12.534369"
+       x="1.8814791"
+       y="28.869871"
+       rx="0"
+       ry="6.2671843" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.5268px;line-height:1.25;font-family:sans-serif;display:inline;fill:#f5f5f5;fill-opacity:1;stroke:none;stroke-width:0.281214"
+       x="8.1762333"
+       y="37.113617"
+       id="text1411"><tspan
+         sodipodi:role="line"
+         id="tspan1409"
+         style="font-size:5.5268px;fill:#f5f5f5;fill-opacity:1;stroke-width:0.281214"
+         x="8.1762333"
+         y="37.113617">Cadre photo</tspan></text>
+    <rect
+       style="display:inline;opacity:1;fill:#3498db;fill-opacity:1;stroke-width:0.281657;stroke-linecap:square"
+       id="rect4873"
+       width="78.612083"
+       height="12.534369"
+       x="1.8814791"
+       y="41.40424"
+       rx="0"
+       ry="6.2671843" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.5268px;line-height:1.25;font-family:sans-serif;display:inline;fill:#f5f5f5;fill-opacity:1;stroke:none;stroke-width:0.281214"
+       x="8.1762333"
+       y="49.647987"
+       id="text4877"><tspan
+         sodipodi:role="line"
+         id="tspan4875"
+         style="font-size:5.5268px;fill:#f5f5f5;fill-opacity:1;stroke-width:0.281214"
+         x="8.1762333"
+         y="49.647987">Météo</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Settings - Control"
+     style="display:none" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Settings - Tasks"
+     style="display:inline" />
 </svg>

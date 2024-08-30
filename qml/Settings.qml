@@ -7,8 +7,6 @@ import "rewards"
 
 PopupDialog
 {
-    property var kid
-
     id: root
 
     Rectangle
@@ -25,7 +23,7 @@ PopupDialog
 
         Tab
         {
-            title: "Texte"
+            title: "Contrôle"
 
             NameTexts
             {
@@ -36,7 +34,7 @@ PopupDialog
 
         Tab
         {
-            title: "Fonds"
+            title: "Tâches"
 
             Backgrounds
             {
@@ -47,7 +45,7 @@ PopupDialog
 
         Tab
         {
-            title: "Points"
+            title: "Cadre photo"
 
             Points
             {
@@ -58,40 +56,13 @@ PopupDialog
 
         Tab
         {
-            title: "Temps d'écran"
+            title: "Météo"
 
             Text
             {
                 text: "My Other item"
             }
         }
-
-        Tab
-        {
-            title: "Spécial"
-
-            Text
-            {
-                text: "My Other item"
-            }
-        }
-    }
-
-    Vault
-    {
-        id: vault
-        kid: root.kid
-        pointsAlwaysVisible: true
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-    }
-
-    KidName
-    {
-        kid: root.kid
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 16
-        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     CornerButton
@@ -104,26 +75,5 @@ PopupDialog
         corner: Qt.BottomRightCorner
 
         onPressed: root.done()
-    }
-
-    Component
-    {
-        id: componentTransfer
-
-        PointsTransfer
-        {
-            kid: root.kid
-            parentObject: root
-            rectStart: Qt.rect(vault.x + vault.width / 2 - 30, vault.y + vault.height / 2 - 30, 60, 60)
-            pointDelta: -1
-        }
-    }
-
-    function transferPoints(amount, button, callback)
-    {
-        var item_rect = root.mapFromItem(button, 0, 0, button.width, button.height);
-        var item_center = Qt.point(item_rect.x + item_rect.width / 2, item_rect.y + item_rect.height / 2);
-        var transfer = componentTransfer.createObject(root, { amount: amount, targetPosition: item_center });
-        transfer.onFinished.connect(callback);
     }
 }

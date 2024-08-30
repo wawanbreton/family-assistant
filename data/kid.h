@@ -1,12 +1,11 @@
 #pragma once
 
 #include <QObject>
-#include <QQmlListProperty>
 
 #include "data/tasksmodel.h"
 #include "data/theme.h"
 
-class Task;
+class DueTask;
 
 class Kid : public QObject
 {
@@ -39,9 +38,9 @@ signals:
     void pointsChanged(const quint32 points, const qint32 delta);
 
 private:
-    void addTask(Task* task);
+    void addTask(DueTask* task);
 
-    void onTaskAccomplished(Task* task);
+    void onTaskAccomplished(DueTask* task);
 
 private:
     QString name_;

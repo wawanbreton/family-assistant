@@ -35,30 +35,34 @@ Item
         {
             id: rewards
             anchors.fill: parent
-            opacity: 0.0
-
-            Component.onCompleted: opacity = 1.0
-            onDone: opacity = 0.0
-            onOpacityChanged:
-            {
-                if(opacity === 0.0)
-                {
-                    destroy()
-                }
-            }
-
-            Behavior on opacity
-            {
-                NumberAnimation { duration: 300; easing.type: Easing.InOutQuad; }
-            }
-
         }
     }
+
+    Component
+    {
+        id: componentSettings
+
+        Settings
+        {
+            id: settings
+            anchors.fill: parent
+        }
+    }
+
+    Connections
+    {
+        target: hardware
+
+        function onParentUnlock()
+        {
+            componentSettings.createObject(root);
+        }
+    }
+
+    //Component.onCompleted: componentSettings.createObject(root);
 
     function displayRewards(kid: var)
     {
         componentRewards.createObject(root, {kid: kid});
     }
-
-    Component.onCompleted: displayRewards(kid_manager.kids[0])
 }

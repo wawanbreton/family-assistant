@@ -3,7 +3,7 @@
 #include <QAbstractListModel>
 #include <QObject>
 
-class Task;
+class DueTask;
 
 class TasksModel : public QAbstractListModel
 {
@@ -18,10 +18,10 @@ public:
 
     virtual QHash<int, QByteArray> roleNames() const override;
 
-    void append(Task* task);
+    void append(DueTask* task);
 
-    void remove(Task* task);
+    void remove(DueTask* task);
 
 private:
-    QList<Task*> tasks_;
+    QList<DueTask*> tasks_;
 };

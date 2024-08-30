@@ -3,7 +3,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-#include "data/task.h"
+#include "data/duetask.h"
 #include "data/tasksmodel.h"
 #include "data/theme.h"
 #include "utils/json.h"
@@ -26,7 +26,7 @@ void Kid::load(const QJsonObject& json_object)
         QJsonArray tasks_array = iterator.value().toArray();
         for (const QJsonValue& task_object : tasks_array)
         {
-            auto task = new Task(this);
+            auto task = new DueTask(this);
             task->load(task_object.toObject());
             addTask(task);
         }
@@ -78,13 +78,13 @@ void Kid::setPoints(const quint32 points)
     }
 }
 
-void Kid::addTask(Task* task)
+void Kid::addTask(DueTask* task)
 {
     task->setParent(this);
 
     connect(
         task,
-        &Task::accomplished,
+        &DueTask::accomplished,
         this,
         [this, task]()
         {
@@ -94,7 +94,7 @@ void Kid::addTask(Task* task)
     tasks_->append(task);
 }
 
-void Kid::onTaskAccomplished(Task* task)
+void Kid::onTaskAccomplished(DueTask* task)
 {
     tasks_->remove(task);
     task->deleteLater();

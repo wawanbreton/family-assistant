@@ -1,5 +1,9 @@
 #include <QCommandLineParser>
+#ifdef QT_WIDGETS_LIB
+#include <QApplication>
+#else
 #include <QGuiApplication>
+#endif
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPalette>
@@ -16,12 +20,16 @@
 #include "easyqt/file.h"
 #include "easyqt/logger.h"
 #include "easyqt/resourcetype.h"
+#include "hardware/hardware.h"
 
 
 int main(int argc, char* argv[])
 {
+#ifdef QT_WIDGETS_LIB
+    QApplication app(argc, argv);
+#else
     QGuiApplication app(argc, argv);
-
+#endif
     QCommandLineParser commands_line_parser;
     QCommandLineOption option_help = commands_line_parser.addHelpOption();
 
@@ -47,6 +55,7 @@ int main(int argc, char* argv[])
         easyqt::Logger::init(&app);
         Preferences::init(&app);
         TaskScheduler::init(&app);
+        Hardware::init(&app);
 
         KidManager kid_manager;
         Theme global_theme;
@@ -60,6 +69,7 @@ int main(int argc, char* argv[])
             {
                 QJsonObject json_object = doc.object();
                 kid_manager.load(json_object);
+                TaskScheduler::access()->load(json_object);
             }
             else
             {
@@ -73,6 +83,7 @@ int main(int argc, char* argv[])
 
         QQmlApplicationEngine engine;
         engine.rootContext()->setContextProperty("kid_manager", &kid_manager);
+        engine.rootContext()->setContextProperty("hardware", Hardware::access());
         engine.rootContext()->setContextProperty("DataStorage", easyqt::DataStorage::access());
         engine.rootContext()->setContextProperty("Theme", &global_theme);
         engine.rootContext()->setContextProperty("fullscreen", commands_line_parser.isSet("fullscreen"));

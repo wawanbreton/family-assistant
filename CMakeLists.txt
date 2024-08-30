@@ -7,6 +7,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick ShaderTools)
 find_package(easyqt REQUIRED)
 
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    message("####### Simulator mode")
+    add_compile_definitions(ENV_SIMULATOR)
+    find_package(Qt6 6.5 REQUIRED COMPONENTS Widgets)
+
+    set(EXTRA_SOURCES
+        hardware/simulated/simulatedhardware.h hardware/simulated/simulatedhardware.cpp
+        hardware/simulated/simulatedhardwarewidget.h hardware/simulated/simulatedhardwarewidget.cpp hardware/simulated/simulatedhardwarewidget.ui
+    )
+else()
+    message("####### Physical mode")
+endif()
+
 qt_standard_project_setup(REQUIRES 6.5)
 
 set(SHADER_FILES
@@ -22,16 +35,22 @@ qt_add_executable(family-assistant
 
     # CPP source files
     main.cpp
+    data/activetask.h data/activetask.cpp
+    data/dayofweek.h
     data/kid.h data/kid.cpp
     data/kidmanager.h data/kidmanager.cpp
     data/preferenceentry.h
     data/preferences.h data/preferences.cpp
+    data/duetask.h data/duetask.cpp
     data/task.h data/task.cpp
+
+    data/taskoccurence.h
     data/taskscheduler.h data/taskscheduler.cpp
     data/tasksmodel.h data/tasksmodel.cpp
     data/taskstate.h
     data/theme.h data/theme.cpp
     data/themecategory.h
+    hardware/hardware.h hardware/hardware.cpp
     utils/json.h utils/json.cpp
 
     # Shaders
@@ -145,7 +164,10 @@ qt_add_executable(family-assistant
     qml/theme/text_style/White.qml
     qml/theme/text_style/Rainbow.qml
     qml/theme/text_style/RainbowAnimated.qml
+    qml/Settings.qml
+    qml/PopupDialog.qml
 
+    ${EXTRA_SOURCES}
 )
 
 qt6_add_resources(family-assistant "family-assistant"
@@ -176,6 +198,13 @@ target_link_libraries(family-assistant
     Qt6::Quick
     easyqt::easyqt
 )
+
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    target_link_libraries(family-assistant
+        PRIVATE
+        Qt6::Widgets
+    )
+endif()
 
 target_include_directories(family-assistant PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>

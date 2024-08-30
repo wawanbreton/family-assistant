@@ -1,6 +1,6 @@
 #include "tasksmodel.h"
 
-#include "data/task.h"
+#include "data/duetask.h"
 
 
 TasksModel::TasksModel(QObject* parent)
@@ -28,14 +28,14 @@ QHash<int, QByteArray> TasksModel::roleNames() const
     return { { 0, "modelData" } };
 }
 
-void TasksModel::append(Task* task)
+void TasksModel::append(DueTask* task)
 {
     beginInsertRows(QModelIndex(), tasks_.count(), tasks_.count());
     tasks_ << task;
     endInsertRows();
 }
 
-void TasksModel::remove(Task* task)
+void TasksModel::remove(DueTask* task)
 {
     int index = tasks_.indexOf(task);
     if (index >= 0)
