@@ -13,6 +13,13 @@ class TaskScheduler : public QObject
 public:
     void load(const QJsonObject& json_object);
 
+    void start(bool reset_tasks);
+
+private:
+    void spawnDueTasks();
+
+    void scheduleNextTrigger();
+
 private:
     QList<ActiveTask*> active_tasks_;
 };

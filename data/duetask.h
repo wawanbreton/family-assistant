@@ -17,6 +17,8 @@ class DueTask : public Task
 public:
     explicit DueTask(QObject* parent = nullptr);
 
+    virtual void copyFrom(const Task* other) override;
+
     virtual void load(const QJsonObject& json_object) override;
 
     const QDateTime& getDueTimestamp() const;

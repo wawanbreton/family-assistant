@@ -13,6 +13,8 @@ class Task : public QObject
 public:
     explicit Task(QObject* parent = nullptr);
 
+    virtual void copyFrom(const Task* other);
+
     virtual void load(const QJsonObject& json_object);
 
     const QString& getDesc() const;

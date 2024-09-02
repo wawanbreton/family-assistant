@@ -1,5 +1,7 @@
 #include "tasksmodel.h"
 
+#include <ranges>
+
 #include "data/duetask.h"
 
 
@@ -30,8 +32,19 @@ QHash<int, QByteArray> TasksModel::roleNames() const
 
 void TasksModel::append(DueTask* task)
 {
-    beginInsertRows(QModelIndex(), tasks_.count(), tasks_.count());
-    tasks_ << task;
+    size_t insert_index = tasks_.size();
+    for (const std::tuple<size_t, const DueTask*> actual_task : tasks_ | std::views::enumerate)
+    {
+        if (task->getDueTimestamp() < std::get<1>(actual_task)->getDueTimestamp())
+        {
+            insert_index = std::get<0>(actual_task);
+            break;
+        }
+    }
+
+    beginInsertRows(QModelIndex(), insert_index, insert_index);
+    task->setParent(this);
+    tasks_.insert(insert_index, task);
     endInsertRows();
 }
 
@@ -41,7 +54,22 @@ void TasksModel::remove(DueTask* task)
     if (index >= 0)
     {
         beginRemoveRows(QModelIndex(), index, index);
+        tasks_.at(index)->deleteLater();
         tasks_.remove(index);
+        endRemoveRows();
+    }
+}
+
+void TasksModel::clear()
+{
+    if (rowCount() > 0)
+    {
+        beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+        for (DueTask* task : tasks_)
+        {
+            task->deleteLater();
+        }
+        tasks_.clear();
         endRemoveRows();
     }
 }

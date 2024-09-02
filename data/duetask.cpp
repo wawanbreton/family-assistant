@@ -13,13 +13,16 @@ DueTask::DueTask(QObject* parent)
     : Task{ parent }
     , timer_next_update_(new QTimer(this))
 {
-    updateState();
-
     timer_next_update_->setSingleShot(true);
     connect(timer_next_update_, &QTimer::timeout, this, &DueTask::updateState);
 
 #warning Make this smarter by updating only of the concerned entry changed
     connect(Preferences::get(), &Preferences::valueChanged, this, &DueTask::updateState);
+}
+
+void DueTask::copyFrom(const Task* other)
+{
+    Task::copyFrom(other);
 }
 
 void DueTask::load(const QJsonObject& json_object)

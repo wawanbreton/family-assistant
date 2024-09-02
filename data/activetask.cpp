@@ -68,7 +68,7 @@ void ActiveTask::load(const QJsonObject& json_object)
     }
 }
 
-bool ActiveTask::isRegular() const
+const QList<TaskOccurence>& ActiveTask::getOccurences() const
 {
-    return ! occurences_.empty();
+    return occurences_;
 }

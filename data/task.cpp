@@ -12,6 +12,13 @@ Task::Task(QObject* parent)
 {
 }
 
+void Task::copyFrom(const Task* other)
+{
+    desc_ = other->desc_;
+    icon_path_ = other->icon_path_;
+    reward_ = other->reward_;
+}
+
 void Task::load(const QJsonObject& json_object)
 {
     Json::mapPropertyToObject(json_object, this);

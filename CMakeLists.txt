@@ -199,6 +199,8 @@ target_link_libraries(family-assistant
     easyqt::easyqt
 )
 
+target_compile_features(family-assistant PRIVATE cxx_std_23)
+
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     target_link_libraries(family-assistant
         PRIVATE

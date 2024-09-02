@@ -24,6 +24,8 @@ public:
 
     void setName(const QString& name);
 
+    bool hasTasks() const;
+
     TasksModel* getTasks();
 
     Theme* getTheme();

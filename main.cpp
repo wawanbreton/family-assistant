@@ -10,6 +10,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
+#include "data/kid.h"
 #include "data/kidmanager.h"
 #include "data/preferences.h"
 #include "data/taskscheduler.h"
@@ -36,6 +37,9 @@ int main(int argc, char* argv[])
     QCommandLineOption option_data_file("data", "Path of the JSON data file to load", "file_path");
     commands_line_parser.addOption(option_data_file);
 
+    QCommandLineOption option_reset_tasks("reset-tasks", "Ignore loaded due tasks and create a new planning");
+    commands_line_parser.addOption(option_reset_tasks);
+
     QCommandLineOption option_fullscreen("fullscreen", "Display the application in full screen");
     commands_line_parser.addOption(option_fullscreen);
 
@@ -54,10 +58,10 @@ int main(int argc, char* argv[])
         easyqt::DataStorage::init(&app);
         easyqt::Logger::init(&app);
         Preferences::init(&app);
+        KidManager::init(&app);
         TaskScheduler::init(&app);
         Hardware::init(&app);
 
-        KidManager kid_manager;
         Theme global_theme;
 
         if (commands_line_parser.isSet(option_data_file))
@@ -68,7 +72,7 @@ int main(int argc, char* argv[])
             if (error.error == QJsonParseError::NoError)
             {
                 QJsonObject json_object = doc.object();
-                kid_manager.load(json_object);
+                KidManager::access()->load(json_object);
                 TaskScheduler::access()->load(json_object);
             }
             else
@@ -77,12 +81,19 @@ int main(int argc, char* argv[])
             }
         }
 
+        const bool all_due_tasks_empty = std::all_of(
+            KidManager::access()->getKids().begin(),
+            KidManager::access()->getKids().end(),
+            [](const Kid* kid) { return ! kid->hasTasks(); });
+        const bool reset_tasks = all_due_tasks_empty || commands_line_parser.isSet(option_reset_tasks);
+        TaskScheduler::access()->start(reset_tasks);
+
         QPalette palette = qApp->palette();
         palette.setColor(QPalette::Text, Qt::white);
         qApp->setPalette(palette);
 
         QQmlApplicationEngine engine;
-        engine.rootContext()->setContextProperty("kid_manager", &kid_manager);
+        engine.rootContext()->setContextProperty("kid_manager", KidManager::access());
         engine.rootContext()->setContextProperty("hardware", Hardware::access());
         engine.rootContext()->setContextProperty("DataStorage", easyqt::DataStorage::access());
         engine.rootContext()->setContextProperty("Theme", &global_theme);

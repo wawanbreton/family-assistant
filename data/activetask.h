@@ -12,7 +12,7 @@ public:
 
     virtual void load(const QJsonObject& json_object);
 
-    bool isRegular() const;
+    const QList<TaskOccurence>& getOccurences() const;
 
 private:
     QList<TaskOccurence> occurences_;

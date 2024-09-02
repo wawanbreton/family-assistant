@@ -22,6 +22,8 @@ public:
 
     void remove(DueTask* task);
 
+    void clear();
+
 private:
     QList<DueTask*> tasks_;
 };

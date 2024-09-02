@@ -6,6 +6,9 @@
 #include "data/kid.h"
 
 
+SINGLETON_IMPL(KidManager)
+SINGLETON_DESTRUCTOR_IMPL(KidManager)
+
 KidManager::KidManager(QObject* parent)
     : QObject{ parent }
 {
@@ -30,7 +33,12 @@ void KidManager::load(const QJsonObject& object)
     }
 }
 
-QQmlListProperty<Kid> KidManager::getKids()
+QQmlListProperty<Kid> KidManager::getKidsQmlList()
 {
     return QQmlListProperty(this, &kids_);
+}
+
+const QList<Kid*>& KidManager::getKids()
+{
+    return kids_;
 }

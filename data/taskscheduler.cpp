@@ -4,6 +4,9 @@
 #include <QJsonObject>
 
 #include "data/activetask.h"
+#include "data/duetask.h"
+#include "data/kid.h"
+#include "data/kidmanager.h"
 #include "preferences.h"
 
 
@@ -35,4 +38,52 @@ void TaskScheduler::load(const QJsonObject& json_object)
     {
         qWarning() << "No kids defined in data";
     }
+}
+
+void TaskScheduler::start(bool reset_tasks)
+{
+    if (reset_tasks)
+    {
+        for (Kid* kid : KidManager::access()->getKids())
+        {
+            kid->getTasks()->clear();
+        }
+
+        spawnDueTasks();
+    }
+
+    scheduleNextTrigger();
+}
+
+void TaskScheduler::spawnDueTasks()
+{
+    const auto now = QDateTime::currentDateTime();
+    const QDate current_date = now.date();
+    const auto current_day = static_cast<DayOfWeek::Enum>(current_date.dayOfWeek());
+
+    for (const ActiveTask* active_task : active_tasks_)
+    {
+        for (const TaskOccurence& occurence : active_task->getOccurences())
+        {
+            if (occurence.day == current_day)
+            {
+                for (Kid* kid : KidManager::access()->getKids())
+                {
+                    const QDateTime due_timestamp(current_date, occurence.time, Qt::LocalTime);
+
+                    if (due_timestamp > now)
+                    {
+                        auto due_task = new DueTask();
+                        due_task->copyFrom(active_task);
+                        due_task->setDueTimestamp(due_timestamp);
+                        kid->getTasks()->append(due_task);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void TaskScheduler::scheduleNextTrigger()
+{
 }

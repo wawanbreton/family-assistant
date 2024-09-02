@@ -53,6 +53,11 @@ void Kid::setName(const QString& name)
     }
 }
 
+bool Kid::hasTasks() const
+{
+    return tasks_->rowCount() > 0;
+}
+
 TasksModel* Kid::getTasks()
 {
     return tasks_;
@@ -80,22 +85,11 @@ void Kid::setPoints(const quint32 points)
 
 void Kid::addTask(DueTask* task)
 {
-    task->setParent(this);
-
-    connect(
-        task,
-        &DueTask::accomplished,
-        this,
-        [this, task]()
-        {
-            onTaskAccomplished(task);
-        });
-
+    connect(task, &DueTask::accomplished, this, [this, task]() { onTaskAccomplished(task); });
     tasks_->append(task);
 }
 
 void Kid::onTaskAccomplished(DueTask* task)
 {
     tasks_->remove(task);
-    task->deleteLater();
 }

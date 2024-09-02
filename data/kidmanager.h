@@ -2,20 +2,22 @@
 
 #include <QObject>
 #include <QQmlListProperty>
+#include <easyqt/singleton.h>
 
 class Kid;
 
 class KidManager : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<Kid> kids READ getKids NOTIFY kidsChanged)
+    SINGLETON(KidManager)
+    Q_PROPERTY(QQmlListProperty<Kid> kids READ getKidsQmlList NOTIFY kidsChanged)
 
 public:
-    explicit KidManager(QObject* parent = nullptr);
-
     void load(const QJsonObject& object);
 
-    QQmlListProperty<Kid> getKids();
+    QQmlListProperty<Kid> getKidsQmlList();
+
+    const QList<Kid*>& getKids();
 
 signals:
     void kidsChanged();

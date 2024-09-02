@@ -16,7 +16,8 @@ public:
         Thursday = Qt::Thursday,
         Friday = Qt::Friday,
         Saturday = Qt::Saturday,
-        Sunday = Qt::Sunday,
+        Sunday = Qt::Sunday
+
     };
 
     ENUM_DEBUG()
