@@ -2,6 +2,7 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QTimer>
 
 #include "data/activetask.h"
 #include "data/duetask.h"
@@ -15,10 +16,14 @@ SINGLETON_DESTRUCTOR_IMPL(TaskScheduler)
 
 TaskScheduler::TaskScheduler(QObject* parent)
     : QObject{ parent }
+    , timer_spawn_tasks_(new QTimer(this))
 {
     Preferences::access()->registerPreference(PreferenceEntry::TaskSoonDelay, QMetaType::Int, 120);
     Preferences::access()->registerPreference(PreferenceEntry::TaskInProgressDelay, QMetaType::Int, 60);
     Preferences::access()->registerPreference(PreferenceEntry::TaskCloseToEndDelay, QMetaType::Int, 10);
+
+    timer_spawn_tasks_->setSingleShot(true);
+    connect(timer_spawn_tasks_, &QTimer::timeout, this, &TaskScheduler::spawnDueTasks);
 }
 
 void TaskScheduler::load(const QJsonObject& json_object)
@@ -51,12 +56,16 @@ void TaskScheduler::start(bool reset_tasks)
 
         spawnDueTasks();
     }
-
-    scheduleNextTrigger();
+    else
+    {
+        scheduleNextTrigger();
+    }
 }
 
 void TaskScheduler::spawnDueTasks()
 {
+    qInfo() << "Spawn due tasks";
+
     const auto now = QDateTime::currentDateTime();
     const QDate current_date = now.date();
     const auto current_day = static_cast<DayOfWeek::Enum>(current_date.dayOfWeek());
@@ -82,8 +91,17 @@ void TaskScheduler::spawnDueTasks()
             }
         }
     }
+
+    scheduleNextTrigger();
 }
 
 void TaskScheduler::scheduleNextTrigger()
 {
+    const auto now = QDateTime::currentDateTime();
+    const auto next_trigger = QDateTime(now.date().addDays(1), QTime(0, 0, 1), Qt::LocalTime);
+    qint64 delta_time = now.msecsTo(next_trigger);
+
+    qInfo() << "Spawning new tasks in" << delta_time << "ms";
+
+    timer_spawn_tasks_->start(delta_time);
 }

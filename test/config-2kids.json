@@ -86,8 +86,7 @@
         {
             "desc": "Passer l'aspirateur",
             "icon": "vacuum",
-            "reward": 10,
-            "regular": false
+            "reward": 10
         }
     ]
 }

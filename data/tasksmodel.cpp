@@ -73,3 +73,8 @@ void TasksModel::clear()
         endRemoveRows();
     }
 }
+
+QDate TasksModel::getDueDate() const
+{
+    return ! tasks_.empty() ? tasks_.first()->getDueTimestamp().date() : QDate();
+}

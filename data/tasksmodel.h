@@ -24,6 +24,8 @@ public:
 
     void clear();
 
+    QDate getDueDate() const;
+
 private:
     QList<DueTask*> tasks_;
 };

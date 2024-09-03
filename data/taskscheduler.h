@@ -3,6 +3,8 @@
 #include <QObject>
 #include <easyqt/singleton.h>
 
+class QTimer;
+
 class ActiveTask;
 
 class TaskScheduler : public QObject
@@ -22,4 +24,5 @@ private:
 
 private:
     QList<ActiveTask*> active_tasks_;
+    QTimer* const timer_spawn_tasks_;
 };

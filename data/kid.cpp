@@ -63,6 +63,11 @@ TasksModel* Kid::getTasks()
     return tasks_;
 }
 
+const TasksModel* Kid::getTasks() const
+{
+    return tasks_;
+}
+
 Theme* Kid::getTheme()
 {
     return theme_;

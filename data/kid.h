@@ -28,6 +28,8 @@ public:
 
     TasksModel* getTasks();
 
+    const TasksModel* getTasks() const;
+
     Theme* getTheme();
 
     quint32 getPoints() const;

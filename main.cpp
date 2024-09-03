@@ -81,11 +81,23 @@ int main(int argc, char* argv[])
             }
         }
 
-        const bool all_due_tasks_empty = std::all_of(
-            KidManager::access()->getKids().begin(),
-            KidManager::access()->getKids().end(),
-            [](const Kid* kid) { return ! kid->hasTasks(); });
-        const bool reset_tasks = all_due_tasks_empty || commands_line_parser.isSet(option_reset_tasks);
+        bool all_due_tasks_empty = true;
+        bool obsolete_tasks = false;
+        const auto current_date = QDateTime::currentDateTime().date();
+        for (const Kid* kid : KidManager::access()->getKids())
+        {
+            if (kid->hasTasks())
+            {
+                all_due_tasks_empty = false;
+                if (kid->getTasks()->getDueDate() != current_date)
+                {
+                    obsolete_tasks = true;
+                }
+            }
+        }
+
+        const bool reset_tasks
+            = obsolete_tasks || all_due_tasks_empty || commands_line_parser.isSet(option_reset_tasks);
         TaskScheduler::access()->start(reset_tasks);
 
         QPalette palette = qApp->palette();
