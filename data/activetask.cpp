@@ -2,6 +2,8 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <easyqt/debug.h>
+#include <easyqt/json.h>
 
 #include "data/taskoccurence.h"
 
@@ -11,9 +13,22 @@ ActiveTask::ActiveTask(QObject* parent)
 {
 }
 
+ActiveTask::ActiveTask(const ActiveTask& other)
+    : Task(other)
+    , occurences_(other.occurences_)
+{
+}
+
+const QUuid& ActiveTask::getUuid() const
+{
+    return uuid_;
+}
+
 void ActiveTask::load(const QJsonObject& json_object)
 {
     Task::load(json_object);
+
+    uuid_ = Json::loadValue(json_object, "uuid", __METHOD__, QUuid());
 
     auto iterator = json_object.constFind("due_times");
     if (iterator != json_object.constEnd())
@@ -62,13 +77,14 @@ void ActiveTask::load(const QJsonObject& json_object)
             }
         }
     }
-    else
-    {
-        qWarning() << "No kids defined in data";
-    }
 }
 
 const QList<TaskOccurence>& ActiveTask::getOccurences() const
 {
     return occurences_;
+}
+
+bool ActiveTask::isCasual() const
+{
+    return occurences_.isEmpty();
 }

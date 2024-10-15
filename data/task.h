@@ -13,6 +13,10 @@ class Task : public QObject
 public:
     explicit Task(QObject* parent = nullptr);
 
+    Task(const Task& other);
+
+    // virtual ~Task() = default;
+
     virtual void copyFrom(const Task* other);
 
     virtual void load(const QJsonObject& json_object);
@@ -37,3 +41,5 @@ private:
     QString icon_path_;
     quint32 reward_{ 0 };
 };
+
+// Q_DECLARE_METATYPE(Task)

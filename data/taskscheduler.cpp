@@ -21,6 +21,7 @@ TaskScheduler::TaskScheduler(QObject* parent)
     Preferences::access()->registerPreference(PreferenceEntry::TaskSoonDelay, QMetaType::Int, 120);
     Preferences::access()->registerPreference(PreferenceEntry::TaskInProgressDelay, QMetaType::Int, 60);
     Preferences::access()->registerPreference(PreferenceEntry::TaskCloseToEndDelay, QMetaType::Int, 10);
+    Preferences::access()->registerPreference(PreferenceEntry::CasualTaskDuration, QMetaType::Int, 60);
 
     timer_spawn_tasks_->setSingleShot(true);
     connect(timer_spawn_tasks_, &QTimer::timeout, this, &TaskScheduler::spawnDueTasks);
@@ -36,7 +37,7 @@ void TaskScheduler::load(const QJsonObject& json_object)
         {
             auto active_task = new ActiveTask(this);
             active_task->load(task_value.toObject());
-            active_tasks_ << active_task;
+            tasks_ << active_task;
         }
     }
     else
@@ -51,7 +52,7 @@ void TaskScheduler::start(bool reset_tasks)
     {
         for (Kid* kid : KidManager::access()->getKids())
         {
-            kid->getTasks()->clear();
+            kid->clearTasks();
         }
 
         spawnDueTasks();
@@ -59,6 +60,54 @@ void TaskScheduler::start(bool reset_tasks)
     else
     {
         scheduleNextTrigger();
+    }
+}
+
+QList<const ActiveTask*> TaskScheduler::getCasualTasks() const
+{
+    QList<const ActiveTask*> casual_tasks;
+
+    std::copy_if(
+        tasks_.begin(),
+        tasks_.end(),
+        std::back_inserter(casual_tasks),
+        [](const ActiveTask* task) { return task->isCasual(); });
+
+    return casual_tasks;
+}
+
+const ActiveTask* TaskScheduler::findTask(const QUuid& uuid) const
+{
+    auto iterator = std::find_if(
+        tasks_.begin(),
+        tasks_.end(),
+        [&uuid](const ActiveTask* task) { return task->getUuid() == uuid; });
+    if (iterator != tasks_.end())
+    {
+        return *iterator;
+    }
+
+    return nullptr;
+}
+
+void TaskScheduler::appendCasualTask(const ActiveTask* task)
+{
+    const QList<Kid*> kids = KidManager::access()->getKids();
+    auto iterator = std::find_if(kids.begin(), kids.end(), [task](const Kid* kid) { return kid->hasCasualTask(task); });
+
+    if (iterator != kids.end())
+    {
+        auto due_task = new DueTask(this);
+        due_task->setTask(task);
+        const auto duration = std::chrono::minutes(Preferences::get()->getInt(PreferenceEntry::CasualTaskDuration));
+        due_task->setDueTimestamp(QDateTime::currentDateTime().addDuration(duration));
+        (*iterator)->addTask(due_task);
+
+        qInfo() << "add casual task" << task->getDesc() << "to" << (*iterator)->getName();
+    }
+    else
+    {
+        qWarning() << "Task" << task->getDesc() << "is not affected to a kid";
     }
 }
 
@@ -70,7 +119,7 @@ void TaskScheduler::spawnDueTasks()
     const QDate current_date = now.date();
     const auto current_day = static_cast<DayOfWeek::Enum>(current_date.dayOfWeek());
 
-    for (const ActiveTask* active_task : active_tasks_)
+    for (const ActiveTask* active_task : tasks_)
     {
         for (const TaskOccurence& occurence : active_task->getOccurences())
         {
@@ -83,9 +132,9 @@ void TaskScheduler::spawnDueTasks()
                     if (due_timestamp > now)
                     {
                         auto due_task = new DueTask();
-                        due_task->copyFrom(active_task);
+                        due_task->setTask(active_task);
                         due_task->setDueTimestamp(due_timestamp);
-                        kid->getTasks()->append(due_task);
+                        kid->addTask(due_task);
                     }
                 }
             }

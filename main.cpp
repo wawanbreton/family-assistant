@@ -72,8 +72,8 @@ int main(int argc, char* argv[])
             if (error.error == QJsonParseError::NoError)
             {
                 QJsonObject json_object = doc.object();
-                KidManager::access()->load(json_object);
                 TaskScheduler::access()->load(json_object);
+                KidManager::access()->load(json_object);
             }
             else
             {
@@ -106,6 +106,7 @@ int main(int argc, char* argv[])
 
         QQmlApplicationEngine engine;
         engine.rootContext()->setContextProperty("kid_manager", KidManager::access());
+        engine.rootContext()->setContextProperty("tasks_scheduler", TaskScheduler::access());
         engine.rootContext()->setContextProperty("hardware", Hardware::access());
         engine.rootContext()->setContextProperty("DataStorage", easyqt::DataStorage::access());
         engine.rootContext()->setContextProperty("Theme", &global_theme);

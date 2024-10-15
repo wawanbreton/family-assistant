@@ -46,64 +46,12 @@ Item
                     id: loader
                     anchors.centerIn: parent
 
-                    MultiEffect
+                    Glow
                     {
                         id: glow
                         anchors.fill: parent
                         source: loader.item
-                        blurEnabled: true
-                        z: 1.0
-                        visible: false
                         clip: root.clipGlowEffect
-
-                        SequentialAnimation
-                        {
-                            id: animationShine
-
-                            ParallelAnimation
-                            {
-                                PropertyAnimation
-                                {
-                                    target: glow
-                                    easing.type: Easing.InOutQuad
-                                    properties: "brightness,blur"
-                                    to: 0.7
-                                    duration: 1500
-                                }
-
-                                PropertyAnimation
-                                {
-                                    target: glow
-                                    property: "scale"
-                                    easing.type: Easing.InOutQuad
-                                    to: 1.5
-                                    duration: 1500
-                                }
-                            }
-
-                            ParallelAnimation
-                            {
-                                PropertyAnimation
-                                {
-                                    target: glow
-                                    easing.type: Easing.InOutQuad
-                                    properties: "brightness,blur,scale"
-                                    to: 0.0
-                                    duration: 1500
-                                }
-
-                                PropertyAnimation
-                                {
-                                    target: glow
-                                    property: "scale"
-                                    easing.type: Easing.InOutQuad
-                                    to: 1.0
-                                    duration: 1500
-                                }
-                            }
-
-                            onFinished: { glow.visible = false; loader.item.visible = true; }
-                        }
                     }
 
                     onLoaded:
@@ -135,9 +83,7 @@ Item
 
                 function shine()
                 {
-                    loader.item.visible = false
-                    glow.visible = true
-                    animationShine.start();
+                    glow.startGlowing();
                 }
             }
         }

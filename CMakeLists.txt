@@ -51,7 +51,6 @@ qt_add_executable(family-assistant
     data/theme.h data/theme.cpp
     data/themecategory.h
     hardware/hardware.h hardware/hardware.cpp
-    utils/json.h utils/json.cpp
 
     # Shaders
     ${SHADER_FILES}
@@ -65,17 +64,29 @@ qt_add_executable(family-assistant
     qml/Vault.qml
     qml/Point.qml
     qml/Rewards.qml
+    qml/KidName.qml
+    qml/PointsCounter.qml
+    qml/PointsTransfer.qml
+    qml/components/ChangeableImage.qml
     qml/components/NormalText.qml
     qml/components/BaseText.qml
+    qml/components/Glow.qml
     qml/components/LargeText.qml
     qml/components/StyledGradient.qml
     qml/components/VerticalTabView.qml
+    qml/components/RandomMirror.qml
     qml/components/Tab.qml
     qml/components/CornerButton.qml
     qml/components/TextOutline.qml
     qml/components/ButtonShadow.qml
     qml/components/Carousel.qml
     qml/components/ConfirmButton.qml
+    qml/rewards/Backgrounds.qml
+    qml/rewards/NameTexts.qml
+    qml/rewards/Points.qml
+    qml/rewards/RewardsTab.qml
+    qml/rewards/ThemeItemSelector.qml
+    qml/settings/TaskControl.qml
     qml/theme/point/DollarCoin.qml
     qml/theme/point/StarCoin.qml
     qml/theme/point/Burger.qml
@@ -114,14 +125,6 @@ qt_add_executable(family-assistant
     qml/theme/points_storage/Treasure2.qml
     qml/theme/points_storage/Wallet.qml
     qml/theme/points_storage/Wealth.qml
-    qml/rewards/Points.qml
-    qml/rewards/ThemeItemSelector.qml
-    qml/rewards/Backgrounds.qml
-    qml/PointsCounter.qml
-    qml/KidName.qml
-    qml/PointsTransfer.qml
-    qml/rewards/RewardsTab.qml
-    qml/components/ChangeableImage.qml
     qml/theme/background/White.qml
     qml/theme/background/Blue.qml
     qml/theme/background/Green.qml
@@ -130,8 +133,6 @@ qt_add_executable(family-assistant
     qml/theme/background/Sky.qml
     qml/theme/background/SkyWithClouds.qml
     qml/theme/background/Farm.qml
-    qml/components/RandomMirror.qml
-    qml/rewards/NameTexts.qml
     qml/theme/font/Ubuntu.qml
     qml/theme/font/SuperCrafty.qml
     qml/theme/font/SuperPlayful.qml

@@ -1,8 +1,7 @@
 #include "theme.h"
 
 #include <QDir>
-
-#include "utils/json.h"
+#include <easyqt/json.h>
 
 
 Theme::Theme(QObject* parent)
@@ -29,7 +28,7 @@ Theme::Theme(QObject* parent)
 
 void Theme::load(const QJsonObject& json_object)
 {
-    Json::mapPropertyToObject(json_object, this);
+    Json::mapValuesToObjectProperties(json_object, this);
 }
 
 const QString& Theme::getPoint() const

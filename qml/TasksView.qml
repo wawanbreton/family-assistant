@@ -59,7 +59,7 @@ Item
         }
     }
 
-    //Component.onCompleted: componentSettings.createObject(root);
+    Component.onCompleted: componentSettings.createObject(root);
 
     function displayRewards(kid: var)
     {

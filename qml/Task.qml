@@ -6,14 +6,15 @@ import "components"
 Item
 {
     property var task
+    property var due_task
 
-    signal rewardEarned(amount: int)
+    signal taskActivated()
 
-    readonly property int clickConfirmDuration: 800
+    property int clickConfirmDuration: 800
 
     id: root
     height: 100
-    opacity: task.state === TaskState.Early ? 0.5 : 1.0
+    opacity: due_task ? (due_task.state === TaskState.Early ? 0.5 : 1.0) : 1.0
 
     Item
     {
@@ -46,19 +47,25 @@ Item
             {
                 color:
                 {
-                    switch(task.state)
+                    if(due_task)
                     {
-                        case TaskState.Early:
-                        case TaskState.Soon:
-                            return blue;
-                        case TaskState.InProgress:
-                            return green;
-                        case TaskState.CloseToEnd:
-                            return orange;
-                        case TaskState.Late:
-                            return red;
+                        switch(due_task.state)
+                        {
+                            case TaskState.Early:
+                            case TaskState.Soon:
+                                return blue;
+                            case TaskState.InProgress:
+                                return green;
+                            case TaskState.CloseToEnd:
+                                return orange;
+                            case TaskState.Late:
+                                return red;
+                        }
                     }
-                    return 0.0;
+                    else
+                    {
+                        return blue;
+                    }
                 }
             }
 
@@ -92,9 +99,8 @@ Item
                     duration: 1000
                     onFinished:
                     {
-                        animationAccomplish.start();
                         mouseArea.enabled = false;
-                        root.rewardEarned(task.reward);
+                        root.taskActivated();
                     }
                 }
 
@@ -104,6 +110,7 @@ Item
                     target: clickProgress
                     property: "width"
                     to: 0
+                    onFinished: mouseArea.enabled = true
                 }
             }
 
@@ -130,11 +137,14 @@ Item
             NormalText
             {
                 id: textDesc
+                anchors.top: parent.top
+                anchors.bottom: due_task ? parent.verticalCenter : parent.bottom
                 anchors.left: iconBubble.right
-                anchors.bottom: parent.verticalCenter
                 anchors.leftMargin: 10
                 anchors.topMargin: 6
+                anchors.bottomMargin: due_task ? 0 : anchors.topMargin
                 text: task.desc
+                verticalAlignment: Text.AlignVCenter
             }
 
             NormalText
@@ -144,12 +154,12 @@ Item
                 anchors.top: parent.verticalCenter
                 anchors.leftMargin: textDesc.anchors.leftMargin
                 anchors.topMargin: textDesc.anchors.bottomMargin
-                text: task.due_time_str
+                text: due_task ? due_task.due_time_str : ""
             }
 
             SequentialAnimation
             {
-                running: task.state === TaskState.CloseToEnd || task.state === TaskState.Late
+                running: due_task ? (due_task.state === TaskState.CloseToEnd || task.state === TaskState.Late) : false
                 loops: Animation.Infinite
 
                 RotationAnimation
@@ -218,15 +228,22 @@ Item
 
     state:
     {
-        switch(task.state)
+        if(due_task)
         {
-            case TaskState.Early:
-            case TaskState.Soon:
-                return "preview";
-            case TaskState.InProgress:
-            case TaskState.CloseToEnd:
-            case TaskState.Late:
-                return "full";
+            switch(due_task.state)
+            {
+                case TaskState.Early:
+                case TaskState.Soon:
+                    return "preview";
+                case TaskState.InProgress:
+                case TaskState.CloseToEnd:
+                case TaskState.Late:
+                    return "full";
+            }
+        }
+        else
+        {
+            return "full"
         }
     }
 
@@ -248,7 +265,7 @@ Item
         duration: 300
         from: 1.0
         to: 0.0
-        onFinished: task.setAccomplished()
+        onFinished: due_task.setAccomplished()
     }
 
     MouseArea
@@ -263,16 +280,20 @@ Item
             animationClickProgress.duration = (clickConfirmDuration * (1.0 - clickProgress.width / root.width));
             animationClickProgress.start();
         }
-        onReleased:
-        {
-            if(enabled)
-            {
-                animationClickProgress.stop();
+        onReleased: rollbackProgress()
+    }
 
-                animationClickCancel.from = clickProgress.width;
-                animationClickCancel.duration = (clickConfirmDuration * (clickProgress.width / root.width) / 3);
-                animationClickCancel.start();
-            }
-        }
+    function accomplish()
+    {
+        animationAccomplish.start();
+    }
+
+    function rollbackProgress()
+    {
+        animationClickProgress.stop();
+
+        animationClickCancel.from = clickProgress.width;
+        animationClickCancel.duration = (clickConfirmDuration * (clickProgress.width / root.width) / 3);
+        animationClickCancel.start();
     }
 }

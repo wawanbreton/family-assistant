@@ -7,11 +7,14 @@
             "tasks":
             [
                 {
-                    "desc": "Brosser ses dents",
-                    "due_timestamp": "2025-06-26 08:50",
-                    "icon": "toothbrush",
-                    "reward": 10
+                    "task_uuid": "ec65a1d6-bf2b-43a7-8d46-ecae886bfbcc",
+                    "due_timestamp": "2024-06-26 23:10"
                 }
+            ],
+            "casual_tasks":
+            [
+                "ebf2a2b3-72c5-474e-8f35-8ca19bea56d9",
+                "c11f3c84-af3b-4aa4-be2c-89becfb8ac50"
             ],
             "theme":
             {
@@ -26,17 +29,17 @@
             "tasks":
             [
                 {
-                    "desc": "Prendre le petit-déjeuner",
-                    "due_timestamp": "2024-06-26 21:30",
-                    "icon": "cereal",
-                    "reward": 11
+                    "task_uuid": "14d76064-f43a-4edc-9c63-82bc279f0880",
+                    "due_timestamp": "2024-06-26 21:50"
                 },
                 {
-                    "desc": "Brosser ses dents",
-                    "due_timestamp": "2024-06-26 19:50",
-                    "icon": "toothbrush",
-                    "reward": 3
+                    "task_uuid": "ec65a1d6-bf2b-43a7-8d46-ecae886bfbcc",
+                    "due_timestamp": "2024-06-26 21:30"
                 }
+            ],
+            "casual_tasks":
+            [
+                "4ec002c9-1859-4587-bcc2-d28fe465b786"
             ],
             "theme":
             {
@@ -50,6 +53,7 @@
     "tasks":
     [
         {
+            "uuid": "ec65a1d6-bf2b-43a7-8d46-ecae886bfbcc",
             "desc": "Brosser ses dents",
             "icon": "toothbrush",
             "reward": 3,
@@ -57,7 +61,7 @@
             [
                 {
                     "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                    "times": ["08:00", "20:00"]
+                    "times": ["08:00", "20:00", "21:30"]
                 },
                 {
                     "days": ["Saturday", "Sunday"],
@@ -67,6 +71,7 @@
         },
 
         {
+            "uuid": "14d76064-f43a-4edc-9c63-82bc279f0880",
             "desc": "Prendre le petit-déjeuner",
             "icon": "cereal",
             "reward": 3,
@@ -79,12 +84,31 @@
                 {
                     "days": ["Saturday", "Sunday"],
                     "times": ["10:00"]
+                },
+                {
+                    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "times": ["22:30"]
                 }
             ]
         },
 
         {
+            "uuid": "ebf2a2b3-72c5-474e-8f35-8ca19bea56d9",
             "desc": "Passer l'aspirateur",
+            "icon": "vacuum",
+            "reward": 10
+        },
+
+        {
+            "uuid": "c11f3c84-af3b-4aa4-be2c-89becfb8ac50",
+            "desc": "Ranger le linge",
+            "icon": "vacuum",
+            "reward": 10
+        },
+
+        {
+            "uuid": "4ec002c9-1859-4587-bcc2-d28fe465b786",
+            "desc": "Ranger les livres",
             "icon": "vacuum",
             "reward": 10
         }

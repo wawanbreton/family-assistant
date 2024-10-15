@@ -2,24 +2,24 @@
 
 #include <QTime>
 
-#include "data/task.h"
 #include "data/taskstate.h"
 
 class QTimer;
 
-class DueTask : public Task
+class Task;
+
+class DueTask : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QDateTime due_timestamp READ getDueTimestamp WRITE setDueTimestamp NOTIFY dueTimestampChanged)
     Q_PROPERTY(QString due_time_str READ getDueTimeStr NOTIFY dueTimestampChanged)
     Q_PROPERTY(TaskState::Enum state READ getState NOTIFY stateChanged)
+    Q_PROPERTY(const Task* task READ getTask CONSTANT)
 
 public:
     explicit DueTask(QObject* parent = nullptr);
 
-    virtual void copyFrom(const Task* other) override;
-
-    virtual void load(const QJsonObject& json_object) override;
+    bool load(const QJsonObject& json_object);
 
     const QDateTime& getDueTimestamp() const;
 
@@ -28,6 +28,10 @@ public:
     QString getDueTimeStr() const;
 
     TaskState::Enum getState() const;
+
+    const Task* getTask() const;
+
+    void setTask(const Task* task);
 
     Q_INVOKABLE void setAccomplished();
 
@@ -42,6 +46,7 @@ private:
     void updateState();
 
 private:
+    const Task* task_{ nullptr };
     QDateTime due_timestamp_;
     TaskState::Enum state_{ TaskState::Early };
     QTimer* const timer_next_update_;

@@ -24,8 +24,9 @@ Flow
 
         Task
         {
-            task: modelData
-            onRewardEarned: (amount) => root.rewardEarned(amount, this)
+            task: modelData.task
+            due_task: modelData
+            onTaskActivated: { root.rewardEarned(task.reward, this); accomplish(); }
         }
     }
 }

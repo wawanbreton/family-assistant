@@ -17,6 +17,7 @@ public:
                              // in minutes
         TaskCloseToEndDelay, // The delay before a task due timestamp to consider that it should be done very soon, in
                              // minutes
+        CasualTaskDuration,  // The time to accomplish a casual start one it has been addded, in minutes
     };
 
     ENUM_TOSTRING()

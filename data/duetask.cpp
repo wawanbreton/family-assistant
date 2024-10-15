@@ -1,16 +1,20 @@
 #include "duetask.h"
 
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QTimer>
 #include <easyqt/datastorage.h>
+#include <easyqt/json.h>
 
+#include "data/activetask.h"
 #include "data/preferences.h"
-#include "utils/json.h"
+#include "data/taskscheduler.h"
 
 
 using namespace std::chrono_literals;
 
 DueTask::DueTask(QObject* parent)
-    : Task{ parent }
+    : QObject{ parent }
     , timer_next_update_(new QTimer(this))
 {
     timer_next_update_->setSingleShot(true);
@@ -18,17 +22,34 @@ DueTask::DueTask(QObject* parent)
 
 #warning Make this smarter by updating only of the concerned entry changed
     connect(Preferences::get(), &Preferences::valueChanged, this, &DueTask::updateState);
-}
 
-void DueTask::copyFrom(const Task* other)
-{
-    Task::copyFrom(other);
-}
-
-void DueTask::load(const QJsonObject& json_object)
-{
-    Task::load(json_object);
     updateState();
+}
+
+bool DueTask::load(const QJsonObject& json_object)
+{
+    Json::mapValuesToObjectProperties(json_object, this);
+
+    auto iterator = json_object.constFind("task_uuid");
+    if (iterator != json_object.constEnd())
+    {
+        QString task_uuid_str = iterator.value().toString();
+        QUuid task_uuid = QUuid::fromString(task_uuid_str);
+        if (! task_uuid.isNull())
+        {
+            task_ = TaskScheduler::get()->findTask(task_uuid);
+            if (! task_)
+            {
+                qWarning() << "No task defined with UUID" << task_uuid;
+            }
+        }
+        else
+        {
+            qWarning() << "String" << task_uuid_str << "is not a valid UUID";
+        }
+    }
+
+    return ! due_timestamp_.isNull() && task_;
 }
 
 const QDateTime& DueTask::getDueTimestamp() const
@@ -54,6 +75,16 @@ QString DueTask::getDueTimeStr() const
 TaskState::Enum DueTask::getState() const
 {
     return state_;
+}
+
+const Task* DueTask::getTask() const
+{
+    return task_;
+}
+
+void DueTask::setTask(const Task* desc)
+{
+    task_ = desc;
 }
 
 void DueTask::setAccomplished()

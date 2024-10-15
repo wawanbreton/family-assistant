@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import FamilyAssistant
 import "components"
 import "rewards"
+import "settings"
 
 PopupDialog
 {
@@ -25,21 +26,16 @@ PopupDialog
         {
             title: "Contrôle"
 
-            NameTexts
-            {
-                kid: root.kid
-                onPointsSpent: (amount, button, callback) => root.transferPoints(amount, button, callback)
-            }
+            TaskControl { }
         }
 
         Tab
         {
             title: "Tâches"
 
-            Backgrounds
+            Text
             {
-                kid: root.kid
-                onPointsSpent: (amount, button, callback) => root.transferPoints(amount, button, callback)
+                text: "Rien à voir ici"
             }
         }
 
@@ -47,10 +43,9 @@ PopupDialog
         {
             title: "Cadre photo"
 
-            Points
+            Text
             {
-                kid: root.kid
-                onPointsSpent: (amount, button, callback) => root.transferPoints(amount, button, callback)
+                text: "Rien à voir ici"
             }
         }
 
@@ -60,7 +55,7 @@ PopupDialog
 
             Text
             {
-                text: "My Other item"
+                text: "Rien à voir ici"
             }
         }
     }
