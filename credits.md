@@ -34,6 +34,8 @@
 <a href="https://www.flaticon.com/free-icons/seo" title="seo icons">Seo icons created by Kalashnyk - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/farm" title="farm icons">Farm icons created by smashingstocks - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/cow" title="cow icons">Cow icons created by surang - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/clothing" title="clothing icons">Clothing icons created by Smashicons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/library" title="library icons">Library icons created by Freepik - Flaticon</a>
 
 https://www.dafont.com/super-playful.font
 https://www.dafont.com/super-crafty.font
