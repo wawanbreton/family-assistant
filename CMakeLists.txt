@@ -35,6 +35,8 @@ qt_add_executable(family-assistant
 
     # CPP source files
     main.cpp
+    data/activecasualtask.h data/activecasualtask.cpp
+    data/activerecurringtask.h data/activerecurringtask.cpp
     data/activetask.h data/activetask.cpp
     data/dayofweek.h
     data/kid.h data/kid.cpp
@@ -87,6 +89,7 @@ qt_add_executable(family-assistant
     qml/rewards/RewardsTab.qml
     qml/rewards/ThemeItemSelector.qml
     qml/settings/TaskControl.qml
+    qml/settings/TaskList.qml
     qml/theme/point/DollarCoin.qml
     qml/theme/point/StarCoin.qml
     qml/theme/point/Burger.qml

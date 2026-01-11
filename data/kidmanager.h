@@ -19,6 +19,10 @@ public:
 
     const QList<Kid*>& getKids();
 
+    Kid* find(const QUuid& uuid);
+
+    Q_INVOKABLE int findIndex(const Kid* kid) const;
+
 signals:
     void kidsChanged();
 

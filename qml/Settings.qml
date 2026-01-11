@@ -33,10 +33,7 @@ PopupDialog
         {
             title: "Tâches"
 
-            Text
-            {
-                text: "Rien à voir ici"
-            }
+            TaskList { }
         }
 
         Tab

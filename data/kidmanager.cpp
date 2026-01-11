@@ -42,3 +42,20 @@ const QList<Kid*>& KidManager::getKids()
 {
     return kids_;
 }
+
+Kid* KidManager::find(const QUuid& uuid)
+{
+    auto iterator
+        = std::find_if(kids_.begin(), kids_.end(), [&uuid](const Kid* kid) { return kid->getUuid() == uuid; });
+    if (iterator != kids_.end())
+    {
+        return *iterator;
+    }
+
+    return nullptr;
+}
+
+int KidManager::findIndex(const Kid* kid) const
+{
+    return kids_.indexOf(kid);
+}

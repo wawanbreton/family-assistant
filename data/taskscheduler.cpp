@@ -3,8 +3,10 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QTimer>
+#include <easyqt/qobject_helper.h>
 
-#include "data/activetask.h"
+#include "data/activecasualtask.h"
+#include "data/activerecurringtask.h"
 #include "data/duetask.h"
 #include "data/kid.h"
 #include "data/kidmanager.h"
@@ -35,9 +37,11 @@ void TaskScheduler::load(const QJsonObject& json_object)
         QJsonArray tasks_array = iterator.value().toArray();
         for (const QJsonValue& task_value : tasks_array)
         {
-            auto active_task = new ActiveTask(this);
-            active_task->load(task_value.toObject());
-            tasks_ << active_task;
+            auto active_task = ActiveTask::makeAndLoad(task_value.toObject(), this);
+            if (active_task)
+            {
+                tasks_ << active_task;
+            }
         }
     }
     else
@@ -63,20 +67,20 @@ void TaskScheduler::start(bool reset_tasks)
     }
 }
 
-QList<const ActiveTask*> TaskScheduler::getCasualTasks() const
+QList<ActiveTask*> TaskScheduler::getCasualTasks() const
 {
-    QList<const ActiveTask*> casual_tasks;
+    QList<ActiveTask*> casual_tasks;
 
     std::copy_if(
         tasks_.begin(),
         tasks_.end(),
         std::back_inserter(casual_tasks),
-        [](const ActiveTask* task) { return task->isCasual(); });
+        [](ActiveTask* task) { return easyqt::is_instance<ActiveCasualTask>(task); });
 
     return casual_tasks;
 }
 
-const ActiveTask* TaskScheduler::findTask(const QUuid& uuid) const
+ActiveTask* TaskScheduler::findTask(const QUuid& uuid) const
 {
     auto iterator = std::find_if(
         tasks_.begin(),
@@ -90,26 +94,27 @@ const ActiveTask* TaskScheduler::findTask(const QUuid& uuid) const
     return nullptr;
 }
 
-void TaskScheduler::appendCasualTask(const ActiveTask* task)
+void TaskScheduler::appendCasualTask(ActiveTask* task)
 {
-    const QList<Kid*> kids = KidManager::access()->getKids();
-    auto iterator = std::find_if(kids.begin(), kids.end(), [task](const Kid* kid) { return kid->hasCasualTask(task); });
-
-    if (iterator != kids.end())
+    IF_CONST_CAST_OBJECT(ActiveCasualTask, casual_task, task)
     {
-        auto due_task = new DueTask(this);
-        due_task->setTask(task);
-        const auto duration = std::chrono::minutes(Preferences::get()->getInt(PreferenceEntry::CasualTaskDuration));
-        due_task->setDueTimestamp(QDateTime::currentDateTime().addDuration(duration));
-        (*iterator)->addTask(due_task);
+        if (casual_task->getAffectedKid())
+        {
+            auto due_task = new DueTask(this);
+            due_task->setTask(task);
+            const auto duration = std::chrono::minutes(Preferences::get()->getInt(PreferenceEntry::CasualTaskDuration));
+            due_task->setDueTimestamp(QDateTime::currentDateTime().addDuration(duration));
+            casual_task->getAffectedKid()->addTask(due_task);
 
-        qInfo() << "add casual task" << task->getDesc() << "to" << (*iterator)->getName();
-    }
-    else
-    {
-        qWarning() << "Task" << task->getDesc() << "is not affected to a kid";
+            qInfo() << "add casual task" << task->getDesc() << "to" << casual_task->getAffectedKid()->getName();
+        }
+        else
+        {
+            qWarning() << "Casual task" << casual_task->getDesc() << "is not affected to a kid";
+        }
     }
 }
+
 
 void TaskScheduler::spawnDueTasks()
 {
@@ -121,20 +126,23 @@ void TaskScheduler::spawnDueTasks()
 
     for (const ActiveTask* active_task : tasks_)
     {
-        for (const TaskOccurence& occurence : active_task->getOccurences())
+        if (const auto* recurring_task = qobject_cast<const ActiveRecurringTask*>(active_task))
         {
-            if (occurence.day == current_day)
+            for (const TaskOccurence& occurence : recurring_task->getOccurences())
             {
-                for (Kid* kid : KidManager::access()->getKids())
+                if (occurence.day == current_day)
                 {
-                    const QDateTime due_timestamp(current_date, occurence.time, Qt::LocalTime);
-
-                    if (due_timestamp > now)
+                    for (Kid* kid : KidManager::access()->getKids())
                     {
-                        auto due_task = new DueTask();
-                        due_task->setTask(active_task);
-                        due_task->setDueTimestamp(due_timestamp);
-                        kid->addTask(due_task);
+                        const QDateTime due_timestamp(current_date, occurence.time, Qt::LocalTime);
+
+                        if (due_timestamp > now)
+                        {
+                            auto due_task = new DueTask();
+                            due_task->setTask(active_task);
+                            due_task->setDueTimestamp(due_timestamp);
+                            kid->addTask(due_task);
+                        }
                     }
                 }
             }

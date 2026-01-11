@@ -14,18 +14,21 @@ class TaskScheduler : public QObject
 {
     Q_OBJECT
     SINGLETON(TaskScheduler)
-    Q_PROPERTY(QList<const ActiveTask*> casual_tasks READ getCasualTasks CONSTANT)
+    Q_PROPERTY(QList<ActiveTask*> casual_tasks READ getCasualTasks NOTIFY casualTasksChanged)
 
 public:
     void load(const QJsonObject& json_object);
 
     void start(bool reset_tasks);
 
-    QList<const ActiveTask*> getCasualTasks() const;
+    QList<ActiveTask*> getCasualTasks() const;
 
-    const ActiveTask* findTask(const QUuid& uuid) const;
+    ActiveTask* findTask(const QUuid& uuid) const;
 
-    Q_INVOKABLE void appendCasualTask(const ActiveTask* task);
+    Q_INVOKABLE void appendCasualTask(ActiveTask* task);
+
+signals:
+    void casualTasksChanged();
 
 private:
     void spawnDueTasks();
@@ -33,6 +36,6 @@ private:
     void scheduleNextTrigger();
 
 private:
-    QList<const ActiveTask*> tasks_;
+    QList<ActiveTask*> tasks_;
     QTimer* const timer_spawn_tasks_;
 };

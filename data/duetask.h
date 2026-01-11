@@ -2,11 +2,14 @@
 
 #include <QTime>
 
+#include "data/task.h"
+#include "data/taskscheduler.h"
 #include "data/taskstate.h"
 
 class QTimer;
 
 class Task;
+class TaskScheduler;
 
 class DueTask : public QObject
 {

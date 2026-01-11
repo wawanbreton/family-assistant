@@ -6,7 +6,6 @@
 #include <easyqt/json.h>
 #include <easyqt/parser.h>
 
-#include "data/activetask.h"
 #include "data/duetask.h"
 #include "data/taskscheduler.h"
 #include "data/tasksmodel.h"
@@ -17,12 +16,15 @@ Kid::Kid(QObject* parent)
     : QObject{ parent }
     , tasks_(new TasksModel(this))
     , theme_(new Theme(this))
+    , uuid_(QUuid::createUuid())
 {
 }
 
 void Kid::load(const QJsonObject& json_object)
 {
     Json::mapValuesToObjectProperties(json_object, this);
+
+    uuid_ = Json::loadValue(json_object, "uuid", __METHOD__, QUuid());
 
     auto iterator = json_object.constFind("tasks");
     if (iterator != json_object.constEnd())
@@ -42,41 +44,16 @@ void Kid::load(const QJsonObject& json_object)
         }
     }
 
-    iterator = json_object.constFind("casual_tasks");
-    if (iterator != json_object.constEnd())
-    {
-        QJsonArray casual_tasks_array = iterator.value().toArray();
-        for (const QJsonValue& casual_task_object : casual_tasks_array)
-        {
-            std::optional<QUuid> casual_task_uuid
-                = Parser::parseFromString<QUuid>(casual_task_object.toString(), __METHOD__);
-            if (casual_task_uuid.has_value())
-            {
-                const ActiveTask* casual_task = TaskScheduler::get()->findTask(casual_task_uuid.value());
-                if (casual_task)
-                {
-                    if (casual_task->isCasual())
-                    {
-                        casual_tasks_ << casual_task;
-                    }
-                    else
-                    {
-                        qWarning() << "Task" << casual_task->getDesc() << "is not casual";
-                    }
-                }
-                else
-                {
-                    qWarning() << "No task found with ID" << casual_task_uuid.value();
-                }
-            }
-        }
-    }
-
     iterator = json_object.constFind("theme");
     if (iterator != json_object.constEnd())
     {
         theme_->load(iterator.value().toObject());
     }
+}
+
+const QUuid& Kid::getUuid() const
+{
+    return uuid_;
 }
 
 const QString& Kid::getName() const
@@ -123,10 +100,6 @@ void Kid::setPoints(const quint32 points)
     }
 }
 
-bool Kid::hasCasualTask(const ActiveTask* casual_task) const
-{
-    return casual_tasks_.contains(casual_task);
-}
 
 void Kid::addTask(DueTask* task)
 {

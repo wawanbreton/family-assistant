@@ -2,6 +2,7 @@
     "kids":
     [
         {
+            "uuid": "ddcfc4d3-cabb-4143-8b51-4afec4580150",
             "name": "Léonis",
             "points": 500,
             "tasks":
@@ -11,11 +12,6 @@
                     "due_timestamp": "2024-06-26 23:10"
                 }
             ],
-            "casual_tasks":
-            [
-                "ebf2a2b3-72c5-474e-8f35-8ca19bea56d9",
-                "c11f3c84-af3b-4aa4-be2c-89becfb8ac50"
-            ],
             "theme":
             {
                 "point": "Burger",
@@ -24,6 +20,7 @@
             }
         },
         {
+            "uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a",
             "name": "Clélie",
             "points": 62,
             "tasks":
@@ -36,10 +33,6 @@
                     "task_uuid": "ec65a1d6-bf2b-43a7-8d46-ecae886bfbcc",
                     "due_timestamp": "2024-06-26 21:30"
                 }
-            ],
-            "casual_tasks":
-            [
-                "4ec002c9-1859-4587-bcc2-d28fe465b786"
             ],
             "theme":
             {
@@ -96,21 +89,24 @@
             "uuid": "ebf2a2b3-72c5-474e-8f35-8ca19bea56d9",
             "desc": "Passer l'aspirateur",
             "icon": "vacuum",
-            "reward": 10
+            "reward": 10,
+            "affected_kid_uuid": "ddcfc4d3-cabb-4143-8b51-4afec4580150"
         },
 
         {
             "uuid": "c11f3c84-af3b-4aa4-be2c-89becfb8ac50",
             "desc": "Ranger le linge",
             "icon": "laundry",
-            "reward": 10
+            "reward": 10,
+            "affected_kid_uuid": "ddcfc4d3-cabb-4143-8b51-4afec4580150"
         },
 
         {
             "uuid": "4ec002c9-1859-4587-bcc2-d28fe465b786",
             "desc": "Ranger les livres",
             "icon": "bookshelf",
-            "reward": 10
+            "reward": 10,
+            "affected_kid_uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a"
         }
     ]
 }

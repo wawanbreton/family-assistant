@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QUuid>
 
 #include "data/tasksmodel.h"
 #include "data/theme.h"
@@ -20,6 +21,8 @@ public:
     explicit Kid(QObject* parent = nullptr);
 
     void load(const QJsonObject& json_object);
+
+    const QUuid& getUuid() const;
 
     const QString& getName() const;
 
@@ -43,8 +46,6 @@ public:
 
     void setPoints(const quint32 points);
 
-    bool hasCasualTask(const ActiveTask* casual_task) const;
-
 signals:
     void nameChanged(const QString& name);
 
@@ -54,9 +55,9 @@ private:
     void onTaskAccomplished(DueTask* task);
 
 private:
+    QUuid uuid_;
     QString name_;
     TasksModel* const tasks_;
-    QList<const ActiveTask*> casual_tasks_;
     Theme* const theme_;
     quint32 points_{ 0 };
 };
