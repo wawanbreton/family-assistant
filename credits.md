@@ -36,6 +36,8 @@
 <a href="https://www.flaticon.com/free-icons/cow" title="cow icons">Cow icons created by surang - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/clothing" title="clothing icons">Clothing icons created by Smashicons - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/library" title="library icons">Library icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/horse" title="horse icons">Horse icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/stable" title="stable icons">Stable icons created by juicy_fish - Flaticon</a>
 
 https://www.dafont.com/super-playful.font
 https://www.dafont.com/super-crafty.font
