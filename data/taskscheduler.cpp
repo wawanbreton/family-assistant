@@ -3,6 +3,8 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QTimer>
+#include <easyqt/debug.h>
+#include <easyqt/json.h>
 #include <easyqt/qobject_helper.h>
 
 #include "data/activecasualtask.h"
@@ -31,23 +33,30 @@ TaskScheduler::TaskScheduler(QObject* parent)
 
 void TaskScheduler::load(const QJsonObject& json_object)
 {
-    auto iterator = json_object.constFind("tasks");
-    if (iterator != json_object.constEnd())
+    QList<QJsonObject> tasks_objects
+        = easyqt::Json::loadPropertyArray<QJsonObject, QList>(json_object, "tasks", __METHOD__);
+    for (const QJsonValue& task_value : tasks_objects)
     {
-        QJsonArray tasks_array = iterator.value().toArray();
-        for (const QJsonValue& task_value : tasks_array)
+        ActiveTask* active_task = ActiveTask::makeAndLoad(task_value.toObject(), this);
+        if (active_task)
         {
-            auto active_task = ActiveTask::makeAndLoad(task_value.toObject(), this);
-            if (active_task)
-            {
-                tasks_ << active_task;
-            }
+            tasks_ << active_task;
         }
     }
-    else
+}
+
+void TaskScheduler::save(QJsonObject& json_object) const
+{
+    QJsonArray tasks_array;
+
+    for (const ActiveTask* task : tasks_)
     {
-        qWarning() << "No kids defined in data";
+        QJsonObject task_object;
+        task->save(task_object);
+        tasks_array.append(task_object);
     }
+
+    json_object["tasks"] = tasks_array;
 }
 
 void TaskScheduler::start(bool reset_tasks)
@@ -126,24 +135,33 @@ void TaskScheduler::spawnDueTasks()
 
     for (const ActiveTask* active_task : tasks_)
     {
-        if (const auto* recurring_task = qobject_cast<const ActiveRecurringTask*>(active_task))
+        const auto* recurring_task = qobject_cast<const ActiveRecurringTask*>(active_task);
+        if (recurring_task == nullptr)
         {
-            for (const TaskOccurence& occurence : recurring_task->getOccurences())
-            {
-                if (occurence.day == current_day)
-                {
-                    for (Kid* kid : KidManager::access()->getKids())
-                    {
-                        const QDateTime due_timestamp(current_date, occurence.time, Qt::LocalTime);
+            return;
+        }
 
-                        if (due_timestamp > now)
-                        {
-                            auto due_task = new DueTask();
-                            due_task->setTask(active_task);
-                            due_task->setDueTimestamp(due_timestamp);
-                            kid->addTask(due_task);
-                        }
-                    }
+        for (const TaskOccurences& occurences : recurring_task->getOccurences())
+        {
+            if (! occurences.days.contains(current_day))
+            {
+                continue;
+            }
+
+            for (const QTime& occurence_time : occurences.times)
+            {
+                const QDateTime due_timestamp(current_date, occurence_time, Qt::LocalTime);
+                if (due_timestamp <= now)
+                {
+                    continue;
+                }
+
+                for (Kid* kid : KidManager::access()->getKids())
+                {
+                    auto due_task = new DueTask();
+                    due_task->setTask(active_task);
+                    due_task->setDueTimestamp(due_timestamp);
+                    kid->addTask(due_task);
                 }
             }
         }

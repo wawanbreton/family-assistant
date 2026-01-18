@@ -11,7 +11,9 @@ class ActiveTask : public Task
 public:
     const QUuid& getUuid() const;
 
-    virtual void load(const QJsonObject& json_object) override;
+    void load(const QJsonObject& json_object) override;
+
+    void save(QJsonObject& json_object) const override;
 
     static ActiveTask* makeAndLoad(const QJsonObject& json_object, QObject* parent = nullptr);
 

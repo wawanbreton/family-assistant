@@ -2,13 +2,11 @@
 
 #include <QTime>
 
-#include "data/task.h"
-#include "data/taskscheduler.h"
+#include "data/activetask.h"
 #include "data/taskstate.h"
 
 class QTimer;
 
-class Task;
 class TaskScheduler;
 
 class DueTask : public QObject
@@ -17,12 +15,14 @@ class DueTask : public QObject
     Q_PROPERTY(QDateTime due_timestamp READ getDueTimestamp WRITE setDueTimestamp NOTIFY dueTimestampChanged)
     Q_PROPERTY(QString due_time_str READ getDueTimeStr NOTIFY dueTimestampChanged)
     Q_PROPERTY(TaskState::Enum state READ getState NOTIFY stateChanged)
-    Q_PROPERTY(const Task* task READ getTask CONSTANT)
+    Q_PROPERTY(const ActiveTask* task READ getTask CONSTANT)
 
 public:
     explicit DueTask(QObject* parent = nullptr);
 
     bool load(const QJsonObject& json_object);
+
+    void save(QJsonObject& json_object) const;
 
     const QDateTime& getDueTimestamp() const;
 
@@ -32,9 +32,9 @@ public:
 
     TaskState::Enum getState() const;
 
-    const Task* getTask() const;
+    const ActiveTask* getTask() const;
 
-    void setTask(const Task* task);
+    void setTask(const ActiveTask* task);
 
     Q_INVOKABLE void setAccomplished();
 
@@ -49,7 +49,7 @@ private:
     void updateState();
 
 private:
-    const Task* task_{ nullptr };
+    const ActiveTask* task_{ nullptr };
     QDateTime due_timestamp_;
     TaskState::Enum state_{ TaskState::Early };
     QTimer* const timer_next_update_;

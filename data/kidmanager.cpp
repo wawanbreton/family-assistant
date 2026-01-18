@@ -2,6 +2,8 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <easyqt/debug.h>
+#include <easyqt/json.h>
 
 #include "data/kid.h"
 
@@ -14,23 +16,29 @@ KidManager::KidManager(QObject* parent)
 {
 }
 
-void KidManager::load(const QJsonObject& object)
+void KidManager::load(const QJsonObject& json_object)
 {
-    auto iterator = object.constFind("kids");
-    if (iterator != object.constEnd())
+    QList<QJsonObject> kids_objects
+        = easyqt::Json::loadPropertyArray<QJsonObject, QList>(json_object, "kids", __METHOD__);
+    for (const QJsonObject& kid_object : kids_objects)
     {
-        QJsonArray kids_array = iterator.value().toArray();
-        for (const QJsonValue& kid_object : kids_array)
-        {
-            auto kid = new Kid(this);
-            kid->load(kid_object.toObject());
-            kids_ << kid;
-        }
+        auto kid = new Kid(this);
+        kid->load(kid_object);
+        connect(kid, &Kid::changed, this, &KidManager::changed);
+        kids_ << kid;
     }
-    else
+}
+
+void KidManager::save(QJsonObject& object) const
+{
+    QJsonArray kids_array;
+    for (const Kid* kid : kids_)
     {
-        qWarning() << "No kids defined in data";
+        QJsonObject kid_object;
+        kid->save(kid_object);
+        kids_array.append(kid_object);
     }
+    object["kids"] = kids_array;
 }
 
 QQmlListProperty<Kid> KidManager::getKidsQmlList()

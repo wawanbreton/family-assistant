@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <easyqt/debug.h>
 #include <easyqt/json.h>
+#include <easyqt/parser.h>
 
 
 ActiveRecurringTask::ActiveRecurringTask(QObject* parent)
@@ -22,56 +23,39 @@ void ActiveRecurringTask::load(const QJsonObject& json_object)
 {
     ActiveTask::load(json_object);
 
-    auto iterator = json_object.constFind("due_times");
-    if (iterator != json_object.constEnd())
+    QList<QJsonObject> occurences
+        = easyqt::Json::loadPropertyArray<QJsonObject, QList>(json_object, "occurences", __METHOD__);
+    for (const QJsonObject& occurences_object : occurences)
     {
-        QJsonArray due_times_array = iterator.value().toArray();
-        for (const QJsonValue& due_time_value : due_times_array)
+        QSet<DayOfWeek::Enum> days
+            = easyqt::Json::loadPropertyArrayEnum<DayOfWeek, QSet>(occurences_object, "days", __METHOD__);
+        QSet<QTime> times = easyqt::Json::loadPropertyArray<QTime, QSet>(occurences_object, "times", __METHOD__);
+
+        if (! days.isEmpty() && ! times.isEmpty())
         {
-            const QJsonObject due_time_object = due_time_value.toObject();
-
-            QList<DayOfWeek::Enum> days;
-            auto iterator_days = due_time_object.constFind("days");
-            if (iterator_days != due_time_object.constEnd())
-            {
-                const QJsonArray days_array = iterator_days.value().toArray();
-                for (const QJsonValue& day_value : days_array)
-                {
-                    std::optional<DayOfWeek::Enum> day = DayOfWeek::fromString(day_value.toString());
-                    if (day.has_value())
-                    {
-                        days << day.value();
-                    }
-                }
-            }
-
-            QList<QTime> times;
-            auto iterator_times = due_time_object.constFind("times");
-            if (iterator_times != due_time_object.constEnd())
-            {
-                const QJsonArray times_array = iterator_times.value().toArray();
-                for (const QJsonValue& time_value : times_array)
-                {
-                    auto time = QTime::fromString(time_value.toString(), "HH:mm");
-                    if (time.isValid())
-                    {
-                        times << time;
-                    }
-                }
-            }
-
-            for (DayOfWeek::Enum day : days)
-            {
-                for (const QTime& time : times)
-                {
-                    occurences_ << TaskOccurence{ day, time };
-                }
-            }
+            occurences_ << TaskOccurences{ days, times };
         }
     }
 }
 
-const QList<TaskOccurence>& ActiveRecurringTask::getOccurences() const
+void ActiveRecurringTask::save(QJsonObject& json_object) const
+{
+    ActiveTask::save(json_object);
+
+    QJsonArray occurences_array;
+
+    for (const TaskOccurences& occurences : occurences_)
+    {
+        QJsonObject occurences_objects;
+        occurences_objects["days"] = easyqt::Json::saveArrayEnum<DayOfWeek>(occurences.days);
+        occurences_objects["times"] = easyqt::Json::saveArray(occurences.times);
+        occurences_array.append(occurences_objects);
+    }
+
+    json_object["occurences"] = occurences_array;
+}
+
+const QList<TaskOccurences>& ActiveRecurringTask::getOccurences() const
 {
     return occurences_;
 }

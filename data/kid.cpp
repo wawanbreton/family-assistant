@@ -18,37 +18,53 @@ Kid::Kid(QObject* parent)
     , theme_(new Theme(this))
     , uuid_(QUuid::createUuid())
 {
+    connect(this, &Kid::nameChanged, this, &Kid::changed);
+    connect(this, &Kid::pointsChanged, this, &Kid::changed);
+    connect(tasks_, &TasksModel::changed, this, &Kid::changed);
+    connect(theme_, &Theme::changed, this, &Kid::changed);
 }
 
 void Kid::load(const QJsonObject& json_object)
 {
-    Json::mapValuesToObjectProperties(json_object, this);
+    uuid_ = easyqt::Json::loadProperty(json_object, "uuid", __METHOD__, uuid_);
+    name_ = easyqt::Json::loadProperty(json_object, "name", __METHOD__, name_);
+    points_ = easyqt::Json::loadProperty(json_object, "points", __METHOD__, points_);
 
-    uuid_ = Json::loadValue(json_object, "uuid", __METHOD__, QUuid());
-
-    auto iterator = json_object.constFind("tasks");
-    if (iterator != json_object.constEnd())
+    QList<QJsonObject> tasks_array
+        = easyqt::Json::loadPropertyArray<QJsonObject, QList>(json_object, "tasks", __METHOD__);
+    for (const QJsonValue& task_object : tasks_array)
     {
-        QJsonArray tasks_array = iterator.value().toArray();
-        for (const QJsonValue& task_object : tasks_array)
+        auto task = new DueTask(this);
+        if (task->load(task_object.toObject()))
         {
-            auto task = new DueTask(this);
-            if (task->load(task_object.toObject()))
-            {
-                addTask(task);
-            }
-            else
-            {
-                delete task;
-            }
+            addTask(task);
+        }
+        else
+        {
+            delete task;
         }
     }
 
-    iterator = json_object.constFind("theme");
-    if (iterator != json_object.constEnd())
+    std::optional<QJsonObject> theme_object = easyqt::Json::loadProperty<QJsonObject>(json_object, "theme", __METHOD__);
+    if (theme_object.has_value())
     {
-        theme_->load(iterator.value().toObject());
+        theme_->load(*theme_object);
     }
+}
+
+void Kid::save(QJsonObject& object) const
+{
+    object["uuid"] = easyqt::Json::saveValue(uuid_);
+    object["name"] = easyqt::Json::saveValue(name_);
+    object["points"] = easyqt::Json::saveValue(points_);
+
+    QJsonObject theme_object;
+    theme_->save(theme_object);
+    object["theme"] = theme_object;
+
+    QJsonArray tasks_array;
+    tasks_->save(tasks_array);
+    object["tasks"] = tasks_array;
 }
 
 const QUuid& Kid::getUuid() const
@@ -103,17 +119,10 @@ void Kid::setPoints(const quint32 points)
 
 void Kid::addTask(DueTask* task)
 {
-    connect(task, &DueTask::accomplished, this, [this, task]() { onTaskAccomplished(task); });
-    task->setParent(this);
     tasks_->append(task);
 }
 
 void Kid::clearTasks()
 {
     tasks_->clear();
-}
-
-void Kid::onTaskAccomplished(DueTask* task)
-{
-    tasks_->remove(task);
 }

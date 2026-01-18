@@ -1,7 +1,7 @@
 #pragma once
 
 #include "data/activetask.h"
-#include "data/taskoccurence.h"
+#include "data/taskoccurences.h"
 
 class ActiveRecurringTask : public ActiveTask
 {
@@ -12,10 +12,12 @@ public:
 
     explicit ActiveRecurringTask(const ActiveRecurringTask& other);
 
-    virtual void load(const QJsonObject& json_object) override;
+    void load(const QJsonObject& json_object) override;
 
-    const QList<TaskOccurence>& getOccurences() const;
+    void save(QJsonObject& json_object) const override;
+
+    const QList<TaskOccurences>& getOccurences() const;
 
 private:
-    QList<TaskOccurence> occurences_;
+    QList<TaskOccurences> occurences_;
 };

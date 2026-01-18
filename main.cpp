@@ -1,36 +1,25 @@
-#include <QCommandLineParser>
-#ifdef QT_WIDGETS_LIB
 #include <QApplication>
-#else
-#include <QGuiApplication>
-#endif
-#include <QJsonDocument>
-#include <QJsonObject>
+#include <QCommandLineParser>
 #include <QPalette>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
 #include "data/kid.h"
 #include "data/kidmanager.h"
-#include "data/preferences.h"
+#include "data/metamanager.h"
 #include "data/taskscheduler.h"
 #include "data/taskstate.h"
 #include "data/theme.h"
 #include "data/themecategory.h"
 #include "easyqt/datastorage.h"
-#include "easyqt/file.h"
-#include "easyqt/logger.h"
 #include "easyqt/resourcetype.h"
 #include "hardware/hardware.h"
 
 
 int main(int argc, char* argv[])
 {
-#ifdef QT_WIDGETS_LIB
     QApplication app(argc, argv);
-#else
-    QGuiApplication app(argc, argv);
-#endif
+
     QCommandLineParser commands_line_parser;
     QCommandLineOption option_help = commands_line_parser.addHelpOption();
 
@@ -55,30 +44,15 @@ int main(int argc, char* argv[])
         qmlRegisterType<ThemeCategory>("FamilyAssistant", 1, 0, "ThemeCategory");
         qmlRegisterType<easyqt::ResourceType>("FamilyAssistant", 1, 0, "ResourceType");
 
-        easyqt::DataStorage::init(&app);
-        easyqt::Logger::init(&app);
-        Preferences::init(&app);
-        KidManager::init(&app);
-        TaskScheduler::init(&app);
-        Hardware::init(&app);
-
-        Theme global_theme;
+        MetaManager::init(&app);
 
         if (commands_line_parser.isSet(option_data_file))
         {
-            QString data_file_path = commands_line_parser.value(option_data_file);
-            QJsonParseError error;
-            auto doc = QJsonDocument::fromJson(easyqt::File::readFile(data_file_path), &error);
-            if (error.error == QJsonParseError::NoError)
-            {
-                QJsonObject json_object = doc.object();
-                TaskScheduler::access()->load(json_object);
-                KidManager::access()->load(json_object);
-            }
-            else
-            {
-                qWarning() << "Error when parsing JSON data file" << data_file_path << ":" << error.errorString();
-            }
+            MetaManager::access()->load(commands_line_parser.value(option_data_file));
+        }
+        else
+        {
+            MetaManager::access()->load();
         }
 
         bool all_due_tasks_empty = true;
@@ -99,6 +73,8 @@ int main(int argc, char* argv[])
         const bool reset_tasks
             = obsolete_tasks || all_due_tasks_empty || commands_line_parser.isSet(option_reset_tasks);
         TaskScheduler::access()->start(reset_tasks);
+
+        Theme global_theme;
 
         QPalette palette = qApp->palette();
         palette.setColor(QPalette::Text, Qt::white);

@@ -4,6 +4,7 @@
 #include <QJsonValue>
 #include <QTimer>
 #include <easyqt/datastorage.h>
+#include <easyqt/debug.h>
 #include <easyqt/json.h>
 
 #include "data/activetask.h"
@@ -28,28 +29,29 @@ DueTask::DueTask(QObject* parent)
 
 bool DueTask::load(const QJsonObject& json_object)
 {
-    Json::mapValuesToObjectProperties(json_object, this);
+    due_timestamp_ = easyqt::Json::loadProperty(json_object, "due_timestamp", __METHOD__, due_timestamp_);
 
-    auto iterator = json_object.constFind("task_uuid");
-    if (iterator != json_object.constEnd())
+    const std::optional<QUuid> task_uuid = easyqt::Json::loadProperty<QUuid>(json_object, "task_uuid", __METHOD__);
+    if (task_uuid.has_value())
     {
-        QString task_uuid_str = iterator.value().toString();
-        QUuid task_uuid = QUuid::fromString(task_uuid_str);
-        if (! task_uuid.isNull())
+        task_ = TaskScheduler::get()->findTask(*task_uuid);
+        if (! task_)
         {
-            task_ = TaskScheduler::get()->findTask(task_uuid);
-            if (! task_)
-            {
-                qWarning() << "No task defined with UUID" << task_uuid;
-            }
-        }
-        else
-        {
-            qWarning() << "String" << task_uuid_str << "is not a valid UUID";
+            qWarning() << "No task defined with UUID" << task_uuid;
         }
     }
 
     return ! due_timestamp_.isNull() && task_;
+}
+
+void DueTask::save(QJsonObject& json_object) const
+{
+    json_object["due_timestamp"] = easyqt::Json::saveValue(due_timestamp_);
+
+    if (task_)
+    {
+        json_object["task_uuid"] = easyqt::Json::saveValue(task_->getUuid());
+    }
 }
 
 const QDateTime& DueTask::getDueTimestamp() const
@@ -77,12 +79,12 @@ TaskState::Enum DueTask::getState() const
     return state_;
 }
 
-const Task* DueTask::getTask() const
+const ActiveTask* DueTask::getTask() const
 {
     return task_;
 }
 
-void DueTask::setTask(const Task* desc)
+void DueTask::setTask(const ActiveTask* desc)
 {
     task_ = desc;
 }

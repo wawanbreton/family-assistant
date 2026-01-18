@@ -19,7 +19,9 @@ public:
 
     explicit ActiveCasualTask(const ActiveCasualTask& other);
 
-    virtual void load(const QJsonObject& json_object) override;
+    void load(const QJsonObject& json_object) override;
+
+    void save(QJsonObject& json_object) const override;
 
     Kid* getAffectedKid() const;
 

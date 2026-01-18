@@ -1,12 +1,47 @@
 #include "tasksmodel.h"
 
+#include <QJsonArray>
+#include <QJsonObject>
 #include <ranges>
 
 #include "data/duetask.h"
 
 
 TasksModel::TasksModel(QObject* parent)
+    : QAbstractListModel(parent)
 {
+}
+
+void TasksModel::load(const QJsonArray& json_array)
+{
+    for (const QJsonValue& task_object : json_array)
+    {
+        if (! task_object.isObject())
+        {
+            qWarning() << "Value" << task_object << "is not an object as expected";
+            continue;
+        }
+
+        auto task = new DueTask(this);
+        if (task->load(task_object.toObject()))
+        {
+            append(task);
+        }
+        else
+        {
+            delete task;
+        }
+    }
+}
+
+void TasksModel::save(QJsonArray& json_array) const
+{
+    for (const DueTask* due_task : tasks_)
+    {
+        QJsonObject task_object;
+        due_task->save(task_object);
+        json_array.append(task_object);
+    }
 }
 
 int TasksModel::rowCount(const QModelIndex& /*parent*/) const
@@ -44,8 +79,10 @@ void TasksModel::append(DueTask* task)
 
     beginInsertRows(QModelIndex(), insert_index, insert_index);
     task->setParent(this);
+    connect(task, &DueTask::accomplished, this, [this, task] { remove(task); });
     tasks_.insert(insert_index, task);
     endInsertRows();
+    emit changed();
 }
 
 void TasksModel::remove(DueTask* task)
@@ -57,6 +94,7 @@ void TasksModel::remove(DueTask* task)
         tasks_.at(index)->deleteLater();
         tasks_.remove(index);
         endRemoveRows();
+        emit changed();
     }
 }
 
@@ -71,6 +109,7 @@ void TasksModel::clear()
         }
         tasks_.clear();
         endRemoveRows();
+        emit changed();
     }
 }
 

@@ -37,7 +37,7 @@
             "theme":
             {
                 "point": "RubySparkling",
-                "background": "Pink",
+                "background": "Stable",
                 "font": "SuperMystery"
             }
         }
@@ -50,7 +50,7 @@
             "desc": "Brosser ses dents",
             "icon": "toothbrush",
             "reward": 3,
-            "due_times":
+            "occurences":
             [
                 {
                     "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -68,7 +68,7 @@
             "desc": "Prendre le petit-déjeuner",
             "icon": "cereal",
             "reward": 3,
-            "due_times":
+            "occurences":
             [
                 {
                     "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],

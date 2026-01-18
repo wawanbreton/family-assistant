@@ -1,6 +1,7 @@
 #include "theme.h"
 
 #include <QDir>
+#include <easyqt/debug.h>
 #include <easyqt/json.h>
 
 
@@ -24,11 +25,30 @@ Theme::Theme(QObject* parent)
     connect(this, &Theme::backgroundChanged, this, [this] { emit itemChanged(ThemeCategory::Background); });
     connect(this, &Theme::fontChanged, this, [this] { emit itemChanged(ThemeCategory::Font); });
     connect(this, &Theme::textStyleChanged, this, [this] { emit itemChanged(ThemeCategory::TextStyle); });
+
+    connect(this, &Theme::pointChanged, this, &Theme::changed);
+    connect(this, &Theme::pointsStorageChanged, this, &Theme::changed);
+    connect(this, &Theme::backgroundChanged, this, &Theme::changed);
+    connect(this, &Theme::fontChanged, this, &Theme::changed);
+    connect(this, &Theme::textStyleChanged, this, &Theme::changed);
 }
 
 void Theme::load(const QJsonObject& json_object)
 {
-    Json::mapValuesToObjectProperties(json_object, this);
+    point_ = easyqt::Json::loadProperty(json_object, "point", __METHOD__, point_);
+    points_storage_ = easyqt::Json::loadProperty(json_object, "points_storage", __METHOD__, points_storage_);
+    background_ = easyqt::Json::loadProperty(json_object, "background", __METHOD__, background_);
+    font_ = easyqt::Json::loadProperty(json_object, "font", __METHOD__, font_);
+    text_style_ = easyqt::Json::loadProperty(json_object, "text_style", __METHOD__, text_style_);
+}
+
+void Theme::save(QJsonObject& json_object) const
+{
+    json_object["point"] = easyqt::Json::saveValue(point_);
+    json_object["points_storage"] = easyqt::Json::saveValue(points_storage_);
+    json_object["background"] = easyqt::Json::saveValue(background_);
+    json_object["font"] = easyqt::Json::saveValue(font_);
+    json_object["text_style"] = easyqt::Json::saveValue(text_style_);
 }
 
 const QString& Theme::getPoint() const

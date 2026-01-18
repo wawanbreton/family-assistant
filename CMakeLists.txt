@@ -41,18 +41,24 @@ qt_add_executable(family-assistant
     data/dayofweek.h
     data/kid.h data/kid.cpp
     data/kidmanager.h data/kidmanager.cpp
+    data/metamanager.h data/metamanager.cpp
     data/preferenceentry.h
     data/preferences.h data/preferences.cpp
     data/duetask.h data/duetask.cpp
     data/task.h data/task.cpp
-
-    data/taskoccurence.h
+    data/taskoccurences.h
     data/taskscheduler.h data/taskscheduler.cpp
     data/tasksmodel.h data/tasksmodel.cpp
     data/taskstate.h
     data/theme.h data/theme.cpp
     data/themecategory.h
+
     hardware/hardware.h hardware/hardware.cpp
+
+    hardware/physical/fingerprintreader/fingerprintreadercommanddatastreamer.h hardware/physical/fingerprintreader/fingerprintreadercommanddatastreamer.cpp
+    hardware/physical/fingerprintreader/fingerprintreadercommands.h
+    hardware/physical/fingerprintreader/fingerprintreadercommandsqueue.h hardware/physical/fingerprintreader/fingerprintreadercommandsqueue.cpp
+    hardware/physical/fingerprintreader/fingerprintreaderinterface.h hardware/physical/fingerprintreader/fingerprintreaderinterface.cpp
 
     # Shaders
     ${SHADER_FILES}
@@ -172,6 +178,8 @@ qt_add_executable(family-assistant
     qml/PopupDialog.qml
 
     ${EXTRA_SOURCES}
+    qml/theme/background/Stable.qml
+    qml/theme/background/generic/Animals.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

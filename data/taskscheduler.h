@@ -19,6 +19,8 @@ class TaskScheduler : public QObject
 public:
     void load(const QJsonObject& json_object);
 
+    void save(QJsonObject& json_object) const;
+
     void start(bool reset_tasks);
 
     QList<ActiveTask*> getCasualTasks() const;

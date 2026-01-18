@@ -5,10 +5,10 @@
 class Task : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString desc READ getDesc WRITE setDesc NOTIFY dummyChanged)
-    Q_PROPERTY(QString icon WRITE setIcon)
-    Q_PROPERTY(QString icon_path READ getIconPath NOTIFY dummyChanged)
-    Q_PROPERTY(quint32 reward READ getReward WRITE setReward NOTIFY dummyChanged)
+    Q_PROPERTY(QString desc READ getDesc CONSTANT)
+    Q_PROPERTY(QString icon READ getIcon WRITE setIcon CONSTANT)
+    Q_PROPERTY(QString icon_path READ getIconPath CONSTANT)
+    Q_PROPERTY(quint32 reward READ getReward CONSTANT)
 
 public:
     explicit Task(QObject* parent = nullptr);
@@ -21,20 +21,17 @@ public:
 
     virtual void load(const QJsonObject& json_object);
 
+    virtual void save(QJsonObject& json_object) const;
+
     const QString& getDesc() const;
 
-    void setDesc(const QString& desc);
-
     const QString& getIconPath() const;
+
+    QString getIcon() const;
 
     void setIcon(const QString& icon);
 
     quint32 getReward() const;
-
-    void setReward(quint32 reward);
-
-signals:
-    void dummyChanged();
 
 private:
     QString desc_;

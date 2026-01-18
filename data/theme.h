@@ -18,6 +18,8 @@ public:
 
     void load(const QJsonObject& json_object);
 
+    void save(QJsonObject& json_object) const;
+
     const QString& getPoint() const;
 
     void setPoint(const QString& point);
@@ -47,6 +49,8 @@ public:
     Q_INVOKABLE QString getItemFilePath(ThemeCategory::Enum category, const QString& base_name);
 
 signals:
+    void changed();
+
     void itemChanged(ThemeCategory::Enum category);
 
     void pointChanged();

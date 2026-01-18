@@ -10,10 +10,12 @@ class KidManager : public QObject
 {
     Q_OBJECT
     SINGLETON(KidManager)
-    Q_PROPERTY(QQmlListProperty<Kid> kids READ getKidsQmlList NOTIFY kidsChanged)
+    Q_PROPERTY(QQmlListProperty<Kid> kids READ getKidsQmlList CONSTANT)
 
 public:
-    void load(const QJsonObject& object);
+    void load(const QJsonObject& json_object);
+
+    void save(QJsonObject& object) const;
 
     QQmlListProperty<Kid> getKidsQmlList();
 
@@ -24,7 +26,7 @@ public:
     Q_INVOKABLE int findIndex(const Kid* kid) const;
 
 signals:
-    void kidsChanged();
+    void changed();
 
 private:
     QList<Kid*> kids_;

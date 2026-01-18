@@ -28,14 +28,21 @@ void ActiveTask::load(const QJsonObject& json_object)
 {
     Task::load(json_object);
 
-    uuid_ = Json::loadValue(json_object, "uuid", __METHOD__, QUuid());
+    uuid_ = easyqt::Json::loadProperty(json_object, "uuid", __METHOD__, QUuid());
+}
+
+void ActiveTask::save(QJsonObject& json_object) const
+{
+    Task::save(json_object);
+
+    json_object["uuid"] = easyqt::Json::saveValue(uuid_);
 }
 
 ActiveTask* ActiveTask::makeAndLoad(const QJsonObject& json_object, QObject* parent)
 {
     ActiveTask* task = nullptr;
 
-    if (json_object.contains("due_times"))
+    if (json_object.contains("occurences"))
     {
         task = new ActiveRecurringTask(parent);
     }
