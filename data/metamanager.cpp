@@ -1,6 +1,5 @@
 #include "data/metamanager.h"
 
-#include <QApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QTimer>

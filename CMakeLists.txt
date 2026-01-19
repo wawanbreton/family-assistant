@@ -18,6 +18,10 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     )
 else()
     message("####### Physical mode")
+
+    set(EXTRA_SOURCES
+        hardware/physical/physicalhardware.h hardware/physical/physicalhardware.cpp
+    )
 endif()
 
 qt_standard_project_setup(REQUIRES 6.5)

@@ -1,4 +1,8 @@
+#ifdef QT_WIDGETS_LIB
 #include <QApplication>
+#else
+#include <QGuiApplication>
+#endif
 #include <QCommandLineParser>
 #include <QPalette>
 #include <QQmlApplicationEngine>
@@ -18,7 +22,11 @@
 
 int main(int argc, char* argv[])
 {
+#ifdef QT_WIDGETS_LIB
     QApplication app(argc, argv);
+#else
+    QGuiApplication app(argc, argv);
+#endif
 
     QCommandLineParser commands_line_parser;
     QCommandLineOption option_help = commands_line_parser.addHelpOption();

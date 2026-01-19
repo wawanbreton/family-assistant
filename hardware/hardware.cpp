@@ -6,7 +6,7 @@
 #ifdef ENV_SIMULATOR
 #include "hardware/simulated/simulatedhardware.h"
 #else
-#error Define physical hardware manager
+#include "hardware/physical/physicalhardware.h"
 #endif
 
 
@@ -33,6 +33,7 @@ void Hardware::init(QObject* parent)
 #ifdef ENV_SIMULATOR
         instance_ = new SimulatedHardware(parent);
 #else
+        instance_ = new PhysicalHardware(parent);
 #endif
         qInfo() << "Init done" << Hardware::staticMetaObject.className();
     }
