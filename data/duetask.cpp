@@ -37,7 +37,7 @@ bool DueTask::load(const QJsonObject& json_object)
         task_ = TaskScheduler::get()->findTask(*task_uuid);
         if (! task_)
         {
-            qWarning() << "No task defined with UUID" << task_uuid;
+            qWarning() << "No task defined with UUID" << *task_uuid;
         }
     }
 
