@@ -1,5 +1,8 @@
 #include "hardware.h"
 
+#include <QFile>
+
+#include "hardware/physical/fingerprintreader/fingerprintreaderinterface.h"
 #ifdef ENV_SIMULATOR
 #include "hardware/simulated/simulatedhardware.h"
 #else
@@ -14,6 +17,12 @@ SINGLETON_DESTRUCTOR_IMPL(Hardware)
 Hardware::Hardware(QObject* parent)
     : QObject{ parent }
 {
+    QFile* file = new QFile("/dev/null");
+    file->open(QIODevice::ReadWrite);
+
+    // constexpr const bool log_raw_data = true;
+    // fingerprint_reader_ = new FingerprintReaderInterface(this, file, log_raw_data);
+    // fingerprint_reader_->sendSleep();
 }
 
 void Hardware::init(QObject* parent)
