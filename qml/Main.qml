@@ -6,10 +6,26 @@ Window
     height: 800
     visible: true
 
-    TasksView
+    MainView
     {
-        id: tasksView
-        anchors.fill: parent
+        id: mainView
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.right: menuBar.left
+    }
+
+    MenuBar
+    {
+        id: menuBar
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+
+        onButtonClicked: (id) =>
+        {
+            mainView.setView(id);
+        }
     }
 
     Component.onCompleted:

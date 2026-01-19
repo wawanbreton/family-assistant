@@ -64,17 +64,23 @@ qt_add_executable(family-assistant
     ${SHADER_FILES}
 
     # qml files
-    qml/Main.qml
-    qml/TasksView.qml
+    qml/KidName.qml
     qml/KidTasksView.qml
     qml/KidTasksList.qml
-    qml/Task.qml
-    qml/Vault.qml
+    qml/Main.qml
+    qml/MenuBar.qml
+    qml/MenuBarButton.qml
     qml/Point.qml
-    qml/Rewards.qml
-    qml/KidName.qml
     qml/PointsCounter.qml
     qml/PointsTransfer.qml
+
+    qml/Rewards.qml
+    qml/Settings.qml
+    qml/Task.qml
+    qml/TasksView.qml
+    qml/MainView.qml
+    qml/Vault.qml
+
     qml/components/ChangeableImage.qml
     qml/components/NormalText.qml
     qml/components/BaseText.qml
@@ -89,13 +95,17 @@ qt_add_executable(family-assistant
     qml/components/ButtonShadow.qml
     qml/components/Carousel.qml
     qml/components/ConfirmButton.qml
+    qml/components/UniqueItemContainer.qml
+
     qml/rewards/Backgrounds.qml
     qml/rewards/NameTexts.qml
     qml/rewards/Points.qml
     qml/rewards/RewardsTab.qml
     qml/rewards/ThemeItemSelector.qml
+
     qml/settings/TaskControl.qml
     qml/settings/TaskList.qml
+
     qml/theme/point/DollarCoin.qml
     qml/theme/point/StarCoin.qml
     qml/theme/point/Burger.qml
@@ -122,6 +132,7 @@ qt_add_executable(family-assistant
     qml/theme/point/Unicorn.qml
     qml/theme/point/Zirconia.qml
     qml/theme/point/ZirconiaSparkling.qml
+
     qml/theme/points_storage/Bank.qml
     qml/theme/points_storage/Bank2.qml
     qml/theme/points_storage/Diamonds.qml
@@ -134,14 +145,18 @@ qt_add_executable(family-assistant
     qml/theme/points_storage/Treasure2.qml
     qml/theme/points_storage/Wallet.qml
     qml/theme/points_storage/Wealth.qml
+
+    qml/theme/background/generic/Animals.qml
     qml/theme/background/White.qml
     qml/theme/background/Blue.qml
+    qml/theme/background/Farm.qml
     qml/theme/background/Green.qml
     qml/theme/background/Orange.qml
     qml/theme/background/Pink.qml
     qml/theme/background/Sky.qml
     qml/theme/background/SkyWithClouds.qml
-    qml/theme/background/Farm.qml
+    qml/theme/background/Stable.qml
+
     qml/theme/font/Ubuntu.qml
     qml/theme/font/SuperCrafty.qml
     qml/theme/font/SuperPlayful.qml
@@ -166,6 +181,7 @@ qt_add_executable(family-assistant
     qml/theme/font/TopSecret.qml
     qml/theme/font/UrbanSlick.qml
     qml/theme/font/Welbutrin.qml
+
     qml/theme/text_style/Black.qml
     qml/theme/text_style/Blue.qml
     qml/theme/text_style/Green.qml
@@ -174,12 +190,8 @@ qt_add_executable(family-assistant
     qml/theme/text_style/White.qml
     qml/theme/text_style/Rainbow.qml
     qml/theme/text_style/RainbowAnimated.qml
-    qml/Settings.qml
-    qml/PopupDialog.qml
 
     ${EXTRA_SOURCES}
-    qml/theme/background/Stable.qml
-    qml/theme/background/generic/Animals.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

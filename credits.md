@@ -38,6 +38,10 @@
 <a href="https://www.flaticon.com/free-icons/library" title="library icons">Library icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/horse" title="horse icons">Horse icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/stable" title="stable icons">Stable icons created by juicy_fish - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/house" title="house icons">House icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/music" title="music icons">Music icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/children" title="children icons">Children icons created by Freepik - Flaticon</a>
 
 https://www.dafont.com/super-playful.font
 https://www.dafont.com/super-crafty.font

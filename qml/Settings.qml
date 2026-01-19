@@ -6,7 +6,7 @@ import "components"
 import "rewards"
 import "settings"
 
-PopupDialog
+Item
 {
     id: root
 
@@ -20,7 +20,7 @@ PopupDialog
     {
         anchors.fill: parent
         anchors.margins: 16
-        anchors.bottomMargin: buttonBack.height + 16
+        anchors.bottomMargin: 16
 
         Tab
         {
@@ -55,17 +55,5 @@ PopupDialog
                 text: "Rien à voir ici"
             }
         }
-    }
-
-    CornerButton
-    {
-        id: buttonBack
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        imageSource: DataStorage.findResource("arrow", ResourceType.Icon)
-        imageScale: 0.75
-        corner: Qt.BottomRightCorner
-
-        onPressed: root.done()
     }
 }

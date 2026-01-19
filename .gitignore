@@ -58,3 +58,4 @@ build/*
 .directory
 case/*
 dependencies.txt
+doc/*

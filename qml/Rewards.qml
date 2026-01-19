@@ -5,7 +5,7 @@ import FamilyAssistant
 import "components"
 import "rewards"
 
-PopupDialog
+Item
 {
     property var kid
 
@@ -21,7 +21,7 @@ PopupDialog
     {
         anchors.fill: parent
         anchors.margins: 16
-        anchors.bottomMargin: buttonBack.height + 16
+        anchors.bottomMargin: vault.height + 16
 
         Tab
         {
@@ -92,18 +92,6 @@ PopupDialog
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 16
         anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-    CornerButton
-    {
-        id: buttonBack
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        imageSource: DataStorage.findResource("arrow", ResourceType.Icon)
-        imageScale: 0.75
-        corner: Qt.BottomRightCorner
-
-        onPressed: root.done()
     }
 
     Component
