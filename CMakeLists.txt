@@ -2,15 +2,16 @@ cmake_minimum_required(VERSION 3.16)
 
 project(family-assistant VERSION 0.1 LANGUAGES CXX)
 
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick ShaderTools)
+find_package(Qt6 6.7 REQUIRED COMPONENTS Quick ShaderTools)
 find_package(easyqt REQUIRED)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     message("####### Simulator mode")
     add_compile_definitions(ENV_SIMULATOR)
-    find_package(Qt6 6.5 REQUIRED COMPONENTS Widgets)
+    find_package(Qt6 6.7 REQUIRED COMPONENTS Widgets SerialPort)
 
     set(EXTRA_SOURCES
         hardware/simulated/simulatedhardware.h hardware/simulated/simulatedhardware.cpp
@@ -24,7 +25,7 @@ else()
     )
 endif()
 
-qt_standard_project_setup(REQUIRES 6.5)
+qt_standard_project_setup(REQUIRES 6.7)
 
 set(SHADER_FILES
     resources/shaders/text_outline.frag
@@ -233,6 +234,7 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     target_link_libraries(family-assistant
         PRIVATE
         Qt6::Widgets
+        Qt6::SerialPort
     )
 endif()
 

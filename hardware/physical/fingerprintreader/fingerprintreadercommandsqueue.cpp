@@ -16,7 +16,11 @@ FingerprintReaderCommandsQueue::FingerprintReaderCommandsQueue(
           new FingerprintReaderCommandDataStreamer(nullptr),
           device,
           false,
+#ifdef ENV_SIMULATOR
+          10000,
+#else
           1000,
+#endif
           parent,
           logRawData)
 {
@@ -68,16 +72,14 @@ DataParseResult FingerprintReaderCommandsQueue::unstreamReceivedData(
     {
         if (buffer.startsWith(magicNumberData) && buffer.mid(7).startsWith(magicNumberData))
         {
-            quint8 checksum;
-            BitField::toUInt8(buffer.mid(buffer.size() + 6), checksum);
-
-            quint8 expectedChecksum = 0;
-            for (int i = 1; i <= 5; ++i)
+            const quint8 received_checksum = buffer.at(6);
+            quint8 expected_checksum = buffer.at(1);
+            for (qsizetype i = 2; i <= 5; ++i)
             {
-                expectedChecksum ^= static_cast<quint8>(buffer.at(i));
+                expected_checksum ^= static_cast<quint8>(buffer.at(i));
             }
 
-            if (checksum == expectedChecksum)
+            if (received_checksum == expected_checksum)
             {
                 // Data is consistent
                 quint8 commandId;
