@@ -2,7 +2,6 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
-#include <ranges>
 
 #include "data/duetask.h"
 
@@ -68,11 +67,11 @@ QHash<int, QByteArray> TasksModel::roleNames() const
 void TasksModel::append(DueTask* task)
 {
     size_t insert_index = tasks_.size();
-    for (const std::tuple<size_t, const DueTask*> actual_task : tasks_ | std::views::enumerate)
+    for (qsizetype index = 0; index < tasks_.size(); ++index)
     {
-        if (task->getDueTimestamp() < std::get<1>(actual_task)->getDueTimestamp())
+        if (task->getDueTimestamp() < tasks_.at(index)->getDueTimestamp())
         {
-            insert_index = std::get<0>(actual_task);
+            insert_index = index;
             break;
         }
     }
