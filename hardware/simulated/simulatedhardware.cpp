@@ -26,7 +26,22 @@ SimulatedHardware::SimulatedHardware(QObject* parent)
         serial_port->setParity(QSerialPort::NoParity);
         constexpr const bool log_raw_data = true;
         auto fingerprint_reader = new FingerprintReaderInterface(this, serial_port, log_raw_data);
-        fingerprint_reader->sendSleep(this, [](const QList<QVariant>&) { qDebug() << "fe dodo"; });
+
+        fingerprint_reader->readFingerprintAddingMode(
+            this,
+            [](FingerprintAddingMode mode) { qDebug() << "mode1" << static_cast<quint8>(mode); },
+            []() { qDebug() << "il veut toujours pas repondre"; });
+
+        fingerprint_reader->setFingerprintAddingMode(
+            FingerprintAddingMode::EnableRepeat,
+            this,
+            []() { qDebug() << "c'est change"; },
+            []() { qDebug() << "il veut toujours pas repondre2"; });
+
+        fingerprint_reader->readFingerprintAddingMode(
+            this,
+            [](FingerprintAddingMode mode) { qDebug() << "mode2" << static_cast<quint8>(mode); },
+            []() { qDebug() << "il veut toujours pas repondre3"; });
     }
     else
     {
@@ -34,4 +49,9 @@ SimulatedHardware::SimulatedHardware(QObject* parent)
                    << ", make sure that it is connected";
         delete serial_port;
     }
+}
+
+void SimulatedHardware::setBacklight(const qreal power_percent)
+{
+    widget_->setBacklight(power_percent);
 }

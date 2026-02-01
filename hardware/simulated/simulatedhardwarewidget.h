@@ -15,6 +15,8 @@ public:
     explicit SimulatedHardwareWidget(QWidget* parent = nullptr);
     ~SimulatedHardwareWidget();
 
+    void setBacklight(const qreal power_percent);
+
 signals:
     void parentUnlock();
 

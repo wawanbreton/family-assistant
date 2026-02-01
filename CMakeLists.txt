@@ -59,11 +59,15 @@ qt_add_executable(family-assistant
     data/themecategory.h
 
     hardware/hardware.h hardware/hardware.cpp
+    hardware/backlightmanager.cpp hardware/backlightmanager.h
 
-    hardware/physical/fingerprintreader/fingerprintreadercommanddatastreamer.h hardware/physical/fingerprintreader/fingerprintreadercommanddatastreamer.cpp
+    hardware/physical/fingerprintreader/commands/fingerprintaddingmodecommand.h hardware/physical/fingerprintreader/commands/fingerprintaddingmodecommand.cpp
+    hardware/physical/fingerprintreader/fingerprintaddingmode.h
     hardware/physical/fingerprintreader/fingerprintreadercommands.h
     hardware/physical/fingerprintreader/fingerprintreadercommandsqueue.h hardware/physical/fingerprintreader/fingerprintreadercommandsqueue.cpp
+    hardware/physical/fingerprintreader/fingerprintreaderheader.h hardware/physical/fingerprintreader/fingerprintreaderheader.cpp
     hardware/physical/fingerprintreader/fingerprintreaderinterface.h hardware/physical/fingerprintreader/fingerprintreaderinterface.cpp
+    hardware/physical/fingerprintreader/fingerprintreaderresultcodes.h
 
     # Shaders
     ${SHADER_FILES}

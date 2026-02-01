@@ -16,3 +16,8 @@ SimulatedHardwareWidget::~SimulatedHardwareWidget()
 {
     delete ui_;
 }
+
+void SimulatedHardwareWidget::setBacklight(const qreal power_percent)
+{
+    ui_->sliderBacklight->setValue(std::llrint(power_percent));
+}

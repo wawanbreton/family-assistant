@@ -1,7 +1,9 @@
 #include "hardware.h"
 
+#include <QCoreApplication>
 #include <QFile>
 
+#include "hardware/backlightmanager.h"
 #include "hardware/physical/fingerprintreader/fingerprintreaderinterface.h"
 #ifdef ENV_SIMULATOR
 #include "hardware/simulated/simulatedhardware.h"
@@ -17,12 +19,16 @@ SINGLETON_DESTRUCTOR_IMPL(Hardware)
 Hardware::Hardware(QObject* parent)
     : QObject{ parent }
 {
-    QFile* file = new QFile("/dev/null");
-    file->open(QIODevice::ReadWrite);
+    // QFile* file = new QFile("/dev/null");
+    // file->open(QIODevice::ReadWrite);
 
     // constexpr const bool log_raw_data = true;
     // fingerprint_reader_ = new FingerprintReaderInterface(this, file, log_raw_data);
     // fingerprint_reader_->sendSleep();
+
+    auto power_manager = new BacklightManager(this);
+    connect(power_manager, &BacklightManager::setBacklight, this, &Hardware::setBacklight);
+    qApp->installEventFilter(power_manager);
 }
 
 void Hardware::init(QObject* parent)

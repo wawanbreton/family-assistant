@@ -8,4 +8,7 @@ class PhysicalHardware : public Hardware
 
 public:
     explicit PhysicalHardware(QObject* parent = nullptr);
+
+protected:
+    virtual void setBacklight(const qreal power_percent) override;
 };

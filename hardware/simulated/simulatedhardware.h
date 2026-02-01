@@ -11,6 +11,9 @@ class SimulatedHardware : public Hardware
 public:
     explicit SimulatedHardware(QObject* parent = nullptr);
 
+protected:
+    virtual void setBacklight(const qreal power_percent) override;
+
 private:
     SimulatedHardwareWidget* const widget_;
 };

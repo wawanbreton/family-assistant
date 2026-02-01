@@ -14,6 +14,9 @@ class Hardware : public QObject
 signals:
     void parentUnlock();
 
+protected:
+    virtual void setBacklight(const qreal power_percent) = 0;
+
 private:
     FingerprintReaderInterface* fingerprint_reader_{ nullptr };
 };
