@@ -8,9 +8,10 @@ class FingerprintReaderCommands : public QObject
     Q_ENUMS(Enum)
 
 public:
-    enum Enum
+    enum Enum : quint8
     {
         Sleep = 0x2c,
+        SetReadFingerprintAddingMode = 0x2d,
     };
 
     ENUM_DEBUG()

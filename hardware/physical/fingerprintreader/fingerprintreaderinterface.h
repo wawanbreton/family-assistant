@@ -1,6 +1,7 @@
 #pragma once
 
 #include "easyqt/communication/core/abstractcommunicationinterface.h"
+#include "hardware/physical/fingerprintreader/fingerprintaddingmode.h"
 #include "hardware/physical/fingerprintreader/fingerprintreadercommands.h"
 
 class QIODevice;
@@ -12,26 +13,28 @@ class FingerprintReaderInterface : public AbstractCommunicationInterface
 public:
     explicit FingerprintReaderInterface(QObject* parent, QIODevice* device, const bool logRawData = false);
 
-    void sendSleep(
+    void switchToSleep(
         QObject* receiver = nullptr,
-        const SlotAnswerType& slotAnswer = nullptr,
+        const SlotNoArgType& slotAnswer = nullptr,
         const SlotNoArgType& slotError = nullptr);
 
-signals:
-    // void positionReached();
+    void readFingerprintAddingMode(
+        QObject* receiver,
+        const std::function<void(FingerprintAddingMode)>& slotAnswer,
+        const SlotNoArgType& slotError = nullptr);
 
-protected:
-    virtual bool onCommandReceivedImpl(Command* command) override;
+    /*!
+     * \brief Set the fingerprint adding mode, to enable or disable repeat
+     * \note This setting is not saved after a device reboot
+     */
+    void setFingerprintAddingMode(
+        FingerprintAddingMode mode,
+        QObject* receiver,
+        const SlotNoArgType& slotAnswer = nullptr,
+        const SlotNoArgType& slotError = nullptr);
 
 private:
-    void sendRequest(
-        const FingerprintReaderCommands::Enum command,
-        const QList<QVariant>& dataRequest = QList<QVariant>(),
-        QObject* receiver = nullptr,
-        const SlotAnswerType& slotAnswer = nullptr,
-        const SlotNoArgType& slotError = nullptr,
-        const SlotNoArgType& slotSent = nullptr,
-        const int& timeout = 0);
+    Command* makeRequest(FingerprintReaderCommands::Enum command);
 
 private:
     QIODevice* const _device;

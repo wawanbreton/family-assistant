@@ -1,8 +1,11 @@
 #include "hardware/physical/fingerprintreader/fingerprintreaderinterface.h"
 
 #include <easyqt/communication/commands/command.h>
+#include <easyqt/qobject_helper.h>
 
+#include "hardware/physical/fingerprintreader/commands/fingerprintaddingmodecommand.h"
 #include "hardware/physical/fingerprintreader/fingerprintreadercommandsqueue.h"
+#include "hardware/physical/fingerprintreader/fingerprintreaderheader.h"
 
 
 FingerprintReaderInterface::FingerprintReaderInterface(QObject* parent, QIODevice* device, const bool logRawData)
@@ -11,42 +14,44 @@ FingerprintReaderInterface::FingerprintReaderInterface(QObject* parent, QIODevic
 {
 }
 
-void FingerprintReaderInterface::sendSleep(
+void FingerprintReaderInterface::switchToSleep(
     QObject* receiver,
-    const SlotAnswerType& slotAnswer,
+    const SlotNoArgType& slotAnswer,
     const SlotNoArgType& slotError)
 {
-    sendRequest(FingerprintReaderCommands::Sleep, {}, receiver, slotAnswer, slotError);
+    sendRequestEmptyAnswer(makeRequest(FingerprintReaderCommands::Sleep), receiver, slotAnswer, slotError);
 }
 
-bool FingerprintReaderInterface::onCommandReceivedImpl(Command* command)
-{
-    // if (command->getId() == Tmcm1161Commands::RequestPositionReached)
-    // {
-    //     emit positionReached();
-    //     return false;
-    // }
-    // else
-    {
-        return AbstractCommunicationInterface::onCommandReceivedImpl(command);
-    }
-}
-
-void FingerprintReaderInterface::sendRequest(
-    const FingerprintReaderCommands::Enum command,
-    const QList<QVariant>& dataRequest,
+void FingerprintReaderInterface::readFingerprintAddingMode(
     QObject* receiver,
-    const SlotAnswerType& slotAnswer,
-    const SlotNoArgType& slotError,
-    const SlotNoArgType& slotSent,
-    const int& timeout)
+    const std::function<void(FingerprintAddingMode)>& slotAnswer,
+    const SlotNoArgType& slotError)
 {
-    AbstractCommunicationInterface::sendRequest(
-        static_cast<quint32>(command),
-        dataRequest,
-        receiver,
-        slotAnswer,
-        slotError,
-        slotSent,
-        timeout);
+    Command* command = makeRequest(FingerprintReaderCommands::SetReadFingerprintAddingMode);
+    IF_CAST_OBJECT(FingerprintAddingModeCommand, mode_command, command)
+    {
+        mode_command->setAction(FingerprintAddingModeCommand::Action::Read);
+        connect(mode_command, &FingerprintAddingModeCommand::readDone, receiver, slotAnswer);
+    }
+    sendRequest(command, receiver, slotError);
+}
+
+void FingerprintReaderInterface::setFingerprintAddingMode(
+    FingerprintAddingMode mode,
+    QObject* receiver,
+    const SlotNoArgType& slotAnswer,
+    const SlotNoArgType& slotError)
+{
+    Command* command = makeRequest(FingerprintReaderCommands::SetReadFingerprintAddingMode);
+    IF_CAST_OBJECT(FingerprintAddingModeCommand, mode_command, command)
+    {
+        mode_command->setAction(FingerprintAddingModeCommand::Action::Set);
+        mode_command->setMode(mode);
+    }
+    sendRequestEmptyAnswer(command, receiver, slotAnswer, slotError);
+}
+
+Command* FingerprintReaderInterface::makeRequest(FingerprintReaderCommands::Enum command)
+{
+    return AbstractCommunicationInterface::makeRequest(std::make_shared<FingerprintReaderHeader>(command));
 }

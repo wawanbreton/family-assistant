@@ -1,8 +1,11 @@
 #include "hardware/physical/fingerprintreader/fingerprintreadercommandsqueue.h"
 
 #include <easyqt/bitfield.h>
+#include <easyqt/qobject_helper.h>
 
-#include "hardware/physical/fingerprintreader/fingerprintreadercommanddatastreamer.h"
+#include "hardware/physical/fingerprintreader/commands/fingerprintaddingmodecommand.h"
+#include "hardware/physical/fingerprintreader/fingerprintreaderheader.h"
+
 // #include "platform/utils/qt/assertutils.h"
 
 
@@ -13,11 +16,10 @@ FingerprintReaderCommandsQueue::FingerprintReaderCommandsQueue(
     QIODevice* device,
     const bool logRawData)
     : AbstractDeviceCommandsQueue(
-          new FingerprintReaderCommandDataStreamer(nullptr),
           device,
           false,
 #ifdef ENV_SIMULATOR
-          10000,
+          1000,
 #else
           1000,
 #endif
@@ -27,7 +29,7 @@ FingerprintReaderCommandsQueue::FingerprintReaderCommandsQueue(
 }
 
 QByteArray FingerprintReaderCommandsQueue::streamCommandData(
-    const CommandHeader* header,
+    const std::shared_ptr<const CommandHeader>& header,
     const QByteArray& commandRawData) const
 {
     QByteArray headerData;
@@ -40,7 +42,7 @@ QByteArray FingerprintReaderCommandsQueue::streamCommandData(
         headerData.append(magicNumberData);
 
         QByteArray fixedSizeRawData = commandRawData.leftJustified(headerTotalDataSize, '\0');
-        headerChecksumedData.append(BitField::toByteArray(static_cast<quint8>(header->getId())));
+        headerChecksumedData.append(header->streamData().value_or(QByteArray()));
         headerChecksumedData.append(fixedSizeRawData);
         headerData.append(headerChecksumedData);
 
@@ -60,13 +62,10 @@ QByteArray FingerprintReaderCommandsQueue::streamCommandData(
     return headerData + payloadData;
 }
 
-DataParseResult FingerprintReaderCommandsQueue::unstreamReceivedData(
-    const QByteArray& buffer,
-    quint16& consumedBytes,
-    CommandHeader*& header,
-    QByteArray& commandRawData) const
+std::expected<AbstractDeviceCommandsQueue::DataParseResult, DataParseError>
+    FingerprintReaderCommandsQueue::unstreamReceivedData(const QByteArray& buffer) const
 {
-    DataParseResult result = DataParseResult::WrongData;
+    std::expected<DataParseResult, DataParseError> result = std::unexpected(DataParseError::WrongData);
 
     if (buffer.size() >= headerSize)
     {
@@ -82,21 +81,24 @@ DataParseResult FingerprintReaderCommandsQueue::unstreamReceivedData(
             if (received_checksum == expected_checksum)
             {
                 // Data is consistent
-                quint8 commandId;
-                BitField::toUInt8(buffer.mid(1), commandId);
+                DataParseResult parse_result;
 
-                commandRawData = buffer.mid(2, headerMaxDataSize);
-                header = new CommandHeader(static_cast<quint32>(commandId));
+                parse_result.commandRawData = buffer.mid(2, headerMaxDataSize);
+                parse_result.consumedBytes = headerSize;
 
-                consumedBytes = headerSize;
-                result = DataParseResult::Success;
+                quint8 command_id;
+                BitField::toUInt8(buffer.mid(1), command_id);
+                parse_result.header = std::make_shared<FingerprintReaderHeader>(
+                    static_cast<FingerprintReaderCommands::Enum>(command_id));
+
+                result = parse_result;
             }
         }
     }
     else
     {
         // Wait a bit more
-        result = DataParseResult::NotEnoughData;
+        result = std::unexpected(DataParseError::NotEnoughData);
     }
 
     return result;
@@ -107,7 +109,19 @@ void FingerprintReaderCommandsQueue::fixBuffer(QByteArray& buffer) const
     fixBufferStandard(buffer, magicNumberData, magicNumberData);
 }
 
-Command* FingerprintReaderCommandsQueue::matchAnsweredCommand(const CommandHeader* header)
+Command* FingerprintReaderCommandsQueue::makeCommandImpl(const std::shared_ptr<const CommandHeader>& header)
 {
-    return matchAnsweredCommandBasic(header);
+    IF_CAST_SHARED_PTR(const FingerprintReaderHeader, fp_header, header)
+    {
+        switch (fp_header->getCommand())
+        {
+            case FingerprintReaderCommands::SetReadFingerprintAddingMode:
+                return new FingerprintAddingModeCommand(fp_header, this);
+
+            case FingerprintReaderCommands::Sleep:
+                break;
+        }
+    }
+
+    return AbstractCommandsQueue::makeCommandImpl(header);
 }
