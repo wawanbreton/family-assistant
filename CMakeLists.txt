@@ -170,8 +170,10 @@ qt_add_executable(family-assistant
     qml/theme/background/Blue.qml
     qml/theme/background/Farm.qml
     qml/theme/background/Green.qml
+    qml/theme/background/Henhouse.qml
     qml/theme/background/Orange.qml
     qml/theme/background/Pink.qml
+    qml/theme/background/Savanna.qml
     qml/theme/background/Sky.qml
     qml/theme/background/SkyWithClouds.qml
     qml/theme/background/Stable.qml

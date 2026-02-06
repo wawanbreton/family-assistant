@@ -43,6 +43,14 @@
 <a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/children" title="children icons">Children icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/fingerprint" title="fingerprint icons">Fingerprint icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/chicken" title="chicken icons">Chicken icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/chick" title="chick icons">Chick icons created by Ylivdesign - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/palm-tree" title="palm tree icons">Palm tree icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/zebra" title="zebra icons">Zebra icons created by Park Jisun - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/gazelle" title="gazelle icons">Gazelle icons created by Park Jisun - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/elephant" title="elephant icons">Elephant icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/lion" title="lion icons">Lion icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/giraffe" title="giraffe icons">Giraffe icons created by Freepik - Flaticon</a>
 
 https://www.dafont.com/super-playful.font
 https://www.dafont.com/super-crafty.font

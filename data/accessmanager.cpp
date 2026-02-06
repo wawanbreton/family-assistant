@@ -71,24 +71,26 @@ void AccessManager::tryLogAdminIn()
 
 void AccessManager::tryLogKidIn(const Kid* kid)
 {
-    if (kid->getFingerprintId().has_value())
+    if (has_access_management_)
     {
-        emit kidLoginStart();
-        Hardware::access()->matchFingerprint(
-            *kid->getFingerprintId(),
-            this,
-            [this, kid] { onTryLogKidAnswered(kid); },
-            std::bind(&AccessManager::onTryLogKidFailed, this));
+        if (kid->getFingerprintId().has_value())
+        {
+            emit kidLoginStart();
+            Hardware::access()->matchFingerprint(
+                *kid->getFingerprintId(),
+                this,
+                [this, kid] { onTryLogKidAnswered(kid); },
+                std::bind(&AccessManager::onTryLogKidFailed, this));
+        }
+        else
+        {
+            emit kidLoginFailed("Pas d'empreinte définie");
+        }
     }
     else
     {
-        emit kidLoginFailed("Pas d'empreinte définie");
+        emit kidLoggedIn(kid);
     }
-}
-
-bool AccessManager::hasAccessManagement() const
-{
-    return has_access_management_;
 }
 
 void AccessManager::registerFingerprint(User* user, int fingerprint_id)
@@ -125,11 +127,7 @@ void AccessManager::onAddFingerprintDone(User* user, int fingerprint_id)
 
 void AccessManager::setHasAccessManagement(bool has_access_management)
 {
-    if (has_access_management != has_access_management_)
-    {
-        has_access_management_ = has_access_management;
-        emit hasAccessManagementChanged(has_access_management_);
-    }
+    has_access_management_ = has_access_management;
 }
 
 void AccessManager::onTryLogAdminAnswered(quint16 fingerprint_id)

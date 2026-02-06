@@ -9,7 +9,6 @@ class AccessManager : public QObject
 {
     Q_OBJECT
     SINGLETON(AccessManager)
-    Q_PROPERTY(bool has_access_management READ hasAccessManagement NOTIFY hasAccessManagementChanged)
 
 public:
     Q_INVOKABLE void registerFingerprintForUser(User* user);
@@ -18,11 +17,7 @@ public:
 
     Q_INVOKABLE void tryLogKidIn(const Kid* kid);
 
-    bool hasAccessManagement() const;
-
 signals:
-    void hasAccessManagementChanged(bool has_access_management);
-
     void scanFingerprintStart();
 
     void scanFingerprintProgress(int step, int total_steps);

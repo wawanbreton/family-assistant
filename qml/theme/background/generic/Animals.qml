@@ -10,6 +10,9 @@ SkyWithClouds
     readonly property int cost: 100
     property string building
     property var animal
+    property alias groundColorTop: groundColor0.color
+    property alias groundColorBottom: groundColor1.color
+    property alias buildingY: imageBuilding.y
     maximumCloudsY: height / 2
 
     Rectangle
@@ -23,12 +26,13 @@ SkyWithClouds
 
         gradient: Gradient
         {
-             GradientStop { position: 0.0; color: "#9ccc65" }
-             GradientStop { position: 1.0; color: "#83bd46" }
+             GradientStop { id: groundColor0; position: 0.0; color: "#9ccc65" }
+             GradientStop { id: groundColor1; position: 1.0; color: "#83bd46" }
         }
 
         Image
         {
+            id: imageBuilding
             source: DataStorage.findResource(root.building, ResourceType.Icon)
             x: 10 + Math.random() * (parent.width - 20 - width)
             y: -180
