@@ -4,7 +4,7 @@
 #include <easyqt/json.h>
 
 #include "kid.h"
-#include "kidmanager.h"
+#include "usermanager.h"
 
 
 ActiveCasualTask::ActiveCasualTask(QObject* parent)

@@ -1,6 +1,14 @@
 {
-    "kids":
+    "users":
     [
+        {
+            "uuid": "158daf5c-e0d4-4b97-b9e7-757893487f54",
+            "name": "Solène"
+        },
+        {
+            "uuid": "e43605e2-cca7-47fd-b3cf-0cc98011bacc",
+            "name": "Erwan"
+        },
         {
             "uuid": "ddcfc4d3-cabb-4143-8b51-4afec4580150",
             "name": "Léonis",

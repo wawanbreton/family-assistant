@@ -7,7 +7,7 @@
 Q_MOC_INCLUDE("data/kid.h")
 
 class Kid;
-class KidManager;
+class UserManager;
 
 class ActiveCasualTask : public ActiveTask
 {
@@ -31,5 +31,5 @@ signals:
     void affectedKidChanged();
 
 private:
-    easyqt::LazyPointer<Kid, KidManager> affected_kid_;
+    easyqt::LazyPointer<Kid, UserManager> affected_kid_;
 };

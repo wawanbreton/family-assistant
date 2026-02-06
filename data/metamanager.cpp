@@ -7,9 +7,10 @@
 #include <easyqt/file.h>
 #include <easyqt/logger.h>
 
-#include "data/kidmanager.h"
+#include "data/accessmanager.h"
 #include "data/preferences.h"
 #include "data/taskscheduler.h"
+#include "data/usermanager.h"
 #include "hardware/hardware.h"
 
 
@@ -23,9 +24,10 @@ MetaManager::MetaManager(QObject* parent)
     easyqt::DataStorage::init(this);
     easyqt::Logger::init(this);
     Preferences::init(this);
-    KidManager::init(this);
+    UserManager::init(this);
     TaskScheduler::init(this);
     Hardware::init(this);
+    AccessManager::init(this);
 
     data_file_path_ = easyqt::DataStorage::configFile("config.json");
 
@@ -33,7 +35,7 @@ MetaManager::MetaManager(QObject* parent)
     timer_data_changed_->setInterval(1000);
     connect(timer_data_changed_, &QTimer::timeout, this, &MetaManager::save);
 
-    connect(KidManager::access(), &KidManager::changed, timer_data_changed_, qOverload<>(&QTimer::start));
+    connect(UserManager::access(), &UserManager::changed, timer_data_changed_, qOverload<>(&QTimer::start));
 }
 
 void MetaManager::load(const QString& file_path)
@@ -46,7 +48,7 @@ void MetaManager::load(const QString& file_path)
     {
         QJsonObject json_object = doc.object();
         TaskScheduler::access()->load(json_object);
-        KidManager::access()->load(json_object);
+        UserManager::access()->load(json_object);
     }
     else
     {
@@ -59,7 +61,7 @@ void MetaManager::save()
     QJsonDocument doc;
 
     QJsonObject object;
-    KidManager::get()->save(object);
+    UserManager::get()->save(object);
     TaskScheduler::get()->save(object);
     doc.setObject(object);
 

@@ -13,12 +13,10 @@
 
 
 Kid::Kid(QObject* parent)
-    : QObject{ parent }
+    : User{ parent }
     , tasks_(new TasksModel(this))
     , theme_(new Theme(this))
-    , uuid_(QUuid::createUuid())
 {
-    connect(this, &Kid::nameChanged, this, &Kid::changed);
     connect(this, &Kid::pointsChanged, this, &Kid::changed);
     connect(tasks_, &TasksModel::changed, this, &Kid::changed);
     connect(theme_, &Theme::changed, this, &Kid::changed);
@@ -26,8 +24,8 @@ Kid::Kid(QObject* parent)
 
 void Kid::load(const QJsonObject& json_object)
 {
-    uuid_ = easyqt::Json::loadProperty(json_object, "uuid", __METHOD__, uuid_);
-    name_ = easyqt::Json::loadProperty(json_object, "name", __METHOD__, name_);
+    User::load(json_object);
+
     points_ = easyqt::Json::loadProperty(json_object, "points", __METHOD__, points_);
 
     QList<QJsonObject> tasks_array
@@ -54,8 +52,8 @@ void Kid::load(const QJsonObject& json_object)
 
 void Kid::save(QJsonObject& object) const
 {
-    object["uuid"] = easyqt::Json::saveValue(uuid_);
-    object["name"] = easyqt::Json::saveValue(name_);
+    User::save(object);
+
     object["points"] = easyqt::Json::saveValue(points_);
 
     QJsonObject theme_object;
@@ -67,23 +65,9 @@ void Kid::save(QJsonObject& object) const
     object["tasks"] = tasks_array;
 }
 
-const QUuid& Kid::getUuid() const
+bool Kid::isAdmin() const
 {
-    return uuid_;
-}
-
-const QString& Kid::getName() const
-{
-    return name_;
-}
-
-void Kid::setName(const QString& name)
-{
-    if (name != name_)
-    {
-        name_ = name;
-        emit nameChanged(name_);
-    }
+    return false;
 }
 
 bool Kid::hasTasks() const

@@ -1,10 +1,14 @@
-#include "hardware/physical/fingerprintreader/fingerprintreadercommandsqueue.h"
+#include "hardware/fingerprintreader/fingerprintreadercommandsqueue.h"
 
 #include <easyqt/bitfield.h>
 #include <easyqt/qobject_helper.h>
 
-#include "hardware/physical/fingerprintreader/commands/fingerprintaddingmodecommand.h"
-#include "hardware/physical/fingerprintreader/fingerprintreaderheader.h"
+#include "hardware/fingerprintreader/commands/addfingerprintcommand.h"
+#include "hardware/fingerprintreader/commands/checkfingerprintcommand.h"
+#include "hardware/fingerprintreader/commands/fingerprintaddingmodecommand.h"
+#include "hardware/fingerprintreader/commands/getuserscountcommand.h"
+#include "hardware/fingerprintreader/commands/sendusercommand.h"
+#include "hardware/fingerprintreader/fingerprintreaderheader.h"
 
 // #include "platform/utils/qt/assertutils.h"
 
@@ -118,8 +122,24 @@ Command* FingerprintReaderCommandsQueue::makeCommandImpl(const std::shared_ptr<c
             case FingerprintReaderCommands::SetReadFingerprintAddingMode:
                 return new FingerprintAddingModeCommand(fp_header, this);
 
+            case FingerprintReaderCommands::AddFingerprint1:
+            case FingerprintReaderCommands::AddFingerprint2:
+            case FingerprintReaderCommands::AddFingerprint3:
+                return new AddFingerprintCommand(fp_header, this);
+
+            case FingerprintReaderCommands::RemoveFingerprint:
+            case FingerprintReaderCommands::CheckUserFingerprint:
+                return new SendUserCommand(fp_header, this);
+
+            case FingerprintReaderCommands::GetFingerprintsCount:
+                return new GetUsersCountCommand(fp_header, this);
+
+            case FingerprintReaderCommands::CheckFingerprint:
+                return new CheckFingerprintCommand(fp_header, this);
+
             case FingerprintReaderCommands::Sleep:
-                break;
+            case FingerprintReaderCommands::RemoveAllFingerprints:
+                return new BaseFingerprintCommand(fp_header, this);
         }
     }
 

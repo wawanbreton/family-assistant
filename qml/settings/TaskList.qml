@@ -50,14 +50,14 @@ Item
         Carousel
         {
             id: carouselKids
-            model: kid_manager.kids
+            model: user_manager.kids
             Layout.fillWidth: true
             currentIndex:
             {
                 var current_task = tasks_scheduler.casual_tasks[carouselTasks.currentIndex];
                 if(current_task.affected_kid !== null)
                 {
-                    return kid_manager.findIndex(current_task.affected_kid);
+                    return user_manager.findIndex(current_task.affected_kid);
                 }
 
                 return 0
@@ -79,7 +79,7 @@ Item
             onCurrentIndexChanged:
             {
                 var current_task = tasks_scheduler.casual_tasks[carouselTasks.currentIndex];
-                var current_kid = kid_manager.kids[carouselKids.currentIndex];
+                var current_kid = user_manager.kids[carouselKids.currentIndex];
                 current_task.affected_kid = current_kid;
             }
         }

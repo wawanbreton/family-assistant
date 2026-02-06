@@ -1,12 +1,12 @@
 #pragma once
 
-#include <easyqt/communication/commands/command.h>
+#include "hardware/fingerprintreader/commands/basefingerprintcommand.h"
+#include "hardware/fingerprintreader/fingerprintaddingmode.h"
 
-#include "hardware/physical/fingerprintreader/fingerprintaddingmode.h"
 
 class FingerprintReaderHeader;
 
-class FingerprintAddingModeCommand : public Command
+class FingerprintAddingModeCommand : public BaseFingerprintCommand
 {
     Q_OBJECT
 
@@ -34,7 +34,6 @@ protected:
 
     virtual bool unstreamCommandDataImpl(const QByteArray& rawData, CommandDataType::Enum dataType) override;
 
-private:
 private:
     Action action_{ Action::Read };
     FingerprintAddingMode mode_{ FingerprintAddingMode::DisableRepeat };

@@ -7,7 +7,7 @@ Item
     signal triggered()
 
     property alias gradient: mainRectangle.gradient
-    readonly property int clickConfirmDuration: 800
+    property int clickConfirmDuration: 800
 
     id: root
     height: 100
@@ -92,6 +92,7 @@ Item
     {
         id: mouseArea
         anchors.fill: parent
+        enabled: clickConfirmDuration > 0
         onPressed:
         {
             animationClickCancel.stop();

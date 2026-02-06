@@ -2,12 +2,13 @@
 
 #include <easyqt/bitfield.h>
 
-#include "hardware/physical/fingerprintreader/fingerprintreaderheader.h"
-#include "hardware/physical/fingerprintreader/fingerprintreaderresultcodes.h"
+#include "hardware/fingerprintreader/fingerprintreaderheader.h"
 
 
-FingerprintAddingModeCommand::FingerprintAddingModeCommand(const std::shared_ptr<const FingerprintReaderHeader> &header, QObject* parent)
-    : Command{ header, parent }
+FingerprintAddingModeCommand::FingerprintAddingModeCommand(
+    const std::shared_ptr<const FingerprintReaderHeader>& header,
+    QObject* parent)
+    : BaseFingerprintCommand{ header, parent }
 {
 }
 
@@ -34,22 +35,24 @@ std::optional<QByteArray> FingerprintAddingModeCommand::streamData(CommandDataTy
 
 bool FingerprintAddingModeCommand::unstreamCommandDataImpl(const QByteArray& rawData, CommandDataType::Enum dataType)
 {
-    quint8 current_mode;
-    quint8 acknowledge;
-
-    if (! BitField::toUInt8(rawData.mid(1), current_mode) || ! BitField::toUInt8(rawData.mid(2), acknowledge))
+    if (! BaseFingerprintCommand::unstreamCommandDataImpl(rawData, dataType))
     {
         return false;
     }
 
-    if (acknowledge != static_cast<quint8>(FingerprintReaderResultCodes::Success))
+    quint8 current_mode;
+
+    if (! BitField::toUInt8(rawData.mid(1), current_mode))
     {
         return false;
     }
 
     mode_ = static_cast<FingerprintAddingMode>(current_mode);
 
-    emit readDone(mode_);
+    if (action_ == Action::Read)
+    {
+        emit readDone(mode_);
+    }
 
     return true;
 }

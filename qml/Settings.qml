@@ -55,5 +55,12 @@ Item
                 text: "Rien à voir ici"
             }
         }
+
+        Tab
+        {
+            title: "Utilisateurs"
+
+            Users { }
+        }
     }
 }

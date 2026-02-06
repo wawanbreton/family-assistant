@@ -2,7 +2,7 @@
 
 #include <easyqt/communication/commands/commandheader.h>
 
-#include "hardware/physical/fingerprintreader/fingerprintreadercommands.h"
+#include "hardware/fingerprintreader/fingerprintreadercommands.h"
 
 class FingerprintReaderHeader : public CommandHeader
 {

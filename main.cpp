@@ -8,13 +8,14 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
+#include "data/accessmanager.h"
 #include "data/kid.h"
-#include "data/kidmanager.h"
 #include "data/metamanager.h"
 #include "data/taskscheduler.h"
 #include "data/taskstate.h"
 #include "data/theme.h"
 #include "data/themecategory.h"
+#include "data/usermanager.h"
 #include "easyqt/datastorage.h"
 #include "easyqt/resourcetype.h"
 #include "hardware/hardware.h"
@@ -66,7 +67,7 @@ int main(int argc, char* argv[])
         bool all_due_tasks_empty = true;
         bool obsolete_tasks = false;
         const auto current_date = QDateTime::currentDateTime().date();
-        for (const Kid* kid : KidManager::access()->getKids())
+        for (const Kid* kid : UserManager::access()->getKids())
         {
             if (kid->hasTasks())
             {
@@ -89,9 +90,10 @@ int main(int argc, char* argv[])
         qApp->setPalette(palette);
 
         QQmlApplicationEngine engine;
-        engine.rootContext()->setContextProperty("kid_manager", KidManager::access());
+        engine.rootContext()->setContextProperty("user_manager", UserManager::access());
         engine.rootContext()->setContextProperty("tasks_scheduler", TaskScheduler::access());
         engine.rootContext()->setContextProperty("hardware", Hardware::access());
+        engine.rootContext()->setContextProperty("access", AccessManager::access());
         engine.rootContext()->setContextProperty("DataStorage", easyqt::DataStorage::access());
         engine.rootContext()->setContextProperty("Theme", &global_theme);
         engine.rootContext()->setContextProperty("fullscreen", commands_line_parser.isSet("fullscreen"));

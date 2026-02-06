@@ -11,7 +11,7 @@
 #include "data/activerecurringtask.h"
 #include "data/duetask.h"
 #include "data/kid.h"
-#include "data/kidmanager.h"
+#include "data/usermanager.h"
 #include "preferences.h"
 
 
@@ -63,7 +63,7 @@ void TaskScheduler::start(bool reset_tasks)
 {
     if (reset_tasks)
     {
-        for (Kid* kid : KidManager::access()->getKids())
+        for (Kid* kid : UserManager::access()->getKids())
         {
             kid->clearTasks();
         }
@@ -156,7 +156,7 @@ void TaskScheduler::spawnDueTasks()
                     continue;
                 }
 
-                for (Kid* kid : KidManager::access()->getKids())
+                for (Kid* kid : UserManager::access()->getKids())
                 {
                     auto due_task = new DueTask();
                     due_task->setTask(active_task);

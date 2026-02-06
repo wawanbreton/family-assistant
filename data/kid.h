@@ -5,14 +5,14 @@
 
 #include "data/tasksmodel.h"
 #include "data/theme.h"
+#include "data/user.h"
 
 class ActiveTask;
 class DueTask;
 
-class Kid : public QObject
+class Kid : public User
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(const TasksModel* tasks READ getTasks CONSTANT STORED false)
     Q_PROPERTY(Theme* theme READ getTheme CONSTANT STORED false)
     Q_PROPERTY(quint32 points READ getPoints WRITE setPoints NOTIFY pointsChanged)
@@ -20,15 +20,11 @@ class Kid : public QObject
 public:
     explicit Kid(QObject* parent = nullptr);
 
-    void load(const QJsonObject& json_object);
+    virtual void load(const QJsonObject& json_object) override;
 
-    void save(QJsonObject& object) const;
+    virtual void save(QJsonObject& object) const override;
 
-    const QUuid& getUuid() const;
-
-    const QString& getName() const;
-
-    void setName(const QString& name);
+    virtual bool isAdmin() const override;
 
     bool hasTasks() const;
 
@@ -49,15 +45,9 @@ public:
     void setPoints(const quint32 points);
 
 signals:
-    void changed();
-
-    void nameChanged(const QString& name);
-
     void pointsChanged(const quint32 points, const qint32 delta);
 
 private:
-    QUuid uuid_;
-    QString name_;
     TasksModel* const tasks_;
     Theme* const theme_;
     quint32 points_{ 0 };

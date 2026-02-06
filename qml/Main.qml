@@ -1,7 +1,9 @@
 import QtQuick
+import "access"
 
 Window
 {
+    id: main
     width: 1280
     height: 800
     visible: true
@@ -26,6 +28,11 @@ Window
         {
             mainView.setView(id);
         }
+    }
+
+    ScanFingerprint
+    {
+        anchors.fill: parent
     }
 
     Component.onCompleted:

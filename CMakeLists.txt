@@ -40,12 +40,13 @@ qt_add_executable(family-assistant
 
     # CPP source files
     main.cpp
+    data/accessmanager.h data/accessmanager.cpp
     data/activecasualtask.h data/activecasualtask.cpp
     data/activerecurringtask.h data/activerecurringtask.cpp
     data/activetask.h data/activetask.cpp
     data/dayofweek.h
     data/kid.h data/kid.cpp
-    data/kidmanager.h data/kidmanager.cpp
+    data/usermanager.h data/usermanager.cpp
     data/metamanager.h data/metamanager.cpp
     data/preferenceentry.h
     data/preferences.h data/preferences.cpp
@@ -57,17 +58,23 @@ qt_add_executable(family-assistant
     data/taskstate.h
     data/theme.h data/theme.cpp
     data/themecategory.h
+    data/user.h data/user.cpp
 
     hardware/hardware.h hardware/hardware.cpp
     hardware/backlightmanager.cpp hardware/backlightmanager.h
 
-    hardware/physical/fingerprintreader/commands/fingerprintaddingmodecommand.h hardware/physical/fingerprintreader/commands/fingerprintaddingmodecommand.cpp
-    hardware/physical/fingerprintreader/fingerprintaddingmode.h
-    hardware/physical/fingerprintreader/fingerprintreadercommands.h
-    hardware/physical/fingerprintreader/fingerprintreadercommandsqueue.h hardware/physical/fingerprintreader/fingerprintreadercommandsqueue.cpp
-    hardware/physical/fingerprintreader/fingerprintreaderheader.h hardware/physical/fingerprintreader/fingerprintreaderheader.cpp
-    hardware/physical/fingerprintreader/fingerprintreaderinterface.h hardware/physical/fingerprintreader/fingerprintreaderinterface.cpp
-    hardware/physical/fingerprintreader/fingerprintreaderresultcodes.h
+    hardware/fingerprintreader/commands/addfingerprintcommand.h hardware/fingerprintreader/commands/addfingerprintcommand.cpp
+    hardware/fingerprintreader/commands/basefingerprintcommand.h hardware/fingerprintreader/commands/basefingerprintcommand.cpp
+    hardware/fingerprintreader/commands/checkfingerprintcommand.h hardware/fingerprintreader/commands/checkfingerprintcommand.cpp
+    hardware/fingerprintreader/commands/fingerprintaddingmodecommand.h hardware/fingerprintreader/commands/fingerprintaddingmodecommand.cpp
+    hardware/fingerprintreader/commands/getuserscountcommand.h hardware/fingerprintreader/commands/getuserscountcommand.cpp
+    hardware/fingerprintreader/commands/sendusercommand.h hardware/fingerprintreader/commands/sendusercommand.cpp
+    hardware/fingerprintreader/fingerprintaddingmode.h
+    hardware/fingerprintreader/fingerprintreadercommands.h
+    hardware/fingerprintreader/fingerprintreadercommandsqueue.h hardware/fingerprintreader/fingerprintreadercommandsqueue.cpp
+    hardware/fingerprintreader/fingerprintreaderheader.h hardware/fingerprintreader/fingerprintreaderheader.cpp
+    hardware/fingerprintreader/fingerprintreaderinterface.h hardware/fingerprintreader/fingerprintreaderinterface.cpp
+    hardware/fingerprintreader/fingerprintreaderresultcodes.h
 
     # Shaders
     ${SHADER_FILES}
@@ -82,7 +89,6 @@ qt_add_executable(family-assistant
     qml/Point.qml
     qml/PointsCounter.qml
     qml/PointsTransfer.qml
-
     qml/Rewards.qml
     qml/Settings.qml
     qml/Task.qml
@@ -90,11 +96,14 @@ qt_add_executable(family-assistant
     qml/MainView.qml
     qml/Vault.qml
 
+    qml/access/ScanFingerprint.qml
+
     qml/components/ChangeableImage.qml
     qml/components/NormalText.qml
     qml/components/BaseText.qml
     qml/components/Glow.qml
     qml/components/LargeText.qml
+    qml/components/ProgressBar.qml
     qml/components/StyledGradient.qml
     qml/components/VerticalTabView.qml
     qml/components/RandomMirror.qml
@@ -114,6 +123,7 @@ qt_add_executable(family-assistant
 
     qml/settings/TaskControl.qml
     qml/settings/TaskList.qml
+    qml/settings/Users.qml
 
     qml/theme/point/DollarCoin.qml
     qml/theme/point/StarCoin.qml
@@ -232,6 +242,7 @@ target_link_libraries(family-assistant
     easyqt::easyqt
 )
 
+target_compile_options(family-assistant PRIVATE -Werror=switch)
 target_compile_features(family-assistant PRIVATE cxx_std_23)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)

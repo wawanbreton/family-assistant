@@ -13,7 +13,7 @@ Item
 
         Repeater
         {
-            model: kid_manager.kids
+            model: user_manager.kids
 
             KidTasksView
             {

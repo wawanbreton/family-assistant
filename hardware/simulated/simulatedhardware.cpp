@@ -3,7 +3,7 @@
 #include <QFile>
 #include <QSerialPort>
 
-#include "hardware/physical/fingerprintreader/fingerprintreaderinterface.h"
+#include "hardware/fingerprintreader/fingerprintreaderinterface.h"
 #include "hardware/simulated/simulatedhardwarewidget.h"
 
 
@@ -16,42 +16,56 @@ SimulatedHardware::SimulatedHardware(QObject* parent)
     widget_->move(0, 0);
     widget_->show();
 
-    auto serial_port = new QSerialPort("/dev/ttyUSB0", this);
-    if (serial_port->open(QIODevice::ReadWrite))
+    if (getFingerprint())
     {
-        serial_port->setBaudRate(QSerialPort::Baud19200);
-        serial_port->setDataBits(QSerialPort::Data8);
-        serial_port->setStopBits(QSerialPort::OneStop);
-        serial_port->setFlowControl(QSerialPort::NoFlowControl);
-        serial_port->setParity(QSerialPort::NoParity);
-        constexpr const bool log_raw_data = true;
-        auto fingerprint_reader = new FingerprintReaderInterface(this, serial_port, log_raw_data);
-
-        fingerprint_reader->readFingerprintAddingMode(
+        connect(widget_, &SimulatedHardwareWidget::readUsersCount, this, &SimulatedHardware::onReadUsersCount);
+        connect(
+            widget_,
+            &SimulatedHardwareWidget::clearAllFingerprints,
             this,
-            [](FingerprintAddingMode mode) { qDebug() << "mode1" << static_cast<quint8>(mode); },
-            []() { qDebug() << "il veut toujours pas repondre"; });
-
-        fingerprint_reader->setFingerprintAddingMode(
-            FingerprintAddingMode::EnableRepeat,
-            this,
-            []() { qDebug() << "c'est change"; },
-            []() { qDebug() << "il veut toujours pas repondre2"; });
-
-        fingerprint_reader->readFingerprintAddingMode(
-            this,
-            [](FingerprintAddingMode mode) { qDebug() << "mode2" << static_cast<quint8>(mode); },
-            []() { qDebug() << "il veut toujours pas repondre3"; });
+            &SimulatedHardware::onClearAllFingerprints);
+        connect(widget_, &SimulatedHardwareWidget::matchUser, this, &SimulatedHardware::onMatchUser);
+        connect(widget_, &SimulatedHardwareWidget::scanUser, this, &SimulatedHardware::onScanUser);
     }
-    else
-    {
-        qWarning() << "Unable to open fingerprint reader on" << serial_port->portName()
-                   << ", make sure that it is connected";
-        delete serial_port;
-    }
+
+    widget_->setFingerprintReaderEnabled(getFingerprint());
 }
 
 void SimulatedHardware::setBacklight(const qreal power_percent)
 {
     widget_->setBacklight(power_percent);
+}
+
+void SimulatedHardware::onReadUsersCount()
+{
+    getFingerprint()->getFingerprintsCount(
+        this,
+        [this](quint16 count) { widget_->setUsersCount(count); },
+        [this] { widget_->setUsersCount(std::nullopt); });
+}
+
+void SimulatedHardware::onClearAllFingerprints()
+{
+    getFingerprint()->removeAllFingerprints();
+}
+
+void SimulatedHardware::onMatchUser()
+{
+    getFingerprint()->checkFingerprint(
+        10000,
+        this,
+        [this](quint16 user, quint8) { widget_->setMatchedUser(user); },
+        [this] { widget_->setMatchedUser(std::nullopt); });
+}
+
+void SimulatedHardware::onScanUser(int attempt, int user_id)
+{
+    getFingerprint()->addFingerprint(
+        user_id,
+        1,
+        attempt,
+        10000,
+        this,
+        [this] { widget_->setScanAttemptSuccess(true); },
+        [this] { widget_->setScanAttemptSuccess(false); });
 }
