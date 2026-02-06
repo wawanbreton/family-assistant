@@ -11,8 +11,6 @@ SimulatedHardware::SimulatedHardware(QObject* parent)
     : Hardware{ parent }
     , widget_(new SimulatedHardwareWidget())
 {
-    connect(widget_, &SimulatedHardwareWidget::parentUnlock, this, &SimulatedHardware::parentUnlock);
-
     widget_->move(0, 0);
     widget_->show();
 
@@ -24,6 +22,7 @@ SimulatedHardware::SimulatedHardware(QObject* parent)
             &SimulatedHardwareWidget::clearAllFingerprints,
             this,
             &SimulatedHardware::onClearAllFingerprints);
+        connect(widget_, &SimulatedHardwareWidget::matchAny, this, &SimulatedHardware::onMatchAny);
         connect(widget_, &SimulatedHardwareWidget::matchUser, this, &SimulatedHardware::onMatchUser);
         connect(widget_, &SimulatedHardwareWidget::scanUser, this, &SimulatedHardware::onScanUser);
     }
@@ -49,13 +48,23 @@ void SimulatedHardware::onClearAllFingerprints()
     getFingerprint()->removeAllFingerprints();
 }
 
-void SimulatedHardware::onMatchUser()
+void SimulatedHardware::onMatchAny()
 {
     getFingerprint()->checkFingerprint(
         10000,
         this,
-        [this](quint16 user, quint8) { widget_->setMatchedUser(user); },
-        [this] { widget_->setMatchedUser(std::nullopt); });
+        [this](quint16 user, quint8) { widget_->setMatchedAny(user); },
+        [this] { widget_->setMatchedAny(std::nullopt); });
+}
+
+void SimulatedHardware::onMatchUser(int user_id)
+{
+    getFingerprint()->checkFingerprint(
+        user_id,
+        10000,
+        this,
+        [this] { widget_->setMatchedUser(true); },
+        [this] { widget_->setMatchedUser(false); });
 }
 
 void SimulatedHardware::onScanUser(int attempt, int user_id)

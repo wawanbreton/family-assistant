@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <QFile>
 #include <QSerialPort>
+#include <QSerialPortInfo>
 
 #include "hardware/backlightmanager.h"
 #include "hardware/fingerprintreader/fingerprintreaderinterface.h"
@@ -24,23 +25,41 @@ Hardware::Hardware(QObject* parent)
     connect(power_manager, &BacklightManager::setBacklight, this, &Hardware::setBacklight);
     qApp->installEventFilter(power_manager);
 
-    auto serial_port = new QSerialPort("/dev/ttyUSB0", this);
-    if (serial_port->open(QIODevice::ReadWrite))
+    QString port_name;
+    for (const QSerialPortInfo& port_info : QSerialPortInfo::availablePorts())
     {
-        serial_port->setBaudRate(QSerialPort::Baud19200);
-        serial_port->setDataBits(QSerialPort::Data8);
-        serial_port->setStopBits(QSerialPort::OneStop);
-        serial_port->setFlowControl(QSerialPort::NoFlowControl);
-        serial_port->setParity(QSerialPort::NoParity);
+        if (port_info.hasProductIdentifier() && port_info.hasVendorIdentifier()
+            && port_info.vendorIdentifier() == 0x067b && port_info.productIdentifier() == 0x2303)
+        {
+            port_name = port_info.systemLocation();
+        }
+    }
 
-        constexpr bool log_raw_data = false;
-        fingerprint_ = new FingerprintReaderInterface(this, serial_port, log_raw_data);
+    if (! port_name.isEmpty())
+    {
+        auto serial_port = new QSerialPort(port_name, this);
+        if (serial_port->open(QIODevice::ReadWrite))
+        {
+            qInfo() << "Fingerprint reader successfully opened on" << port_name;
+
+            serial_port->setBaudRate(QSerialPort::Baud19200);
+            serial_port->setDataBits(QSerialPort::Data8);
+            serial_port->setStopBits(QSerialPort::OneStop);
+            serial_port->setFlowControl(QSerialPort::NoFlowControl);
+            serial_port->setParity(QSerialPort::NoParity);
+
+            constexpr bool log_raw_data = false;
+            fingerprint_ = new FingerprintReaderInterface(this, serial_port, log_raw_data);
+        }
+        else
+        {
+            qWarning() << "Unable to open fingerprint reader on" << port_name;
+            delete serial_port;
+        }
     }
     else
     {
-        qWarning() << "Unable to open fingerprint reader on" << serial_port->portName()
-                   << ", make sure that it is connected";
-        delete serial_port;
+        qWarning() << "Unable to find fingerprint reader,  make sure that it is connected";
     }
 }
 
@@ -100,6 +119,33 @@ void Hardware::readFingerprintsCount(
     if (fingerprint_)
     {
         fingerprint_->getFingerprintsCount(receiver, slotSuccess, slotError);
+    }
+}
+
+void Hardware::matchFingerprint(
+    const quint16 user,
+    QObject* receiver,
+    const SlotNoArgType& slotSuccess,
+    const SlotNoArgType& slotError)
+{
+    if (fingerprint_)
+    {
+        fingerprint_->checkFingerprint(user, 10000, receiver, slotSuccess, slotError);
+    }
+}
+
+void Hardware::matchFingerprint(
+    QObject* receiver,
+    const std::function<void(quint16)>& slotSuccess,
+    const SlotNoArgType& slotError)
+{
+    if (fingerprint_)
+    {
+        fingerprint_->checkFingerprint(
+            10000,
+            receiver,
+            [slotSuccess](quint16 user, quint8 permisions) { slotSuccess(user); },
+            slotError);
     }
 }
 

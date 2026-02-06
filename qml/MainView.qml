@@ -30,11 +30,16 @@ Item
 
     Connections
     {
-        target: hardware
+        target: access
 
-        function onParentUnlock()
+        function onAdminLoggedIn()
         {
             setMainItem(componentSettings);
+        }
+
+        function onKidLoggedIn(kid)
+        {
+            setMainItem(componentRewards, {kid: kid});
         }
     }
 
@@ -54,7 +59,7 @@ Item
 
     function displayRewards(kid: var)
     {
-        setMainItem(componentRewards, {kid: kid});
+        access.tryLogKidIn(kid);
     }
 
     function setView(view: string)
@@ -65,7 +70,7 @@ Item
         }
         else if(view === "settings")
         {
-            setMainItem(componentSettings);
+            access.tryLogAdminIn();
         }
     }
 }

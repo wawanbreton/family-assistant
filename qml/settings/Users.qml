@@ -8,14 +8,17 @@ Item
 {
     ColumnLayout
     {
-        anchors.fill: parent
-        anchors.leftMargin: 16
-        anchors.rightMargin: 16
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.margins: 16
         spacing: 32
 
-        Item
+        NormalText
         {
-            Layout.fillHeight: true
+            text: "Empreintes digitales"
+            Layout.fillWidth: true
+            horizontalAlignment: Qt.AlignHCenter
         }
 
         Carousel
@@ -71,11 +74,6 @@ Item
             }
 
             onTriggered: access.registerFingerprintForUser(carouselUsers.model[carouselUsers.currentIndex])
-        }
-
-        Item
-        {
-            Layout.fillHeight: true
         }
     }
 }

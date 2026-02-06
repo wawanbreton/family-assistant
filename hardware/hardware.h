@@ -28,12 +28,20 @@ public:
         const SlotNoArgType& slotError = nullptr);
 
     virtual void readFingerprintsCount(
-        QObject* receiver = nullptr,
-        const std::function<void(quint16)>& slotSuccess = nullptr,
+        QObject* receiver,
+        const std::function<void(quint16)>& slotSuccess,
         const SlotNoArgType& slotError = nullptr);
 
-signals:
-    void parentUnlock();
+    virtual void matchFingerprint(
+        const quint16 user,
+        QObject* receiver,
+        const SlotNoArgType& slotSuccess,
+        const SlotNoArgType& slotError);
+
+    virtual void matchFingerprint(
+        QObject* receiver,
+        const std::function<void(quint16)>& slotSuccess,
+        const SlotNoArgType& slotError);
 
 protected:
     FingerprintReaderInterface* getFingerprint();

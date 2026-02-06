@@ -21,18 +21,20 @@ public:
 
     void setUsersCount(const std::optional<int> users);
 
-    void setMatchedUser(const std::optional<int> user);
+    void setMatchedAny(const std::optional<int> user);
+
+    void setMatchedUser(bool matched);
 
     void setScanAttemptSuccess(bool success);
 
 signals:
-    void parentUnlock();
-
     void readUsersCount();
 
     void clearAllFingerprints();
 
-    void matchUser();
+    void matchAny();
+
+    void matchUser(int user_id);
 
     void scanUser(int attempt, int user_id);
 

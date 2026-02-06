@@ -19,7 +19,9 @@ private:
 
     void onClearAllFingerprints();
 
-    void onMatchUser();
+    void onMatchAny();
+
+    void onMatchUser(int user_id);
 
     void onScanUser(int attempt, int user_id);
 

@@ -272,6 +272,7 @@ Item
     {
         id: mouseArea
         anchors.fill: parent
+        enabled: clickConfirmDuration > 0
         onPressed:
         {
             animationClickCancel.stop();

@@ -9,10 +9,14 @@ SimulatedHardwareWidget::SimulatedHardwareWidget(QWidget* parent)
 {
     ui_->setupUi(this);
 
-    connect(ui_->buttonParentUnlock, &QPushButton::clicked, this, &SimulatedHardwareWidget::parentUnlock);
     connect(ui_->buttonClearFingerprints, &QPushButton::clicked, this, &SimulatedHardwareWidget::clearAllFingerprints);
     connect(ui_->buttonReadUsersCount, &QPushButton::clicked, this, &SimulatedHardwareWidget::readUsersCount);
-    connect(ui_->buttonMatchUser, &QPushButton::clicked, this, &SimulatedHardwareWidget::matchUser);
+    connect(ui_->buttonMatchAny, &QPushButton::clicked, this, &SimulatedHardwareWidget::matchAny);
+    connect(
+        ui_->buttonMatchUser,
+        &QPushButton::clicked,
+        this,
+        [this] { emit matchUser(ui_->spinBoxMatchUserId->value()); });
     connect(
         ui_->buttonScanUser,
         &QPushButton::clicked,
@@ -40,9 +44,14 @@ void SimulatedHardwareWidget::setUsersCount(const std::optional<int> users)
     ui_->labelUsersCount->setText(users.has_value() ? QString::number(*users) : "#ERROR");
 }
 
-void SimulatedHardwareWidget::setMatchedUser(const std::optional<int> user)
+void SimulatedHardwareWidget::setMatchedAny(const std::optional<int> user)
 {
-    ui_->labelMatchedUser->setText(user.has_value() ? QString::number(*user) : "#NONE");
+    ui_->labelMatchedAny->setText(user.has_value() ? QString::number(*user) : "#NONE");
+}
+
+void SimulatedHardwareWidget::setMatchedUser(bool matched)
+{
+    ui_->labelMatchedUser->setText(matched ? "MATCH" : "#ERROR");
 }
 
 void SimulatedHardwareWidget::setScanAttemptSuccess(bool success)

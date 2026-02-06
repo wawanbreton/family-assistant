@@ -5,13 +5,13 @@ project(family-assistant VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.7 REQUIRED COMPONENTS Quick ShaderTools)
+find_package(Qt6 6.7 REQUIRED COMPONENTS Quick ShaderTools SerialPort)
 find_package(easyqt REQUIRED)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     message("####### Simulator mode")
     add_compile_definitions(ENV_SIMULATOR)
-    find_package(Qt6 6.7 REQUIRED COMPONENTS Widgets SerialPort)
+    find_package(Qt6 6.7 REQUIRED COMPONENTS Widgets)
 
     set(EXTRA_SOURCES
         hardware/simulated/simulatedhardware.h hardware/simulated/simulatedhardware.cpp
@@ -239,6 +239,7 @@ set_target_properties(family-assistant PROPERTIES
 target_link_libraries(family-assistant
     PRIVATE
     Qt6::Quick
+    Qt6::SerialPort
     easyqt::easyqt
 )
 
@@ -249,7 +250,6 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     target_link_libraries(family-assistant
         PRIVATE
         Qt6::Widgets
-        Qt6::SerialPort
     )
 endif()
 

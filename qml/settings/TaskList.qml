@@ -7,9 +7,11 @@ Item
 {
     ColumnLayout
     {
-        anchors.fill: parent
-        anchors.leftMargin: 16
-        anchors.rightMargin: 16
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.margins: 16
+        spacing: 32
 
         NormalText
         {
@@ -35,14 +37,7 @@ Item
                     task: taskItemParent.modelData
                     width: 400
                     anchors.centerIn: parent
-                    clickConfirmDuration: 500
-
-                    onTaskActivated:
-                    {
-                        rollbackProgress();
-                        glow.startGlowing();
-                        tasks_scheduler.appendCasualTask(task.task);
-                    }
+                    clickConfirmDuration: 0
                 }
             }
         }

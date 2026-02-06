@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>766</width>
+    <width>794</width>
     <height>368</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,1">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
    <item>
     <widget class="QSlider" name="sliderBacklight">
      <property name="enabled">
@@ -33,25 +33,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="buttonParentUnlock">
-     <property name="text">
-      <string notr="true">Parent unlock</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QGroupBox" name="groupBoxFingerprint">
      <property name="title">
       <string notr="true">Fingerprint reader</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QPushButton" name="buttonClearFingerprints">
-        <property name="text">
-         <string notr="true">Clear all users</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="1">
        <widget class="QLabel" name="labelUsersCount">
         <property name="text">
@@ -59,24 +45,17 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="buttonScanUser">
-        <property name="text">
-         <string notr="true">Scan user</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
+      <item row="4" column="3">
        <widget class="QLabel" name="labelScanResult">
         <property name="text">
          <string notr="true">--</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QPushButton" name="buttonMatchUser">
+      <item row="2" column="1">
+       <widget class="QLabel" name="labelMatchedAny">
         <property name="text">
-         <string notr="true">Match user</string>
+         <string notr="true">--</string>
         </property>
        </widget>
       </item>
@@ -87,7 +66,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="4" column="1">
        <widget class="QSpinBox" name="spinBoxAttempt">
         <property name="prefix">
          <string>attempt </string>
@@ -100,14 +79,28 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="labelMatchedUser">
+      <item row="2" column="0">
+       <widget class="QPushButton" name="buttonMatchAny">
         <property name="text">
-         <string notr="true">--</string>
+         <string notr="true">Match any</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
+      <item row="4" column="0">
+       <widget class="QPushButton" name="buttonScanUser">
+        <property name="text">
+         <string notr="true">Scan user</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="buttonClearFingerprints">
+        <property name="text">
+         <string notr="true">Clear all users</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
        <widget class="QSpinBox" name="spinBoxScanUserId">
         <property name="prefix">
          <string>user </string>
@@ -117,6 +110,33 @@
         </property>
         <property name="maximum">
          <number>4095</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="buttonMatchUser">
+        <property name="text">
+         <string notr="true">Match user</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="spinBoxMatchUserId">
+        <property name="prefix">
+         <string>user </string>
+        </property>
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>4095</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="labelMatchedUser">
+        <property name="text">
+         <string notr="true">--</string>
         </property>
        </widget>
       </item>

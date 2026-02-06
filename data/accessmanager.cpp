@@ -2,7 +2,7 @@
 
 #include <ranges>
 
-#include "data/user.h"
+#include "data/kid.h"
 #include "data/usermanager.h"
 #include "hardware/hardware.h"
 
@@ -48,9 +48,42 @@ void AccessManager::registerFingerprintForUser(User* user)
     }
 
     scan_fingerprint_attempt_ = 1;
-    emit scanFingerprintStart(true);
+    emit scanFingerprintStart();
     emit scanFingerprintProgress(0, scan_attempts);
     registerFingerprint(user, first_available_fingerprint_id);
+}
+
+void AccessManager::tryLogAdminIn()
+{
+    if (has_access_management_)
+    {
+        emit adminLoginStart();
+        Hardware::access()->matchFingerprint(
+            this,
+            std::bind(&AccessManager::onTryLogAdminAnswered, this, std::placeholders::_1),
+            std::bind(&AccessManager::onTryLogAdminFailed, this));
+    }
+    else
+    {
+        emit adminLoggedIn();
+    }
+}
+
+void AccessManager::tryLogKidIn(const Kid* kid)
+{
+    if (kid->getFingerprintId().has_value())
+    {
+        emit kidLoginStart();
+        Hardware::access()->matchFingerprint(
+            *kid->getFingerprintId(),
+            this,
+            [this, kid] { onTryLogKidAnswered(kid); },
+            std::bind(&AccessManager::onTryLogKidFailed, this));
+    }
+    else
+    {
+        emit kidLoginFailed("Pas d'empreinte définie");
+    }
 }
 
 bool AccessManager::hasAccessManagement() const
@@ -97,4 +130,40 @@ void AccessManager::setHasAccessManagement(bool has_access_management)
         has_access_management_ = has_access_management;
         emit hasAccessManagementChanged(has_access_management_);
     }
+}
+
+void AccessManager::onTryLogAdminAnswered(quint16 fingerprint_id)
+{
+    const QList<User*>& users = UserManager::get()->getUsers();
+    auto iterator = std::ranges::find_if(
+        users,
+        [fingerprint_id](const User* user) { return user->getFingerprintId() == fingerprint_id; });
+    if (iterator == users.end())
+    {
+        emit adminLoginFailed("Empreinte non associée");
+        return;
+    }
+
+    if (! (*iterator)->isAdmin())
+    {
+        emit adminLoginFailed("Accès refusé");
+        return;
+    }
+
+    emit adminLoggedIn();
+}
+
+void AccessManager::onTryLogAdminFailed()
+{
+    emit adminLoginFailed("Erreur de lecture");
+}
+
+void AccessManager::onTryLogKidAnswered(const Kid* kid)
+{
+    emit kidLoggedIn(kid);
+}
+
+void AccessManager::onTryLogKidFailed()
+{
+    emit kidLoginFailed("Empreinte non reconnue");
 }

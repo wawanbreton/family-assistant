@@ -71,13 +71,10 @@ Rectangle
     Connections
     {
         target: access
-        function onScanFingerprintStart(display_progress: bool)
+
+        function onScanFingerprintStart()
         {
-            textMessage.text = "Veuillez scanner votre empreinte"
-            textMessage.color = "black"
-            root.visible = true;
-            root.opacity = root.targetOpacity
-            progressBar.visible = display_progress;
+            root.startScan(true);
         }
 
         function onScanFingerprintProgress(step, total_steps)
@@ -88,20 +85,66 @@ Rectangle
 
         function onScanFingerprintDone()
         {
-            textMessage.text = "Empreinte enregistrée !"
-            textMessage.color = "green"
+            textMessage.text = "Empreinte enregistrée !";
+            textMessage.color = "green";
         }
 
         function onScanFingerprintError()
         {
-            textMessage.text = "Erreur, veuillez recommencer"
-            textMessage.color = "red"
+            textMessage.text = "Erreur, veuillez recommencer";
+            textMessage.color = "red";
+        }
+
+        function onAdminLoginStart()
+        {
+            root.startScan(false);
+        }
+
+        function onAdminLoggedIn()
+        {
+            root.endScan();
+        }
+
+        function onAdminLoginFailed(error: string)
+        {
+            textMessage.text = error;
+            textMessage.color = "red";
+        }
+
+        function onKidLoginStart()
+        {
+            root.startScan(false);
+        }
+
+        function onKidLoggedIn()
+        {
+            root.endScan();
+        }
+
+        function onKidLoginFailed(error: string)
+        {
+            textMessage.text = error;
+            textMessage.color = "red";
         }
     }
 
     MouseArea
     {
         anchors.fill: parent
-        onClicked: { root.opacity = 0.0 }
+        onClicked: root.endScan()
+    }
+
+    function startScan(display_progress: bool)
+    {
+        textMessage.text = "Veuillez scanner votre empreinte"
+        textMessage.color = "black"
+        root.visible = true;
+        root.opacity = root.targetOpacity
+        progressBar.visible = display_progress;
+    }
+
+    function endScan()
+    {
+        root.opacity = 0.0
     }
 }

@@ -3,15 +3,18 @@
     [
         {
             "uuid": "158daf5c-e0d4-4b97-b9e7-757893487f54",
-            "name": "Solène"
+            "name": "Solène",
+            "fingerprint": 1
         },
         {
             "uuid": "e43605e2-cca7-47fd-b3cf-0cc98011bacc",
-            "name": "Erwan"
+            "name": "Erwan",
+            "fingerprint": 0
         },
         {
             "uuid": "ddcfc4d3-cabb-4143-8b51-4afec4580150",
             "name": "Léonis",
+            "fingerprint": 2,
             "points": 500,
             "tasks":
             [
@@ -30,6 +33,7 @@
         {
             "uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a",
             "name": "Clélie",
+            "fingerprint": 3,
             "points": 62,
             "tasks":
             [

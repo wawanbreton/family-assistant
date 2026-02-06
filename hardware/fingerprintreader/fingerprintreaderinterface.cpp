@@ -128,7 +128,7 @@ void FingerprintReaderInterface::checkFingerprint(
     const SlotNoArgType& slotAnswer,
     const SlotNoArgType& slotError)
 {
-    sendUserRequest(FingerprintReaderCommands::CheckUserFingerprint, timeout, user, receiver, slotAnswer, slotError);
+    sendUserRequest(FingerprintReaderCommands::CheckUserFingerprint, user, timeout, receiver, slotAnswer, slotError);
 }
 
 void FingerprintReaderInterface::checkFingerprint(
