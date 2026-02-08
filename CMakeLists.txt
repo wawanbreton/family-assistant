@@ -168,6 +168,8 @@ qt_add_executable(family-assistant
     qml/theme/background/White.qml
     qml/theme/background/Blue.qml
     qml/theme/background/Farm.qml
+    qml/theme/background/Flowers.qml
+    qml/theme/background/FlowersStatic.qml
     qml/theme/background/Green.qml
     qml/theme/background/Henhouse.qml
     qml/theme/background/Orange.qml
@@ -177,6 +179,7 @@ qt_add_executable(family-assistant
     qml/theme/background/SkyWithClouds.qml
     qml/theme/background/Stable.qml
 
+    qml/theme/font/generic/Font.qml
     qml/theme/font/Ubuntu.qml
     qml/theme/font/SuperCrafty.qml
     qml/theme/font/SuperPlayful.qml
@@ -212,7 +215,6 @@ qt_add_executable(family-assistant
     qml/theme/text_style/RainbowAnimated.qml
 
     ${EXTRA_SOURCES}
-    qml/theme/font/generic/Font.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"
