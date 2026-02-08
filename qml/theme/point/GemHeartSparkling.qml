@@ -3,7 +3,7 @@ import FamilyAssistant
 
 RubySparkling
 {
-    readonly property int cost: 20
+    readonly property int cost: 200
 
     source: DataStorage.findResource("gem_heart", ResourceType.Icon)
 }

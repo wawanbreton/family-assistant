@@ -23,7 +23,7 @@ Item
         Carousel
         {
             id: carouselTasks
-            model: tasks_scheduler.casual_tasks
+            model: tasks_scheduler.tasks
             Layout.fillWidth: true
 
             Item
@@ -45,17 +45,19 @@ Item
         Carousel
         {
             id: carouselKids
-            model: user_manager.kids
+            model: user_manager.kids.concat([null])
             Layout.fillWidth: true
             currentIndex:
             {
-                var current_task = tasks_scheduler.casual_tasks[carouselTasks.currentIndex];
+                var current_task = tasks_scheduler.tasks[carouselTasks.currentIndex];
                 if(current_task.affected_kid !== null)
                 {
                     return user_manager.findIndex(current_task.affected_kid);
                 }
-
-                return 0
+                else
+                {
+                    return user_manager.kids.length;
+                }
             }
 
             Item
@@ -66,15 +68,33 @@ Item
                 KidName
                 {
                     id: kidName
+                    visible: parent.modelData !== null
                     kid: kidItemParent.modelData
+                    anchors.centerIn: parent
+                }
+
+                LargeText
+                {
+                    visible: !kidName.visible
+                    text: "Tous"
+                    color: "black"
                     anchors.centerIn: parent
                 }
             }
 
             onCurrentIndexChanged:
             {
-                var current_task = tasks_scheduler.casual_tasks[carouselTasks.currentIndex];
-                var current_kid = user_manager.kids[carouselKids.currentIndex];
+                var current_task = tasks_scheduler.tasks[carouselTasks.currentIndex];
+                var current_kid;
+                if(carouselKids.currentIndex < user_manager.kids.length)
+                {
+                    current_kid = user_manager.kids[carouselKids.currentIndex];
+                }
+                else
+                {
+                    current_kid = null;
+                }
+
                 current_task.affected_kid = current_kid;
             }
         }

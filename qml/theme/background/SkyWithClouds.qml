@@ -4,7 +4,7 @@ import "../../components"
 
 Sky
 {
-    readonly property int cost: 40
+    readonly property int cost: 100
     property var clouds: []
     property int maximumCloudsY: height
 

@@ -39,6 +39,8 @@ signals:
     void kidLoginFailed(const QString& error);
 
 private:
+    void readFingerprintsCount();
+
     void registerFingerprint(User* user, int fingerprint_id);
 
     void onAddFingerprintDone(User* user, int fingerprint_id);
@@ -52,6 +54,10 @@ private:
     void onTryLogKidAnswered(const Kid* kid);
 
     void onTryLogKidFailed();
+
+    void onReadFingerprintsCountsDone(quint16 count);
+
+    void onReadFingerprintsCountsError();
 
 private:
     static constexpr int scan_attempts{ 3 };

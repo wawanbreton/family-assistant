@@ -36,7 +36,11 @@ public:
 
     void setTask(const ActiveTask* task);
 
+    Q_INVOKABLE int currentReward() const;
+
     Q_INVOKABLE void setAccomplished();
+
+    void updateState();
 
 signals:
     void dueTimestampChanged();
@@ -44,9 +48,6 @@ signals:
     void stateChanged();
 
     void accomplished();
-
-private:
-    void updateState();
 
 private:
     const ActiveTask* task_{ nullptr };

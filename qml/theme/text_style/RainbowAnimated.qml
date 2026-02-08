@@ -4,7 +4,7 @@ import "../../components"
 
 Rainbow
 {
-    readonly property int cost: 300
+    readonly property int cost: 200
 
     id: root
 

@@ -2,7 +2,7 @@ import QtQuick 2.15
 
 Rectangle
 {
-    readonly property int cost: 20
+    readonly property int cost: 30
 
     gradient: Gradient
     {

@@ -1,8 +1,7 @@
 import QtQuick 2.15
-import FamilyAssistant
+import "generic"
 
-Item
+Font
 {
-    readonly property int cost: 40
-    readonly property string font: DataStorage.findResource("retro_stereo_wide", ResourceType.Font)
+    font_name: "retro_stereo_wide"
 }

@@ -3,7 +3,7 @@ import FamilyAssistant
 
 Image
 {
-    readonly property int cost: 20
+    readonly property int cost: 100
 
     source: DataStorage.findResource("euro", ResourceType.Icon)
 }

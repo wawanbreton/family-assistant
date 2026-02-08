@@ -1,8 +1,7 @@
 import QtQuick 2.15
-import FamilyAssistant
+import "generic"
 
-Item
+Font
 {
-    readonly property int cost: 20
-    readonly property string font: DataStorage.findResource("super_mystery", ResourceType.Font)
+    font_name: "super_mystery"
 }

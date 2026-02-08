@@ -23,8 +23,6 @@ DueTask::DueTask(QObject* parent)
 
 #warning Make this smarter by updating only of the concerned entry changed
     connect(Preferences::get(), &Preferences::valueChanged, this, &DueTask::updateState);
-
-    updateState();
 }
 
 bool DueTask::load(const QJsonObject& json_object)
@@ -89,6 +87,18 @@ void DueTask::setTask(const ActiveTask* desc)
     task_ = desc;
 }
 
+int DueTask::currentReward() const
+{
+    int reward = task_->getReward();
+
+    if (state_ == TaskState::Late)
+    {
+        reward /= 3;
+    }
+
+    return reward;
+}
+
 void DueTask::setAccomplished()
 {
     emit accomplished();
@@ -102,7 +112,9 @@ void DueTask::updateState()
     }
 
     // Get delays stored in preferences
-    const auto soon_delay = std::chrono::minutes(Preferences::get()->getInt(PreferenceEntry::TaskSoonDelay));
+    std::optional<int> specific_activation_delay = task_->getActivationDelay();
+    const auto soon_delay = std::chrono::minutes(
+        specific_activation_delay.value_or(Preferences::get()->getInt(PreferenceEntry::TaskSoonDelay)));
     const auto in_progress_delay
         = std::chrono::minutes(Preferences::get()->getInt(PreferenceEntry::TaskInProgressDelay));
     const auto close_to_end_delay

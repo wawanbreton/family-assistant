@@ -272,7 +272,7 @@ Item
     {
         id: mouseArea
         anchors.fill: parent
-        enabled: clickConfirmDuration > 0
+        enabled: clickConfirmDuration > 0 && (!due_task || due_task.state !== TaskState.Early)
         onPressed:
         {
             animationClickCancel.stop();

@@ -3,7 +3,7 @@ import "../../components"
 
 Item
 {
-    readonly property int cost: 10
+    readonly property int cost: 20
     property var target
     property alias outline: textOutline
     property string color: "black"

@@ -12,8 +12,8 @@ BacklightManager::BacklightManager(QObject* parent)
     , state_(State::Awake)
     , timer_awake_(new QTimer(this))
     , timer_day_(new QTimer(this))
-    , day_start_(21, 40, 0)
-    , day_end_(21, 41, 0)
+    , day_start_(7, 0, 0)
+    , day_end_(20, 0, 0)
 {
     Preferences::access()->registerPreference(PreferenceEntry::BacklightPowerDayOff, QMetaType::Int, 20);
     Preferences::access()->registerPreference(PreferenceEntry::BacklightPowerDayOn, QMetaType::Int, 100);

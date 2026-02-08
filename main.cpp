@@ -64,14 +64,12 @@ int main(int argc, char* argv[])
             MetaManager::access()->load();
         }
 
-        bool all_due_tasks_empty = true;
         bool obsolete_tasks = false;
         const auto current_date = QDateTime::currentDateTime().date();
         for (const Kid* kid : UserManager::access()->getKids())
         {
             if (kid->hasTasks())
             {
-                all_due_tasks_empty = false;
                 if (kid->getTasks()->getDueDate() != current_date)
                 {
                     obsolete_tasks = true;
@@ -79,8 +77,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        const bool reset_tasks
-            = obsolete_tasks || all_due_tasks_empty || commands_line_parser.isSet(option_reset_tasks);
+        const bool reset_tasks = obsolete_tasks || commands_line_parser.isSet(option_reset_tasks);
         TaskScheduler::access()->start(reset_tasks);
 
         Theme global_theme;

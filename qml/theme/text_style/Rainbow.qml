@@ -4,7 +4,7 @@ import "../../components"
 
 Item
 {
-    readonly property int cost: 30
+    readonly property int cost: 100
     property var target
     property alias gradient: rainbowGradient
 

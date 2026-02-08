@@ -1,5 +1,6 @@
 #include "accessmanager.h"
 
+#include <QTimer>
 #include <ranges>
 
 #include "data/kid.h"
@@ -15,16 +16,7 @@ AccessManager::AccessManager(QObject* parent)
 {
     if (Hardware::access()->hasFingerprintReader())
     {
-        Hardware::access()->readFingerprintsCount(
-            this,
-            [this](quint16 count)
-            {
-                if (count > 0)
-                {
-                    qInfo() << "Access management is active";
-                    has_access_management_ = true;
-                }
-            });
+        QTimer::singleShot(0, this, &AccessManager::readFingerprintsCount);
     }
 }
 
@@ -91,6 +83,14 @@ void AccessManager::tryLogKidIn(const Kid* kid)
     {
         emit kidLoggedIn(kid);
     }
+}
+
+void AccessManager::readFingerprintsCount()
+{
+    Hardware::access()->readFingerprintsCount(
+        this,
+        std::bind(&AccessManager::onReadFingerprintsCountsDone, this, std::placeholders::_1),
+        std::bind(&AccessManager::onReadFingerprintsCountsError, this));
 }
 
 void AccessManager::registerFingerprint(User* user, int fingerprint_id)
@@ -164,4 +164,23 @@ void AccessManager::onTryLogKidAnswered(const Kid* kid)
 void AccessManager::onTryLogKidFailed()
 {
     emit kidLoginFailed("Empreinte non reconnue");
+}
+
+void AccessManager::onReadFingerprintsCountsDone(quint16 count)
+{
+    if (count > 0)
+    {
+        qInfo() << "Access management is active";
+        has_access_management_ = true;
+    }
+    else
+    {
+        qInfo() << "No registered fingerprint, disabling access management";
+    }
+}
+
+void AccessManager::onReadFingerprintsCountsError()
+{
+    qWarning() << "Error when reading fingerprints count, retrying later";
+    QTimer::singleShot(2000, this, &AccessManager::readFingerprintsCount);
 }

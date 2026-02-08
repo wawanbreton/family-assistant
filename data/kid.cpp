@@ -35,6 +35,7 @@ void Kid::load(const QJsonObject& json_object)
         auto task = new DueTask(this);
         if (task->load(task_object.toObject()))
         {
+            task->updateState();
             addTask(task);
         }
         else

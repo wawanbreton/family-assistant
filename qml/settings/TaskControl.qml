@@ -23,7 +23,7 @@ Item
         Carousel
         {
             id: carousel
-            model: tasks_scheduler.casual_tasks
+            model: tasks_scheduler.tasks
             Layout.fillWidth: true
 
             Item

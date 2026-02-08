@@ -7,7 +7,7 @@ SkyWithClouds
 {
     id: root
 
-    readonly property int cost: 100
+    readonly property int cost: 300
     property string building
     property var animal
     property alias groundColorTop: groundColor0.color

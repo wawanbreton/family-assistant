@@ -3,7 +3,7 @@ import FamilyAssistant
 
 Image
 {
-    readonly property int cost: 20
+    readonly property int cost: 200
 
     id: root
     source: DataStorage.findResource("ruby", ResourceType.Icon)

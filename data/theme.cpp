@@ -35,11 +35,26 @@ Theme::Theme(QObject* parent)
 
 void Theme::load(const QJsonObject& json_object)
 {
-    point_ = easyqt::Json::loadProperty(json_object, "point", __METHOD__, point_);
-    points_storage_ = easyqt::Json::loadProperty(json_object, "points_storage", __METHOD__, points_storage_);
-    background_ = easyqt::Json::loadProperty(json_object, "background", __METHOD__, background_);
-    font_ = easyqt::Json::loadProperty(json_object, "font", __METHOD__, font_);
-    text_style_ = easyqt::Json::loadProperty(json_object, "text_style", __METHOD__, text_style_);
+    point_ = easyqt::Json::loadProperty(json_object, "point", __METHOD__, point_, easyqt::Json::WarnIfNotFound::No);
+    points_storage_ = easyqt::Json::loadProperty(
+        json_object,
+        "points_storage",
+        __METHOD__,
+        points_storage_,
+        easyqt::Json::WarnIfNotFound::No);
+    background_ = easyqt::Json::loadProperty(
+        json_object,
+        "background",
+        __METHOD__,
+        background_,
+        easyqt::Json::WarnIfNotFound::No);
+    font_ = easyqt::Json::loadProperty(json_object, "font", __METHOD__, font_, easyqt::Json::WarnIfNotFound::No);
+    text_style_ = easyqt::Json::loadProperty(
+        json_object,
+        "text_style",
+        __METHOD__,
+        text_style_,
+        easyqt::Json::WarnIfNotFound::No);
 }
 
 void Theme::save(QJsonObject& json_object) const

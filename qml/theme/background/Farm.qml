@@ -5,7 +5,6 @@ import "generic"
 
 Animals
 {
-    readonly property int cost: 100
     building: "barn"
     animal: "cow"
 }

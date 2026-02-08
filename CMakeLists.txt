@@ -41,8 +41,7 @@ qt_add_executable(family-assistant
     # CPP source files
     main.cpp
     data/accessmanager.h data/accessmanager.cpp
-    data/activecasualtask.h data/activecasualtask.cpp
-    data/activerecurringtask.h data/activerecurringtask.cpp
+
     data/activetask.h data/activetask.cpp
     data/dayofweek.h
     data/kid.h data/kid.cpp
@@ -213,6 +212,7 @@ qt_add_executable(family-assistant
     qml/theme/text_style/RainbowAnimated.qml
 
     ${EXTRA_SOURCES}
+    qml/theme/font/generic/Font.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

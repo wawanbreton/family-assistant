@@ -5,7 +5,6 @@ import "generic"
 
 Animals
 {
-    readonly property int cost: 100
     groundColorBottom: "#e7820c"
     groundColorTop: "#ecee7b"
     building: "oasis"
