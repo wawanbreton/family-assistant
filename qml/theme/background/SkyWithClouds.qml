@@ -7,6 +7,7 @@ Sky
     readonly property int cost: 100
     property var clouds: []
     property int maximumCloudsY: height
+    property real cloudsZ: 0.0
 
     id: root
     clip: true
@@ -19,6 +20,7 @@ Sky
         {
             id: cloud
             source: DataStorage.findResource("cloud", ResourceType.Icon)
+            z: root.cloudsZ
 
             RandomMirror { }
 

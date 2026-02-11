@@ -166,8 +166,8 @@ qt_add_executable(family-assistant
     qml/theme/points_storage/Wealth.qml
 
     qml/theme/background/generic/Animals.qml
-    qml/theme/background/White.qml
     qml/theme/background/Blue.qml
+    qml/theme/background/City.qml
     qml/theme/background/Farm.qml
     qml/theme/background/Flowers.qml
     qml/theme/background/FlowersStatic.qml
@@ -179,6 +179,7 @@ qt_add_executable(family-assistant
     qml/theme/background/Sky.qml
     qml/theme/background/SkyWithClouds.qml
     qml/theme/background/Stable.qml
+    qml/theme/background/White.qml
 
     qml/theme/font/generic/Font.qml
     qml/theme/font/Ubuntu.qml
