@@ -159,6 +159,7 @@ qt_add_executable(family-assistant
     qml/theme/points_storage/Refrigerator.qml
     qml/theme/points_storage/SafeBox.qml
     qml/theme/points_storage/StrongBox.qml
+    qml/theme/points_storage/Toilet.qml
     qml/theme/points_storage/Treasure.qml
     qml/theme/points_storage/Treasure2.qml
     qml/theme/points_storage/Wallet.qml

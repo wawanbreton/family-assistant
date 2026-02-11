@@ -56,6 +56,7 @@
 <a href="https://www.flaticon.com/free-icons/restaurant" title="restaurant icons">Restaurant icons created by denimao - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/tidy" title="tidy icons">Tidy icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/flower" title="flower icons">Flower icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/restroom" title="restroom icons">Restroom icons created by wanicon - Flaticon</a>
 
 https://www.dafont.com/super-playful.font
 https://www.dafont.com/super-crafty.font
