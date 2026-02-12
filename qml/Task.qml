@@ -174,7 +174,7 @@ Item
 
                 SequentialAnimation
                 {
-                    loops: 5
+                    loops: due_task && due_task.state === TaskState.Late ? Animation.Infinite : 5
 
                     RotationAnimation
                     {
@@ -206,7 +206,7 @@ Item
 
                 PauseAnimation
                 {
-                    duration: due_task && due_task.state === TaskState.Late ? 0 : 1000
+                    duration: 1000
                 }
             }
         }
