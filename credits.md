@@ -57,6 +57,9 @@
 <a href="https://www.flaticon.com/free-icons/tidy" title="tidy icons">Tidy icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/flower" title="flower icons">Flower icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/restroom" title="restroom icons">Restroom icons created by wanicon - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/tree" title="tree icons">Tree icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/street-light" title="street light icons">Street light icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/traffic-light" title="traffic light icons">Traffic light icons created by Freepik - Flaticon</a>
 
 https://www.dafont.com/super-playful.font
 https://www.dafont.com/super-crafty.font
