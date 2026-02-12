@@ -159,7 +159,7 @@ Item
 
             SequentialAnimation
             {
-                running: due_task ? (due_task.state === TaskState.CloseToEnd || task.state === TaskState.Late) : false
+                running: due_task ? (due_task.state === TaskState.CloseToEnd || due_task.state === TaskState.Late) : false
                 loops: Animation.Infinite
 
                 RotationAnimation
@@ -168,7 +168,7 @@ Item
                     target: mainContainer
                     duration: 120
                     from: 0
-                    to: 5
+                    to: due_task && due_task.state === TaskState.Late ? 10 : 5
                     easing.type: Easing.InOutQuad
                 }
 
@@ -206,7 +206,7 @@ Item
 
                 PauseAnimation
                 {
-                    duration: 1000
+                    duration: due_task && due_task.state === TaskState.Late ? 0 : 1000
                 }
             }
         }
