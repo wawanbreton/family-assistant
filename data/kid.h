@@ -19,7 +19,7 @@ class Kid : public User
     Q_PROPERTY(const TasksModel* tasks READ getTasks CONSTANT STORED false)
     Q_PROPERTY(Theme* theme READ getTheme CONSTANT STORED false)
     Q_PROPERTY(quint32 points READ getPoints WRITE setPoints NOTIFY pointsChanged)
-    Q_PROPERTY(int64_t screen_time READ getScreenTime NOTIFY screenTimeChanged)
+    Q_PROPERTY(int64_t screen_time READ getScreenTime WRITE setScreenTime NOTIFY screenTimeChanged)
     Q_PROPERTY(QString screen_time_str READ getScreenTimeStr NOTIFY screenTimeChanged)
     Q_PROPERTY(bool screen_time_active READ isScreenTimeActive NOTIFY screenTimeActiveChanged)
     Q_PROPERTY(
@@ -57,6 +57,8 @@ public:
 
     int64_t getScreenTime() const;
 
+    void setScreenTime(int64_t screen_time);
+
     QString getScreenTimeStr() const;
 
     Q_INVOKABLE void startScreenTime();
@@ -76,11 +78,11 @@ public:
 signals:
     void pointsChanged(const quint32 points, const qint32 delta);
 
-    void screenTimeChanged(const std::chrono::seconds screen_time);
+    void screenTimeChanged();
 
-    void screenTimeActiveChanged(bool active);
+    void screenTimeActiveChanged();
 
-    void activeScreenTimeDurationChanged(const std::chrono::seconds duration);
+    void activeScreenTimeDurationChanged();
 
     void screenTimeStateChanged();
 

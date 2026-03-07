@@ -2,10 +2,13 @@ import QtQuick 2.15
 import QtQuick.Layouts
 import FamilyAssistant
 import "../components"
+import ".."
 
 RewardsTab
 {
     id: root
+
+    readonly property int buyCost: 100
 
     ColumnLayout
     {
@@ -31,7 +34,7 @@ RewardsTab
 
         ConfirmButton
         {
-            id: button
+            id: buttonStart
             width: textStart.x + textStart.implicitWidth + 12
             Layout.alignment: Qt.AlignHCenter
             enabled: !kid.screen_time_active && kid.screen_time > 0
@@ -64,6 +67,59 @@ RewardsTab
                 kid.startScreenTime();
                 main.goToHomeView();
             }
+        }
+
+        ConfirmButton
+        {
+            id: buttonBuy
+            Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: 32
+            enabled: root.buyCost <= kid.points
+            width: row.implicitWidth + row.anchors.leftMargin + row.anchors.rightMargin
+
+            RowLayout
+            {
+                id: row
+                spacing: 12
+                anchors.fill: parent
+                anchors.leftMargin: 16
+                anchors.rightMargin: anchors.leftMargin
+
+                NormalText
+                {
+                    id: textBuy
+                    text: "Ajouter 30 minutes"
+                    verticalAlignment: Text.AlignVCenter
+                    Layout.fillHeight: true
+                }
+
+                PointsCounter
+                {
+                    id: buyCost
+                    kid: root.kid
+                    points: root.buyCost.toString()
+                    Layout.fillHeight: true
+                }
+            }
+
+            onTriggered:
+            {
+                root.pointsSpent(root.buyCost, buttonBuy, () =>
+                                 {
+                                     animationAddTime.from = kid.screen_time;
+                                     animationAddTime.to = kid.screen_time + 30 * 60;
+                                     animationAddTime.start();
+                                 });
+            }
+        }
+
+        NumberAnimation
+        {
+            id: animationAddTime
+            target: kid
+            property: "screen_time"
+            duration: 1000
+            easing.type: Easing.OutQuad
         }
     }
 }

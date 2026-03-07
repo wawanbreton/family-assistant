@@ -118,6 +118,17 @@ int64_t Kid::getScreenTime() const
     return screen_time_.count();
 }
 
+void Kid::setScreenTime(int64_t screen_time)
+{
+    const auto screen_time_sec = std::chrono::seconds(screen_time);
+    if (screen_time_sec != screen_time_)
+    {
+        screen_time_ = screen_time_sec;
+        emit screenTimeChanged();
+        emit screenTimeStateChanged();
+    }
+}
+
 QString Kid::getScreenTimeStr() const
 {
     return screenTimeDurationToString(screen_time_);
@@ -127,15 +138,15 @@ void Kid::startScreenTime()
 {
     active_screen_time_duration_ = 0s;
     timer_screen_time_->start();
-    emit screenTimeActiveChanged(true);
-    emit activeScreenTimeDurationChanged(active_screen_time_duration_);
+    emit screenTimeActiveChanged();
+    emit activeScreenTimeDurationChanged();
     emit changed();
 }
 
 void Kid::stopScreenTime()
 {
     timer_screen_time_->stop();
-    emit screenTimeActiveChanged(false);
+    emit screenTimeActiveChanged();
     emit changed();
 }
 
@@ -143,7 +154,7 @@ void Kid::resetScreenTime(const std::chrono::seconds screen_time)
 {
     screen_time_ = screen_time;
     emit changed();
-    emit screenTimeChanged(screen_time_);
+    emit screenTimeChanged();
     emit screenTimeStateChanged();
 }
 
@@ -185,8 +196,8 @@ void Kid::decreaseScreenTime()
     screen_time_ = std::max(screen_time_ - 1s, 0s);
     active_screen_time_duration_++;
 
-    emit screenTimeChanged(screen_time_);
-    emit activeScreenTimeDurationChanged(active_screen_time_duration_);
+    emit screenTimeChanged();
+    emit activeScreenTimeDurationChanged();
     emit screenTimeStateChanged();
 
     auto minutes_after = std::chrono::duration_cast<std::chrono::minutes>(screen_time_);
