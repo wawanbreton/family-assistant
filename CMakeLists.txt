@@ -44,12 +44,12 @@ qt_add_executable(family-assistant
 
     data/activetask.h data/activetask.cpp
     data/dayofweek.h
+    data/duetask.h data/duetask.cpp
     data/kid.h data/kid.cpp
-    data/usermanager.h data/usermanager.cpp
     data/metamanager.h data/metamanager.cpp
     data/preferenceentry.h
     data/preferences.h data/preferences.cpp
-    data/duetask.h data/duetask.cpp
+    data/screentimestate.h
     data/task.h data/task.cpp
     data/taskoccurences.h
     data/taskscheduler.h data/taskscheduler.cpp
@@ -58,6 +58,7 @@ qt_add_executable(family-assistant
     data/theme.h data/theme.cpp
     data/themecategory.h
     data/user.h data/user.cpp
+    data/usermanager.h data/usermanager.cpp
 
     hardware/hardware.h hardware/hardware.cpp
     hardware/backlightmanager.cpp hardware/backlightmanager.h
@@ -79,10 +80,12 @@ qt_add_executable(family-assistant
     ${SHADER_FILES}
 
     # qml files
+    qml/ActiveScreenTime.qml
     qml/KidName.qml
     qml/KidTasksView.qml
     qml/KidTasksList.qml
     qml/Main.qml
+    qml/MainView.qml
     qml/MenuBar.qml
     qml/MenuBarButton.qml
     qml/Point.qml
@@ -92,7 +95,6 @@ qt_add_executable(family-assistant
     qml/Settings.qml
     qml/Task.qml
     qml/TasksView.qml
-    qml/MainView.qml
     qml/Vault.qml
 
     qml/access/ScanFingerprint.qml
@@ -100,24 +102,27 @@ qt_add_executable(family-assistant
     qml/components/ChangeableImage.qml
     qml/components/NormalText.qml
     qml/components/BaseText.qml
-    qml/components/Glow.qml
-    qml/components/LargeText.qml
-    qml/components/ProgressBar.qml
-    qml/components/StyledGradient.qml
-    qml/components/VerticalTabView.qml
-    qml/components/RandomMirror.qml
-    qml/components/Tab.qml
-    qml/components/CornerButton.qml
-    qml/components/TextOutline.qml
+
     qml/components/ButtonShadow.qml
     qml/components/Carousel.qml
     qml/components/ConfirmButton.qml
+    qml/components/CornerButton.qml
+    qml/components/Glow.qml
+    qml/components/LargeText.qml
+    qml/components/ProgressBar.qml
+    qml/components/RandomMirror.qml
+    qml/components/SmallText.qml
+    qml/components/StyledGradient.qml
+    qml/components/Tab.qml
+    qml/components/TextOutline.qml
     qml/components/UniqueItemContainer.qml
+    qml/components/VerticalTabView.qml
 
     qml/rewards/Backgrounds.qml
     qml/rewards/NameTexts.qml
     qml/rewards/Points.qml
     qml/rewards/RewardsTab.qml
+    qml/rewards/ScreenTime.qml
     qml/rewards/ThemeItemSelector.qml
 
     qml/settings/TaskControl.qml

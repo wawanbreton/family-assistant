@@ -214,19 +214,20 @@
         {
             "fingerprint": 7,
             "name": "Léonis",
-            "points": 0,
+            "points": 100,
+            "screen_time": 3610,
             "tasks": [
                 {
-                    "due_timestamp": "2026-02-07 19:30",
+                    "due_timestamp": "2026-02-12 19:30",
                     "task_uuid": "0228b8a9-26ee-498e-a921-22c98ea6b89b"
                 },
                 {
-                    "due_timestamp": "2026-02-07 20:30",
+                    "due_timestamp": "2026-02-12 18:00",
                     "task_uuid": "6ae4e41b-3a29-45ec-9912-821a68e5cb19"
                 }
             ],
             "theme": {
-                "background": "White",
+                "background": "City",
                 "font": "Ubuntu",
                 "point": "StarCoin",
                 "points_storage": "Treasure",
@@ -237,23 +238,24 @@
         {
             "fingerprint": 5,
             "name": "Clélie",
-            "points": 0,
+            "points": 500,
+            "screen_time": 3600,
             "tasks": [
                 {
-                    "due_timestamp": "2026-02-07 19:30",
+                    "due_timestamp": "2026-02-12 19:30",
                     "task_uuid": "0228b8a9-26ee-498e-a921-22c98ea6b89b"
                 },
                 {
-                    "due_timestamp": "2026-02-07 20:00",
+                    "due_timestamp": "2026-02-12 20:00",
                     "task_uuid": "f452f306-9380-4bc7-99bf-90b490bdfb65"
                 },
                 {
-                    "due_timestamp": "2026-02-07 20:30",
+                    "due_timestamp": "2026-02-12 20:30",
                     "task_uuid": "6ae4e41b-3a29-45ec-9912-821a68e5cb19"
                 }
             ],
             "theme": {
-                "background": "White",
+                "background": "Flowers",
                 "font": "Ubuntu",
                 "point": "StarCoin",
                 "points_storage": "Treasure",

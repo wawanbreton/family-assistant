@@ -52,6 +52,57 @@ Item
         onDisplayRewards: root.displayRewards()
     }
 
+    ActiveScreenTime
+    {
+        id: activeScreenTime
+        anchors.right: parent.right
+        anchors.rightMargin: -height / 2
+
+        kid: root.kid
+        state: root.kid.screen_time_active ? "displayed" : "hidden"
+
+        states:
+        [
+            State
+            {
+                name: "displayed"
+
+                AnchorChanges
+                {
+                    target: activeScreenTime
+                    anchors.bottom: parent.bottom
+                    anchors.top: undefined
+                }
+            },
+
+            State
+            {
+                name: "hidden"
+
+                AnchorChanges {
+                    target: activeScreenTime
+                    anchors.bottom: undefined
+                    anchors.top: parent.bottom
+                }
+            }
+        ]
+
+        transitions:
+        [
+             Transition
+            {
+                to: "*"
+
+                 AnchorAnimation
+                 {
+                     id: animationExpand
+                     duration: 300
+                     easing.type: Easing.OutQuad
+                 }
+             }
+         ]
+    }
+
     Component
     {
         id: componentPoint

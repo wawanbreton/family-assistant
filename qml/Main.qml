@@ -42,4 +42,9 @@ Window
             showFullScreen()
         }
     }
+
+    function goToHomeView()
+    {
+        menuBar.buttonClicked("children");
+    }
 }

@@ -8,6 +8,7 @@ Item
 
     property alias gradient: mainRectangle.gradient
     property int clickConfirmDuration: 800
+    property int clickConfirmWidth: width
 
     id: root
     height: 100
@@ -67,7 +68,7 @@ Item
                     target: clickProgress
                     property: "width"
                     from: 0
-                    to: root.width
+                    to: root.clickConfirmWidth
                     onFinished:
                     {
                         mouseArea.enabled = false;

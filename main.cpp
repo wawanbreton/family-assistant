@@ -11,6 +11,7 @@
 #include "data/accessmanager.h"
 #include "data/kid.h"
 #include "data/metamanager.h"
+#include "data/screentimestate.h"
 #include "data/taskscheduler.h"
 #include "data/taskstate.h"
 #include "data/theme.h"
@@ -38,6 +39,11 @@ int main(int argc, char* argv[])
     QCommandLineOption option_reset_tasks("reset-tasks", "Ignore loaded due tasks and create a new planning");
     commands_line_parser.addOption(option_reset_tasks);
 
+    QCommandLineOption option_reset_screen_time(
+        "reset-screen-time",
+        "Reset the kids screen time (requires reset tasks)");
+    commands_line_parser.addOption(option_reset_screen_time);
+
     QCommandLineOption option_fullscreen("fullscreen", "Display the application in full screen");
     commands_line_parser.addOption(option_fullscreen);
 
@@ -50,6 +56,7 @@ int main(int argc, char* argv[])
     else
     {
         qmlRegisterType<TaskState>("FamilyAssistant", 1, 0, "TaskState");
+        qmlRegisterType<ScreenTimeState>("FamilyAssistant", 1, 0, "ScreenTimeState");
         qmlRegisterType<ThemeCategory>("FamilyAssistant", 1, 0, "ThemeCategory");
         qmlRegisterType<easyqt::ResourceType>("FamilyAssistant", 1, 0, "ResourceType");
 
@@ -78,7 +85,8 @@ int main(int argc, char* argv[])
         }
 
         const bool reset_tasks = obsolete_tasks || commands_line_parser.isSet(option_reset_tasks);
-        TaskScheduler::access()->start(reset_tasks);
+        const bool reset_screen_time = commands_line_parser.isSet(option_reset_screen_time);
+        TaskScheduler::access()->start(reset_tasks, reset_screen_time);
 
         Theme global_theme;
 

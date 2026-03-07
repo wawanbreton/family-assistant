@@ -21,23 +21,23 @@ public:
 
     void save(QJsonObject& json_object) const;
 
-    void start(bool reset_tasks);
+    void start(const bool reset_tasks, const bool force_reset_screen_time);
 
     const QList<ActiveTask*>& getTasks() const;
 
     ActiveTask* findTask(const QUuid& uuid) const;
 
-    Q_INVOKABLE void appendCasualTask(const ActiveTask *task);
+    Q_INVOKABLE void appendCasualTask(const ActiveTask* task);
 
 signals:
     void tasksChanged();
 
 private:
-    void spawnDueTasks();
+    void spawnDueTasks(bool force_reset_screen_time);
 
     void scheduleNextTrigger();
 
-    void appendDueTask(const ActiveTask *active_task, const QDateTime& due_timestamp);
+    void appendDueTask(const ActiveTask* active_task, const QDateTime& due_timestamp);
 
 private:
     QList<ActiveTask*> tasks_;

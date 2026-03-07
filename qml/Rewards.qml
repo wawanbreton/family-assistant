@@ -60,9 +60,9 @@ Item
         {
             title: "Temps d'écran"
 
-            Text
+            ScreenTime
             {
-                text: "My Other item"
+                kid: root.kid
             }
         }
 

@@ -25,6 +25,7 @@ public:
         BacklightSleepDelay,             // Inactivity delay before screen goes into low-backlight mode, in milliseconds
         BacklightSleepAnimationDuration, // In milliseconds
         BacklightWakeUpAnimationDuration, // In milliseconds
+        WeeklyScreenTime,                 // In minutes
     };
 
     ENUM_TOSTRING()

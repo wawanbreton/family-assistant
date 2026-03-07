@@ -24,9 +24,10 @@ TaskScheduler::TaskScheduler(QObject* parent)
     Preferences::access()->registerPreference(PreferenceEntry::TaskInProgressDelay, QMetaType::Int, 60);
     Preferences::access()->registerPreference(PreferenceEntry::TaskCloseToEndDelay, QMetaType::Int, 10);
     Preferences::access()->registerPreference(PreferenceEntry::CasualTaskDuration, QMetaType::Int, 60);
+    Preferences::access()->registerPreference(PreferenceEntry::WeeklyScreenTime, QMetaType::Int, 7 * 30);
 
     timer_spawn_tasks_->setSingleShot(true);
-    connect(timer_spawn_tasks_, &QTimer::timeout, this, &TaskScheduler::spawnDueTasks);
+    connect(timer_spawn_tasks_, &QTimer::timeout, this, [this] { spawnDueTasks(false); });
 }
 
 void TaskScheduler::load(const QJsonObject& json_object)
@@ -55,11 +56,11 @@ void TaskScheduler::save(QJsonObject& json_object) const
     json_object["tasks"] = tasks_array;
 }
 
-void TaskScheduler::start(bool reset_tasks)
+void TaskScheduler::start(const bool reset_tasks, const bool force_reset_screen_time)
 {
     if (reset_tasks)
     {
-        spawnDueTasks();
+        spawnDueTasks(force_reset_screen_time);
     }
     else
     {
@@ -94,18 +95,25 @@ void TaskScheduler::appendCasualTask(const ActiveTask* task)
 }
 
 
-void TaskScheduler::spawnDueTasks()
+void TaskScheduler::spawnDueTasks(bool force_reset_screen_time)
 {
     qInfo() << "Spawn due tasks";
-
-    for (Kid* kid : UserManager::access()->getKids())
-    {
-        kid->clearTasks();
-    }
 
     const auto now = QDateTime::currentDateTime();
     const QDate current_date = now.date();
     const auto current_day = static_cast<DayOfWeek::Enum>(current_date.dayOfWeek());
+    const bool reset_screen_times = force_reset_screen_time || current_day == DayOfWeek::Monday;
+    const auto screen_time = std::chrono::minutes(Preferences::get()->getInt(PreferenceEntry::WeeklyScreenTime));
+
+    for (Kid* kid : UserManager::access()->getKids())
+    {
+        kid->clearTasks();
+
+        if (reset_screen_times)
+        {
+            kid->resetScreenTime(screen_time);
+        }
+    }
 
     for (const ActiveTask* active_task : tasks_)
     {

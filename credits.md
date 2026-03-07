@@ -60,6 +60,7 @@
 <a href="https://www.flaticon.com/free-icons/tree" title="tree icons">Tree icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/street-light" title="street light icons">Street light icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/traffic-light" title="traffic light icons">Traffic light icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/session" title="session icons">Session icons created by Andrean Prabowo - Flaticon</a>
 
 https://www.dafont.com/super-playful.font
 https://www.dafont.com/super-crafty.font

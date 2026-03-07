@@ -2,6 +2,7 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QTimer>
 #include <easyqt/debug.h>
 #include <easyqt/json.h>
 #include <easyqt/parser.h>
@@ -12,14 +13,20 @@
 #include "data/theme.h"
 
 
+using namespace std::chrono_literals;
+
 Kid::Kid(QObject* parent)
     : User{ parent }
     , tasks_(new TasksModel(this))
     , theme_(new Theme(this))
+    , timer_screen_time_(new QTimer(this))
 {
     connect(this, &Kid::pointsChanged, this, &Kid::changed);
     connect(tasks_, &TasksModel::changed, this, &Kid::changed);
     connect(theme_, &Theme::changed, this, &Kid::changed);
+
+    timer_screen_time_->setInterval(1s);
+    connect(timer_screen_time_, &QTimer::timeout, this, &Kid::decreaseScreenTime);
 }
 
 void Kid::load(const QJsonObject& json_object)
@@ -27,6 +34,10 @@ void Kid::load(const QJsonObject& json_object)
     User::load(json_object);
 
     points_ = easyqt::Json::loadProperty(json_object, "points", __METHOD__, points_);
+
+    auto bla = easyqt::Json::loadProperty(json_object, "screen_time", __METHOD__, screen_time_.count());
+    screen_time_ = std::chrono::seconds(
+        easyqt::Json::loadProperty(json_object, "screen_time", __METHOD__, screen_time_.count()));
 
     QList<QJsonObject> tasks_array
         = easyqt::Json::loadPropertyArray<QJsonObject, QList>(json_object, "tasks", __METHOD__);
@@ -56,6 +67,7 @@ void Kid::save(QJsonObject& object) const
     User::save(object);
 
     object["points"] = easyqt::Json::saveValue(points_);
+    object["screen_time"] = easyqt::Json::saveValue(screen_time_.count());
 
     QJsonObject theme_object;
     theme_->save(theme_object);
@@ -101,6 +113,95 @@ void Kid::setPoints(const quint32 points)
     }
 }
 
+int64_t Kid::getScreenTime() const
+{
+    return screen_time_.count();
+}
+
+QString Kid::getScreenTimeStr() const
+{
+    return screenTimeDurationToString(screen_time_);
+}
+
+void Kid::startScreenTime()
+{
+    active_screen_time_duration_ = 0s;
+    timer_screen_time_->start();
+    emit screenTimeActiveChanged(true);
+    emit activeScreenTimeDurationChanged(active_screen_time_duration_);
+    emit changed();
+}
+
+void Kid::stopScreenTime()
+{
+    timer_screen_time_->stop();
+    emit screenTimeActiveChanged(false);
+    emit changed();
+}
+
+void Kid::resetScreenTime(const std::chrono::seconds screen_time)
+{
+    screen_time_ = screen_time;
+    emit changed();
+    emit screenTimeChanged(screen_time_);
+    emit screenTimeStateChanged();
+}
+
+bool Kid::isScreenTimeActive() const
+{
+    return timer_screen_time_->isActive();
+}
+
+int64_t Kid::getActiveScreenTimeDuration() const
+{
+    return active_screen_time_duration_.count();
+}
+
+QString Kid::getActiveScreenTimeDurationStr() const
+{
+    return screenTimeDurationToString(active_screen_time_duration_);
+}
+
+ScreenTimeState::Enum Kid::getScreenTimeState() const
+{
+    if (screen_time_ >= 1h)
+    {
+        return ScreenTimeState::Plenty;
+    }
+    else if (screen_time_ > 0s)
+    {
+        return ScreenTimeState::NotMuch;
+    }
+    else
+    {
+        return ScreenTimeState::Out;
+    }
+}
+
+void Kid::decreaseScreenTime()
+{
+    auto minutes_before = std::chrono::duration_cast<std::chrono::minutes>(screen_time_);
+
+    screen_time_ = std::max(screen_time_ - 1s, 0s);
+    active_screen_time_duration_++;
+
+    emit screenTimeChanged(screen_time_);
+    emit activeScreenTimeDurationChanged(active_screen_time_duration_);
+    emit screenTimeStateChanged();
+
+    auto minutes_after = std::chrono::duration_cast<std::chrono::minutes>(screen_time_);
+    if (minutes_after != minutes_before)
+    {
+        // Count every seconds, but only save every minute to avoid killing the SSD :)
+        emit changed();
+    }
+}
+
+QString Kid::screenTimeDurationToString(const std::chrono::seconds duration)
+{
+    const std::chrono::milliseconds duration_ms = duration;
+    return QTime::fromMSecsSinceStartOfDay(duration_ms.count()).toString("HH:mm");
+}
 
 void Kid::addTask(DueTask* task)
 {
