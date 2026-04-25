@@ -9,8 +9,8 @@
 
 #include "data/duetask.h"
 #include "data/kid.h"
+#include "data/preferences.h"
 #include "data/usermanager.h"
-#include "preferences.h"
 
 
 SINGLETON_IMPL(TaskScheduler)

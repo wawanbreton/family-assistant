@@ -97,5 +97,6 @@ private:
     quint32 points_{ 0 };
     std::chrono::seconds screen_time_{};
     std::chrono::seconds active_screen_time_duration_{};
+    std::chrono::seconds screen_time_penalty_count_{};
     QTimer* const timer_screen_time_;
 };

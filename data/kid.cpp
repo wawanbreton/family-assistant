@@ -8,6 +8,7 @@
 #include <easyqt/parser.h>
 
 #include "data/duetask.h"
+#include "data/preferences.h"
 #include "data/taskscheduler.h"
 #include "data/tasksmodel.h"
 #include "data/theme.h"
@@ -27,6 +28,8 @@ Kid::Kid(QObject* parent)
 
     timer_screen_time_->setInterval(1s);
     connect(timer_screen_time_, &QTimer::timeout, this, &Kid::decreaseScreenTime);
+
+    Preferences::access()->registerPreference(PreferenceEntry::ScreenTimePenaltyDelay, QMetaType::Int, 10);
 }
 
 void Kid::load(const QJsonObject& json_object)
@@ -199,6 +202,16 @@ void Kid::decreaseScreenTime()
     emit screenTimeChanged();
     emit activeScreenTimeDurationChanged();
     emit screenTimeStateChanged();
+
+    if (screen_time_ == 0s)
+    {
+        screen_time_penalty_count_ += 1s;
+        if (screen_time_penalty_count_.count() >= Preferences::get()->getInt(PreferenceEntry::ScreenTimePenaltyDelay))
+        {
+            screen_time_penalty_count_ = 0s;
+            setPoints(std::max(0, static_cast<int>(getPoints()) - 1));
+        }
+    }
 
     auto minutes_after = std::chrono::duration_cast<std::chrono::minutes>(screen_time_);
     if (minutes_after != minutes_before)

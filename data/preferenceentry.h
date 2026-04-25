@@ -26,6 +26,7 @@ public:
         BacklightSleepAnimationDuration, // In milliseconds
         BacklightWakeUpAnimationDuration, // In milliseconds
         WeeklyScreenTime,                 // In minutes
+        ScreenTimePenaltyDelay,           // When screen time is over, a penalty point is taken every <delay> seconds
     };
 
     ENUM_TOSTRING()
