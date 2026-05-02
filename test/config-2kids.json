@@ -214,8 +214,9 @@
         {
             "fingerprint": 7,
             "name": "Léonis",
+            "pronounced_name": "Léoniss",
             "points": 100,
-            "screen_time": 10,
+            "screen_time": 3,
             "tasks": [
                 {
                     "due_timestamp": "2026-02-12 19:30",
@@ -239,7 +240,7 @@
             "fingerprint": 5,
             "name": "Clélie",
             "points": 500,
-            "screen_time": 3600,
+            "screen_time": 3,
             "tasks": [
                 {
                     "due_timestamp": "2026-02-12 19:30",

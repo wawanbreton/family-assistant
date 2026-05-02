@@ -1,0 +1,31 @@
+#pragma once
+
+#include <QQueue>
+#include <chrono>
+#include <easyqt/singleton.h>
+
+using namespace std::chrono_literals;
+
+struct piper_synthesizer;
+
+class AbstractAnnouncementEvent;
+
+class AnnouncementManager : public QObject
+{
+    Q_OBJECT
+    SINGLETON(AnnouncementManager)
+
+public:
+    void addAnnouncement(const QString& text, const quint8 repeat = 1, const std::chrono::seconds delay = 2s);
+
+    struct piper_synthesizer* getVoiceSynthesizer();
+
+private:
+    void onEventOver();
+
+    void startNextEvent();
+
+private:
+    QQueue<AbstractAnnouncementEvent*> events_queue_;
+    struct piper_synthesizer* voice_synthesizer_{ nullptr };
+};

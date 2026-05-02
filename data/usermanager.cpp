@@ -6,6 +6,7 @@
 #include <easyqt/json.h>
 
 #include "data/kid.h"
+#include "data/preferences.h"
 
 
 SINGLETON_IMPL(UserManager)
@@ -14,6 +15,8 @@ SINGLETON_DESTRUCTOR_IMPL(UserManager)
 UserManager::UserManager(QObject* parent)
     : QObject{ parent }
 {
+    Preferences::access()->registerPreference(PreferenceEntry::ScreenTimePenaltyDelay, QMetaType::Int, 10);
+    Preferences::access()->registerPreference(PreferenceEntry::ScreenTimeOverAnnouncement, QMetaType::Int, 3);
 }
 
 void UserManager::load(const QJsonObject& json_object)

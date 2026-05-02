@@ -7,6 +7,7 @@
 #include <easyqt/json.h>
 #include <easyqt/parser.h>
 
+#include "data/announcementmanager.h"
 #include "data/duetask.h"
 #include "data/preferences.h"
 #include "data/taskscheduler.h"
@@ -28,8 +29,6 @@ Kid::Kid(QObject* parent)
 
     timer_screen_time_->setInterval(1s);
     connect(timer_screen_time_, &QTimer::timeout, this, &Kid::decreaseScreenTime);
-
-    Preferences::access()->registerPreference(PreferenceEntry::ScreenTimePenaltyDelay, QMetaType::Int, 10);
 }
 
 void Kid::load(const QJsonObject& json_object)
@@ -195,6 +194,7 @@ ScreenTimeState::Enum Kid::getScreenTimeState() const
 void Kid::decreaseScreenTime()
 {
     auto minutes_before = std::chrono::duration_cast<std::chrono::minutes>(screen_time_);
+    const bool screen_time_was_zero = screen_time_ == 0s;
 
     screen_time_ = std::max(screen_time_ - 1s, 0s);
     active_screen_time_duration_++;
@@ -203,8 +203,17 @@ void Kid::decreaseScreenTime()
     emit activeScreenTimeDurationChanged();
     emit screenTimeStateChanged();
 
-    if (screen_time_ == 0s)
+    const bool screen_time_is_zero = screen_time_ == 0s;
+    if (screen_time_is_zero)
     {
+        if (! screen_time_was_zero)
+        {
+            const int announcements = Preferences::get()->getInt(PreferenceEntry::ScreenTimeOverAnnouncement);
+            AnnouncementManager::access()->addAnnouncement(
+                QString("Le temps d'écran de %1 est terminé").arg(getPronouncedName()),
+                announcements);
+        }
+
         screen_time_penalty_count_ += 1s;
         if (screen_time_penalty_count_.count() >= Preferences::get()->getInt(PreferenceEntry::ScreenTimePenaltyDelay))
         {

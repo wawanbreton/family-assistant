@@ -24,6 +24,8 @@ public:
 
     void setName(const QString& name);
 
+    const QString& getPronouncedName() const;
+
     std::optional<int> getFingerprintId() const;
 
     void setFingerprintId(int fingerprint_id);
@@ -40,5 +42,6 @@ signals:
 private:
     QUuid uuid_;
     QString name_;
+    QString pronounced_name_;
     std::optional<int> fingerprint_id_;
 };

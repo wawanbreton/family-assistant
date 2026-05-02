@@ -5,8 +5,22 @@ project(family-assistant VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.7 REQUIRED COMPONENTS Quick ShaderTools SerialPort)
+find_package(Qt6 6.7 REQUIRED COMPONENTS Quick ShaderTools SerialPort Multimedia)
 find_package(easyqt REQUIRED)
+
+include(ExternalProject)
+
+ExternalProject_Add(libpiper
+    GIT_REPOSITORY https://github.com/wawanbreton/piper1-gpl.git
+    GIT_TAG 81bfdcf3c1950ea41b585e5c753d2dfcdaf91392
+    SOURCE_SUBDIR libpiper
+    INSTALL_COMMAND ""
+    CMAKE_ARGS
+        -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+        -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/libpiper-install
+)
+
+include_directories(${install_dir}/include)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     message("####### Simulator mode")
@@ -41,8 +55,8 @@ qt_add_executable(family-assistant
     # CPP source files
     main.cpp
     data/accessmanager.h data/accessmanager.cpp
-
     data/activetask.h data/activetask.cpp
+    data/announcementmanager.h data/announcementmanager.cpp
     data/dayofweek.h
     data/duetask.h data/duetask.cpp
     data/kid.h data/kid.cpp
@@ -222,6 +236,9 @@ qt_add_executable(family-assistant
     qml/theme/text_style/RainbowAnimated.qml
 
     ${EXTRA_SOURCES}
+    data/abstractannouncementevent.h data/abstractannouncementevent.cpp
+    data/announcementeventwait.h data/announcementeventwait.cpp
+    data/announcementeventplay.h data/announcementeventplay.cpp
 )
 
 qt6_add_resources(family-assistant "family-assistant"
@@ -247,11 +264,19 @@ set_target_properties(family-assistant PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+add_dependencies(family-assistant libpiper)
+
+ExternalProject_Get_Property(libpiper BINARY_DIR SOURCE_DIR)
+set(LIBPIPER_SOURCE_DIR ${SOURCE_DIR})
+set(LIBPIPER_BINARY_DIR ${BINARY_DIR})
+
 target_link_libraries(family-assistant
     PRIVATE
     Qt6::Quick
     Qt6::SerialPort
+    Qt6::Multimedia
     easyqt::easyqt
+    piper
 )
 
 target_compile_options(family-assistant PRIVATE -Werror=switch)
@@ -262,10 +287,23 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
         PRIVATE
         Qt6::Widgets
     )
+else()
+    target_link_libraries(family-assistant
+        PRIVATE
+        onnxruntime
+    )
 endif()
 
 target_include_directories(family-assistant PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    "${LIBPIPER_SOURCE_DIR}/libpiper/include"
+)
+
+target_link_directories(family-assistant PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    "${LIBPIPER_BINARY_DIR}"
+    "${LIBPIPER_SOURCE_DIR}/libpiper/lib/onnxruntime-linux-aarch64-1.22.0/lib"
+    "${ONNXRUNTIME_DIR}"
 )
 
 include(GNUInstallDirs)
