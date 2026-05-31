@@ -100,12 +100,12 @@ Theme* Kid::getTheme()
     return theme_;
 }
 
-quint32 Kid::getPoints() const
+qint32 Kid::getPoints() const
 {
     return points_;
 }
 
-void Kid::setPoints(const quint32 points)
+void Kid::setPoints(const qint32 points)
 {
     if (points != points_)
     {
@@ -193,38 +193,49 @@ ScreenTimeState::Enum Kid::getScreenTimeState() const
 
 void Kid::decreaseScreenTime()
 {
-    auto minutes_before = std::chrono::duration_cast<std::chrono::minutes>(screen_time_);
-    const bool screen_time_was_zero = screen_time_ == 0s;
-
-    screen_time_ = std::max(screen_time_ - 1s, 0s);
+    screen_time_ = screen_time_ - 1s;
     active_screen_time_duration_++;
+
+    const bool full_minute = screen_time_.count() % 60 == 0;
+    const auto minutes = std::chrono::duration_cast<std::chrono::minutes>(screen_time_);
 
     emit screenTimeChanged();
     emit activeScreenTimeDurationChanged();
     emit screenTimeStateChanged();
 
-    const bool screen_time_is_zero = screen_time_ == 0s;
-    if (screen_time_is_zero)
+    if (screen_time_ < 0s)
     {
-        if (! screen_time_was_zero)
+        const int penalty_delay = Preferences::get()->getInt(PreferenceEntry::ScreenTimePenaltyDelay);
+        if (std::abs(screen_time_.count()) % penalty_delay == 0)
         {
-            const int announcements = Preferences::get()->getInt(PreferenceEntry::ScreenTimeOverAnnouncement);
-            AnnouncementManager::access()->addAnnouncement(
-                QString("Le temps d'écran de %1 est terminé").arg(getPronouncedName()),
-                announcements);
-        }
-
-        screen_time_penalty_count_ += 1s;
-        if (screen_time_penalty_count_.count() >= Preferences::get()->getInt(PreferenceEntry::ScreenTimePenaltyDelay))
-        {
-            screen_time_penalty_count_ = 0s;
-            setPoints(std::max(0, static_cast<int>(getPoints()) - 1));
+            setPoints(static_cast<int>(getPoints()) - 1);
         }
     }
 
-    auto minutes_after = std::chrono::duration_cast<std::chrono::minutes>(screen_time_);
-    if (minutes_after != minutes_before)
+    if (full_minute)
     {
+        int announcement_minutes = -minutes.count();
+        const QList<int> announcements_times
+            = Preferences::get()->getIntList(PreferenceEntry::ScreenTimeOverPreannouncements);
+        if (announcements_times.contains(announcement_minutes))
+        {
+            QString message;
+            if (announcement_minutes == 0)
+            {
+                message = "Le temps d'écran de %1 est terminé";
+            }
+            else if (announcement_minutes < 0)
+            {
+                message = QString("Le temps d'écran de %2 sera terminé dans %1 minutes").arg(-(announcement_minutes));
+            }
+            else
+            {
+                message = QString("Le temps d'écran de %2 est terminé depuis %1 minutes").arg(announcement_minutes);
+            }
+
+            AnnouncementManager::access()->addAnnouncement(message.arg(getPronouncedName()));
+        }
+
         // Count every seconds, but only save every minute to avoid killing the SSD :)
         emit changed();
     }
@@ -232,7 +243,7 @@ void Kid::decreaseScreenTime()
 
 QString Kid::screenTimeDurationToString(const std::chrono::seconds duration)
 {
-    const std::chrono::milliseconds duration_ms = duration;
+    const std::chrono::milliseconds duration_ms = duration > 0s ? duration : 0s;
     return QTime::fromMSecsSinceStartOfDay(duration_ms.count()).toString("HH:mm");
 }
 

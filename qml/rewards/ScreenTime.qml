@@ -37,7 +37,7 @@ RewardsTab
             id: buttonStart
             width: textStart.x + textStart.implicitWidth + 12
             Layout.alignment: Qt.AlignHCenter
-            enabled: !kid.screen_time_active && kid.screen_time > 0
+            enabled: !kid.screen_time_active && kid.screen_time > 0 && kid.points > 0
 
             Image
             {

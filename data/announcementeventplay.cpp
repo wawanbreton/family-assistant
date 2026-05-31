@@ -1,13 +1,13 @@
 #include "announcementeventplay.h"
 
-#include <QAudioFormat>
-#include <QAudioSink>
+#include <QAudioOutput>
 #include <QBuffer>
 #include <QCryptographicHash>
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QMediaPlayer>
 #include <QtConcurrent/QtConcurrentRun>
+#include <easyqt/bitfield.h>
 #include <easyqt/datastorage.h>
 #include <easyqt/file.h>
 #include <easyqt/qobject_helper.h>
@@ -31,11 +31,6 @@ AnnouncementEventPlay::AnnouncementEventPlay(const QString& text, QObject* paren
     }
 }
 
-AnnouncementEventPlay::~AnnouncementEventPlay()
-{
-    qInfo() << "Destroy me";
-}
-
 void AnnouncementEventPlay::start()
 {
     if (QFile(wav_filepath_).exists())
@@ -56,19 +51,12 @@ void AnnouncementEventPlay::start()
 
 void AnnouncementEventPlay::playAnnouncement()
 {
-    QAudioFormat format;
-    format.setSampleRate(22050);
-    format.setChannelCount(1);
-    format.setSampleFormat(QAudioFormat::Float);
-
-    auto file = new QFile(wav_filepath_, this);
-    file->open(QIODevice::ReadOnly);
-
-    auto audio_sink = new QAudioSink(format, this);
-    audio_sink->setVolume(1.0);
-
-    connect(audio_sink, &QAudioSink::stateChanged, this, &AnnouncementEventPlay::onAudioSinkStateChanged);
-    audio_sink->start(file);
+    auto player = new QMediaPlayer(this);
+    auto audio_output = new QAudioOutput(this);
+    connect(player, &QMediaPlayer::mediaStatusChanged, this, &AnnouncementEventPlay::onMediaPlayerStatusChanged);
+    player->setAudioOutput(audio_output);
+    player->setSource(QUrl::fromLocalFile(wav_filepath_));
+    player->play();
 }
 
 void AnnouncementEventPlay::onGenerateWavFileDone(bool success)
@@ -77,19 +65,16 @@ void AnnouncementEventPlay::onGenerateWavFileDone(bool success)
     {
         playAnnouncement();
     }
+    else
+    {
+        emit over();
+    }
 }
 
-void AnnouncementEventPlay::onAudioSinkStateChanged(QAudio::State state)
+void AnnouncementEventPlay::onMediaPlayerStatusChanged(QMediaPlayer::MediaStatus status)
 {
-    if (state == QAudio::IdleState)
+    if (status == QMediaPlayer::EndOfMedia)
     {
-        IF_CAST_SENDER(QAudioSink, audio_sink)
-        {
-            // This really looks silly, but destroying the audio sink while not explicitely stopped leads to
-            // segfaults...
-            audio_sink->stop();
-        }
-
         emit over();
     }
 }
@@ -116,7 +101,33 @@ bool AnnouncementEventPlay::generateWavFile(const QString& text, const QString& 
 
     if (success)
     {
-        easyqt::File::writeToFile(wav_filepath, sound_data);
+        // Generate a proper WAV file from the RAW PCM data returned by piper
+        QByteArray wav_header_data;
+
+        constexpr quint16 channels = 1;
+        constexpr quint32 sample_rate = 22050;
+        constexpr quint32 bytes_per_sample = sizeof(float);
+        constexpr bool invert_bytes = true;
+
+        wav_header_data.push_back(QString("RIFF").toLatin1());
+        wav_header_data.push_back(BitField::toByteArray<quint32>(36 + sound_data.size(), invert_bytes));
+        wav_header_data.push_back(QString("WAVE").toLatin1());
+        wav_header_data.push_back(QString("fmt ").toLatin1());
+        wav_header_data.push_back(BitField::toByteArray<quint32>(18, invert_bytes)); // Size of data format
+        wav_header_data.push_back(BitField::toByteArray<quint16>(3, invert_bytes));  // Floating-point values
+        wav_header_data.push_back(BitField::toByteArray<quint16>(channels, invert_bytes));
+        wav_header_data.push_back(BitField::toByteArray<quint32>(sample_rate, invert_bytes));
+        wav_header_data.push_back(
+            BitField::toByteArray<quint32>(sample_rate * channels * bytes_per_sample, invert_bytes)); // Byte rate
+        wav_header_data.push_back(
+            BitField::toByteArray<quint16>(channels * bytes_per_sample, invert_bytes)); // Block align
+        wav_header_data.push_back(
+            BitField::toByteArray<quint16>(bytes_per_sample * 8, invert_bytes));    // Bits per sample
+        wav_header_data.push_back(BitField::toByteArray<quint16>(0, invert_bytes)); // Extra format info
+        wav_header_data.push_back(QString("data").toLatin1());
+        wav_header_data.push_back(BitField::toByteArray<quint32>(sound_data.size(), invert_bytes));
+
+        easyqt::File::writeToFile(wav_filepath, wav_header_data + sound_data);
     }
 
     qInfo() << "Generating the voice file took" << timer.elapsed() << "ms";

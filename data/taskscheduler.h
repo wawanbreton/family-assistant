@@ -39,7 +39,12 @@ private:
 
     void appendDueTask(const ActiveTask* active_task, const QDateTime& due_timestamp);
 
+    void scheduleNextAnnouncement();
+
+    void triggerAnnouncements();
+
 private:
     QList<ActiveTask*> tasks_;
     QTimer* const timer_spawn_tasks_;
+    QTimer* const timer_trigger_announcements_;
 };

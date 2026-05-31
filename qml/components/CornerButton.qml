@@ -8,6 +8,7 @@ Item
     property alias imageComponent: imageItem.source
     property alias imageScale: image.scale
     property alias backgroundScale: buttonShadow.scale
+    property alias backgroundColor: gradient.color
     property int visualCenterX: image.x + image.width / 2
     property int visualCenterY: image.y + image.height / 2
     property int corner: Qt.BottomLeftCorner
@@ -62,7 +63,7 @@ Item
             radius: width / 2
             visible: false
 
-            gradient: StyledGradient {}
+            gradient: StyledGradient { id: gradient }
         }
     }
 

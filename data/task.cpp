@@ -4,6 +4,7 @@
 #include <easyqt/datastorage.h>
 #include <easyqt/debug.h>
 #include <easyqt/json.h>
+#include <ranges>
 
 
 using namespace std::chrono_literals;
@@ -18,6 +19,7 @@ Task::Task(const Task& other)
     , desc_(other.desc_)
     , icon_path_(other.icon_path_)
     , reward_(other.reward_)
+    , announcements_(other.announcements_)
 {
 }
 
@@ -26,6 +28,7 @@ void Task::copyFrom(const Task* other)
     desc_ = other->desc_;
     icon_path_ = other->icon_path_;
     reward_ = other->reward_;
+    announcements_ = other->announcements_;
 }
 
 void Task::load(const QJsonObject& json_object)
@@ -33,6 +36,15 @@ void Task::load(const QJsonObject& json_object)
     desc_ = easyqt::Json::loadProperty(json_object, "desc", __METHOD__, desc_);
     setIcon(easyqt::Json::loadProperty(json_object, "icon", __METHOD__, QString()));
     reward_ = easyqt::Json::loadProperty(json_object, "reward", __METHOD__, reward_);
+
+    std::ranges::transform(
+        easyqt::Json::loadPropertyArray<int, QList>(
+            json_object,
+            "announcements",
+            __METHOD__,
+            easyqt::Json::WarnIfNotFound::No),
+        std::back_inserter(announcements_),
+        [](int announcement) { return std::chrono::minutes(announcement); });
 }
 
 void Task::save(QJsonObject& json_object) const
@@ -40,6 +52,12 @@ void Task::save(QJsonObject& json_object) const
     json_object["desc"] = easyqt::Json::saveValue(desc_);
     json_object["icon"] = easyqt::Json::saveValue(getIcon());
     json_object["reward"] = easyqt::Json::saveValue(reward_);
+    if (! announcements_.empty())
+    {
+        json_object["announcements"] = easyqt::Json::saveArray(
+            announcements_
+            | std::views::transform([](std::chrono::minutes announcement) { return announcement.count(); }));
+    }
 }
 
 const QString& Task::getDesc() const
@@ -70,4 +88,9 @@ void Task::setIcon(const QString& icon)
 quint32 Task::getReward() const
 {
     return reward_;
+}
+
+const QList<std::chrono::minutes>& Task::getAnnouncements() const
+{
+    return announcements_;
 }

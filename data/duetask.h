@@ -36,6 +36,10 @@ public:
 
     void setTask(const ActiveTask* task);
 
+    const QList<QDateTime>& getAnnouncementTimestamps() const;
+
+    std::optional<std::chrono::minutes> popAnnouncement(const QDateTime& now);
+
     Q_INVOKABLE int currentReward() const;
 
     Q_INVOKABLE void setAccomplished();
@@ -45,13 +49,19 @@ public:
 signals:
     void dueTimestampChanged();
 
+    void announcementsChanged();
+
     void stateChanged();
 
     void accomplished();
 
 private:
+    void updateAnnouncements();
+
+private:
     const ActiveTask* task_{ nullptr };
     QDateTime due_timestamp_;
+    QList<QDateTime> announcements_timestamps_;
     TaskState::Enum state_{ TaskState::Early };
     QTimer* const timer_next_update_;
 };

@@ -16,7 +16,11 @@ UserManager::UserManager(QObject* parent)
     : QObject{ parent }
 {
     Preferences::access()->registerPreference(PreferenceEntry::ScreenTimePenaltyDelay, QMetaType::Int, 10);
-    Preferences::access()->registerPreference(PreferenceEntry::ScreenTimeOverAnnouncement, QMetaType::Int, 3);
+    Preferences::access()->registerPreference(
+        PreferenceEntry::ScreenTimeOverPreannouncements,
+        qMetaTypeId<QList<int>>(),
+        // QVariant::fromValue(QList<int>{ -10, -5, 0, 2, 5 }));
+        QVariant::fromValue(QList<int>{ -2, -1, 0, 1, 2 }));
 }
 
 void UserManager::load(const QJsonObject& json_object)

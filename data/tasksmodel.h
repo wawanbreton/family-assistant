@@ -30,10 +30,10 @@ public:
 
     QDate getDueDate() const;
 
+    const QList<DueTask*>& getTasks() const;
+
 signals:
     void changed();
-
-    void taskAccomplished(DueTask* task);
 
 private:
     QList<DueTask*> tasks_;

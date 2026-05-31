@@ -11,16 +11,10 @@ Preferences::Preferences(QObject* parent)
         this,
         &easyqt::Preferences::valueChanged,
         this,
-        [this](const int entry)
-        {
-            emit valueChanged(static_cast<PreferenceEntry::Enum>(entry));
-        });
+        [this](const int entry) { emit valueChanged(static_cast<PreferenceEntry::Enum>(entry)); });
 }
 
-void Preferences::registerPreference(
-    const PreferenceEntry::Enum entry,
-    const QMetaType::Type type,
-    const QVariant& default_value)
+void Preferences::registerPreference(const PreferenceEntry::Enum entry, const int type, const QVariant& default_value)
 {
     return easyqt::Preferences::registerPreference(
         static_cast<int>(entry),
@@ -37,6 +31,11 @@ QString Preferences::getString(const PreferenceEntry::Enum entry) const
 int Preferences::getInt(const PreferenceEntry::Enum entry) const
 {
     return easyqt::Preferences::getTypedValue<int>(static_cast<int>(entry));
+}
+
+QList<int> Preferences::getIntList(const PreferenceEntry::Enum entry) const
+{
+    return easyqt::Preferences::getTypedValue<QList<int>>(static_cast<int>(entry));
 }
 
 QVariant Preferences::getValue(const PreferenceEntry::Enum entry) const

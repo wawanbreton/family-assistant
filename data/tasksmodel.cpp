@@ -79,6 +79,7 @@ void TasksModel::append(DueTask* task)
     beginInsertRows(QModelIndex(), insert_index, insert_index);
     task->setParent(this);
     connect(task, &DueTask::accomplished, this, [this, task] { remove(task); });
+    connect(task, &DueTask::announcementsChanged, this, &TasksModel::changed);
     tasks_.insert(insert_index, task);
     endInsertRows();
     emit changed();
@@ -115,4 +116,9 @@ void TasksModel::clear()
 QDate TasksModel::getDueDate() const
 {
     return ! tasks_.empty() ? tasks_.first()->getDueTimestamp().date() : QDate();
+}
+
+const QList<DueTask*>& TasksModel::getTasks() const
+{
+    return tasks_;
 }

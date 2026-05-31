@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QAudio>
+#include <QMediaPlayer>
 
 #include "data/abstractannouncementevent.h"
 
@@ -11,8 +11,6 @@ class AnnouncementEventPlay : public AbstractAnnouncementEvent
 public:
     explicit AnnouncementEventPlay(const QString& text, QObject* parent = nullptr);
 
-    virtual ~AnnouncementEventPlay();
-
     void start() override;
 
 private:
@@ -20,7 +18,7 @@ private:
 
     void onGenerateWavFileDone(bool success);
 
-    void onAudioSinkStateChanged(QAudio::State state);
+    void onMediaPlayerStatusChanged(QMediaPlayer::MediaStatus status);
 
     static bool generateWavFile(const QString& text, const QString& wav_filepath);
 

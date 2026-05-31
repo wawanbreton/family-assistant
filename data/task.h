@@ -29,6 +29,8 @@ public:
 
     quint32 getReward() const;
 
+    const QList<std::chrono::minutes>& getAnnouncements() const;
+
 private:
     void setIcon(const QString& icon);
 
@@ -36,4 +38,5 @@ private:
     QString desc_;
     QString icon_path_;
     quint32 reward_{ 0 };
+    QList<std::chrono::minutes> announcements_;
 };

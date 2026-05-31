@@ -8,6 +8,7 @@
 #include <easyqt/logger.h>
 
 #include "data/accessmanager.h"
+#include "data/announcementmanager.h"
 #include "data/preferences.h"
 #include "data/taskscheduler.h"
 #include "data/usermanager.h"
@@ -28,6 +29,7 @@ MetaManager::MetaManager(QObject* parent)
     TaskScheduler::init(this);
     Hardware::init(this);
     AccessManager::init(this);
+    AnnouncementManager::init(this);
 
     data_file_path_ = easyqt::DataStorage::configFile("config.json");
 

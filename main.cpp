@@ -9,7 +9,6 @@
 #include <QQmlContext>
 
 #include "data/accessmanager.h"
-#include "data/announcementmanager.h"
 #include "data/kid.h"
 #include "data/metamanager.h"
 #include "data/screentimestate.h"
@@ -88,8 +87,6 @@ int main(int argc, char* argv[])
         const bool reset_tasks = obsolete_tasks || commands_line_parser.isSet(option_reset_tasks);
         const bool reset_screen_time = commands_line_parser.isSet(option_reset_screen_time);
         TaskScheduler::access()->start(reset_tasks, reset_screen_time);
-
-        AnnouncementManager::init(&app);
 
         Theme global_theme;
 

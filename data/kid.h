@@ -18,7 +18,7 @@ class Kid : public User
     Q_OBJECT
     Q_PROPERTY(const TasksModel* tasks READ getTasks CONSTANT STORED false)
     Q_PROPERTY(Theme* theme READ getTheme CONSTANT STORED false)
-    Q_PROPERTY(quint32 points READ getPoints WRITE setPoints NOTIFY pointsChanged)
+    Q_PROPERTY(qint32 points READ getPoints WRITE setPoints NOTIFY pointsChanged)
     Q_PROPERTY(int64_t screen_time READ getScreenTime WRITE setScreenTime NOTIFY screenTimeChanged)
     Q_PROPERTY(QString screen_time_str READ getScreenTimeStr NOTIFY screenTimeChanged)
     Q_PROPERTY(bool screen_time_active READ isScreenTimeActive NOTIFY screenTimeActiveChanged)
@@ -51,9 +51,9 @@ public:
 
     Theme* getTheme();
 
-    quint32 getPoints() const;
+    qint32 getPoints() const;
 
-    void setPoints(const quint32 points);
+    void setPoints(const qint32 points);
 
     int64_t getScreenTime() const;
 
@@ -94,9 +94,8 @@ private:
 private:
     TasksModel* const tasks_;
     Theme* const theme_;
-    quint32 points_{ 0 };
+    qint32 points_{ 0 };
     std::chrono::seconds screen_time_{};
     std::chrono::seconds active_screen_time_duration_{};
-    std::chrono::seconds screen_time_penalty_count_{};
     QTimer* const timer_screen_time_;
 };

@@ -16,7 +16,10 @@ class AnnouncementManager : public QObject
     SINGLETON(AnnouncementManager)
 
 public:
-    void addAnnouncement(const QString& text, const quint8 repeat = 1, const std::chrono::seconds delay = 2s);
+    void addAnnouncement(
+        const QString& text,
+        const std::optional<quint8> repeat = std::nullopt,
+        const std::chrono::seconds delay = 2s);
 
     struct piper_synthesizer* getVoiceSynthesizer();
 
@@ -28,4 +31,5 @@ private:
 private:
     QQueue<AbstractAnnouncementEvent*> events_queue_;
     struct piper_synthesizer* voice_synthesizer_{ nullptr };
+    int repeat_{ 1 };
 };

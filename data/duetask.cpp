@@ -39,6 +39,12 @@ bool DueTask::load(const QJsonObject& json_object)
         }
     }
 
+    announcements_timestamps_ = easyqt::Json::loadPropertyArray<QDateTime, QList>(
+        json_object,
+        "announcements",
+        __METHOD__,
+        easyqt::Json::WarnIfNotFound::No);
+
     return ! due_timestamp_.isNull() && task_;
 }
 
@@ -49,6 +55,11 @@ void DueTask::save(QJsonObject& json_object) const
     if (task_)
     {
         json_object["task_uuid"] = easyqt::Json::saveValue(task_->getUuid());
+    }
+
+    if (! announcements_timestamps_.empty())
+    {
+        json_object["announcements"] = easyqt::Json::saveArray(announcements_timestamps_);
     }
 }
 
@@ -63,6 +74,7 @@ void DueTask::setDueTimestamp(const QDateTime& due_timestamp)
     {
         due_timestamp_ = due_timestamp;
         updateState();
+        updateAnnouncements();
         emit dueTimestampChanged();
     }
 }
@@ -85,6 +97,34 @@ const ActiveTask* DueTask::getTask() const
 void DueTask::setTask(const ActiveTask* desc)
 {
     task_ = desc;
+    updateAnnouncements();
+}
+
+const QList<QDateTime>& DueTask::getAnnouncementTimestamps() const
+{
+    return announcements_timestamps_;
+}
+
+std::optional<std::chrono::minutes> DueTask::popAnnouncement(const QDateTime& now)
+{
+    std::optional<std::chrono::minutes> delay;
+    auto iterator = QMutableListIterator(announcements_timestamps_);
+    while (iterator.hasNext())
+    {
+        const QDateTime& announcement_timestamp = iterator.next();
+        if (announcement_timestamp <= now)
+        {
+            delay = std::chrono::duration_cast<std::chrono::minutes>(announcement_timestamp - getDueTimestamp());
+            iterator.remove();
+        }
+    }
+
+    if (delay.has_value())
+    {
+        emit announcementsChanged();
+    }
+
+    return delay;
 }
 
 int DueTask::currentReward() const
@@ -181,5 +221,26 @@ void DueTask::updateState()
         std::chrono::milliseconds delay_next_update = next_update_timestamp - now;
         delay_next_update = std::max(std::chrono::milliseconds::zero(), delay_next_update);
         timer_next_update_->start(delay_next_update + 1ms);
+    }
+}
+
+void DueTask::updateAnnouncements()
+{
+    announcements_timestamps_.clear();
+
+    if (! task_)
+    {
+        return;
+    }
+
+    const auto now = QDateTime::currentDateTimeUtc();
+
+    for (const std::chrono::minutes announcement : task_->getAnnouncements())
+    {
+        const QDateTime announcement_timestamp = due_timestamp_ + announcement;
+        if (announcement_timestamp > now)
+        {
+            announcements_timestamps_ << announcement_timestamp;
+        }
     }
 }

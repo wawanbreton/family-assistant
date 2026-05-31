@@ -8,6 +8,7 @@ Item
     property var kid
     property int delayHide: 5000
     property bool pointsAlwaysVisible: false
+    property var color: kid.points <= 0 ? gradient.red : (kid.points < 10 ? gradient.orange : gradient.blue)
 
     signal displayRewards()
 
@@ -38,7 +39,11 @@ Item
             width: pointsCounter.x + pointsCounter.width + 38
             height: 100
 
-            gradient: StyledGradient {}
+            gradient: StyledGradient
+            {
+                id: gradient
+                color: root.color
+            }
 
             PointsCounter
             {
@@ -113,6 +118,7 @@ Item
         y: 0
         imageComponent: Theme.getItemFilePath(ThemeCategory.PointsStorage, kid.theme.points_storage)
         imageScale: 0.65
+        backgroundColor: root.color
 
         onPressed:
         {

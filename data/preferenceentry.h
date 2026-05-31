@@ -26,8 +26,10 @@ public:
         BacklightSleepAnimationDuration, // In milliseconds
         BacklightWakeUpAnimationDuration, // In milliseconds
         WeeklyScreenTime,                 // In minutes
+        AnnouncementRepeats,              // When a vocal announcement is made, it is repeated N times
         ScreenTimePenaltyDelay,           // When screen time is over, a penalty point is taken every <delay> seconds
-        ScreenTimeOverAnnouncement,       // When screen time is over, N vocal announcements are made
+        ScreenTimeOverPreannouncements,   // When screen time is (almost) due, vocal announcements are made at these
+                                          // times. This is a list of negative (or null) ints, in minutes.
     };
 
     ENUM_TOSTRING()

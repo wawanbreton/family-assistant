@@ -6,6 +6,7 @@
 
 #include "data/announcementeventplay.h"
 #include "data/announcementeventwait.h"
+#include "data/preferences.h"
 
 
 SINGLETON_IMPL(AnnouncementManager)
@@ -13,6 +14,11 @@ SINGLETON_IMPL(AnnouncementManager)
 AnnouncementManager::AnnouncementManager(QObject* parent)
     : QObject{ parent }
 {
+    QTimer::singleShot(0, this, [this] { addAnnouncement("Bienvenue dans l'assistant familial !", 1); });
+
+    Preferences::access()->registerPreference(PreferenceEntry::AnnouncementRepeats, QMetaType::Int, 3);
+    repeat_ = Preferences::get()->getInt(PreferenceEntry::AnnouncementRepeats);
+
     const QString voice = "fr_FR-siwis-medium";
     const QString voice_filepath
         = easyqt::DataStorage::resourceFile(QString("%1.onnx").arg(voice), easyqt::ResourceType::Voice);
@@ -31,16 +37,20 @@ AnnouncementManager::~AnnouncementManager()
     piper_free(voice_synthesizer_);
 }
 
-void AnnouncementManager::addAnnouncement(const QString& text, const quint8 repeat, const std::chrono::seconds delay)
+void AnnouncementManager::addAnnouncement(
+    const QString& text,
+    const std::optional<quint8> repeat,
+    const std::chrono::seconds delay)
 {
-    if (repeat == 0)
+    const quint8 actual_repeat = repeat.value_or(repeat_);
+    if (actual_repeat == 0)
     {
         return;
     }
 
     const bool start_next_event = events_queue_.empty();
 
-    for (quint8 index = 0; index < repeat; ++index)
+    for (quint8 index = 0; index < actual_repeat; ++index)
     {
         if (index > 0)
         {
