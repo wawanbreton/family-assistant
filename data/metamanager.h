@@ -8,7 +8,7 @@ class QTimer;
 class MetaManager : public QObject
 {
     Q_OBJECT
-    SINGLETON(MetaManager)
+    SINGLETON_WITH_1_PARAM(MetaManager, const bool skip_voice_engine)
 
 public:
     void load(const QString& file_path = QString());

@@ -39,6 +39,9 @@ int main(int argc, char* argv[])
     QCommandLineOption option_reset_tasks("reset-tasks", "Ignore loaded due tasks and create a new planning");
     commands_line_parser.addOption(option_reset_tasks);
 
+    QCommandLineOption option_no_announces("no-announces", "Do not load the voice synthesis engine");
+    commands_line_parser.addOption(option_no_announces);
+
     QCommandLineOption option_reset_screen_time(
         "reset-screen-time",
         "Reset the kids screen time (requires reset tasks)");
@@ -60,7 +63,7 @@ int main(int argc, char* argv[])
         qmlRegisterType<ThemeCategory>("FamilyAssistant", 1, 0, "ThemeCategory");
         qmlRegisterType<easyqt::ResourceType>("FamilyAssistant", 1, 0, "ResourceType");
 
-        MetaManager::init(&app);
+        MetaManager::init(&app, commands_line_parser.isSet(option_no_announces));
 
         if (commands_line_parser.isSet(option_data_file))
         {

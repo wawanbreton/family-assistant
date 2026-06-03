@@ -13,7 +13,7 @@ class AbstractAnnouncementEvent;
 class AnnouncementManager : public QObject
 {
     Q_OBJECT
-    SINGLETON(AnnouncementManager)
+    SINGLETON_WITH_1_PARAM(AnnouncementManager, const bool skip_voice_engine)
 
 public:
     void addAnnouncement(

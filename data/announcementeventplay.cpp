@@ -85,8 +85,14 @@ bool AnnouncementEventPlay::generateWavFile(const QString& text, const QString& 
     timer.start();
     QByteArray sound_data;
 
-    piper_synthesizer* synthesizer = AnnouncementManager::access()->getVoiceSynthesizer();
     bool success = false;
+
+    piper_synthesizer* synthesizer = AnnouncementManager::access()->getVoiceSynthesizer();
+    if (! synthesizer)
+    {
+        return success;
+    }
+
     if (piper_synthesize_start(synthesizer, text.toStdString().c_str(), nullptr) == PIPER_OK)
     {
         piper_audio_chunk chunk;

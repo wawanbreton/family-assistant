@@ -15,10 +15,10 @@
 #include "hardware/hardware.h"
 
 
-SINGLETON_IMPL(MetaManager)
+SINGLETON_IMPL_WITH_1_PARAM(MetaManager, const bool skip_voice_engine, skip_voice_engine)
 SINGLETON_DESTRUCTOR_IMPL(MetaManager)
 
-MetaManager::MetaManager(QObject* parent)
+MetaManager::MetaManager(QObject* parent, const bool skip_voice_engine)
     : QObject(parent)
     , timer_data_changed_(new QTimer(this))
 {
@@ -29,7 +29,7 @@ MetaManager::MetaManager(QObject* parent)
     TaskScheduler::init(this);
     Hardware::init(this);
     AccessManager::init(this);
-    AnnouncementManager::init(this);
+    AnnouncementManager::init(this, skip_voice_engine);
 
     data_file_path_ = easyqt::DataStorage::configFile("config.json");
 

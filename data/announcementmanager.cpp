@@ -9,15 +9,20 @@
 #include "data/preferences.h"
 
 
-SINGLETON_IMPL(AnnouncementManager)
+SINGLETON_IMPL_WITH_1_PARAM(AnnouncementManager, const bool skip_voice_engine, skip_voice_engine)
 
-AnnouncementManager::AnnouncementManager(QObject* parent)
+AnnouncementManager::AnnouncementManager(QObject* parent, const bool skip_voice_engine)
     : QObject{ parent }
 {
-    QTimer::singleShot(0, this, [this] { addAnnouncement("Bienvenue dans l'assistant familial !", 1); });
-
     Preferences::access()->registerPreference(PreferenceEntry::AnnouncementRepeats, QMetaType::Int, 3);
     repeat_ = Preferences::get()->getInt(PreferenceEntry::AnnouncementRepeats);
+
+    if (skip_voice_engine)
+    {
+        return;
+    }
+
+    QTimer::singleShot(0, this, [this] { addAnnouncement("Bienvenue dans l'assistant familial !", 1); });
 
     const QString voice = "fr_FR-siwis-medium";
     const QString voice_filepath
@@ -34,7 +39,10 @@ AnnouncementManager::AnnouncementManager(QObject* parent)
 AnnouncementManager::~AnnouncementManager()
 {
     SINGLETON_DESTROY_IMPL(AnnouncementManager);
-    piper_free(voice_synthesizer_);
+    if (voice_synthesizer_)
+    {
+        piper_free(voice_synthesizer_);
+    }
 }
 
 void AnnouncementManager::addAnnouncement(
