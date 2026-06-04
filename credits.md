@@ -61,6 +61,9 @@
 <a href="https://www.flaticon.com/free-icons/street-light" title="street light icons">Street light icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/traffic-light" title="traffic light icons">Traffic light icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/session" title="session icons">Session icons created by Andrean Prabowo - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/booster" title="booster icons">Booster icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/alien" title="alien icons">Alien icons created by smalllikeart - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/explosion" title="explosion icons">Explosion icons created by Freepik - Flaticon</a>
 
 https://www.dafont.com/super-playful.font
 https://www.dafont.com/super-crafty.font
