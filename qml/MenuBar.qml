@@ -24,7 +24,7 @@ Rectangle
 
         Repeater
         {
-            model: ["children", "settings"]
+            model: ["home", "children", "settings"]
 
             MenuBarButton
             {

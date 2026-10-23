@@ -5,7 +5,7 @@ import "generic"
 
 Rectangle
 {
-    readonly property int cost: 200
+    readonly property int cost: 300
 
     id: root
     clip: true

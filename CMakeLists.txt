@@ -71,6 +71,7 @@ qt_add_executable(family-assistant
     data/taskstate.h
     data/theme.h data/theme.cpp
     data/themecategory.h
+    data/timeaccessor.h data/timeaccessor.cpp
     data/user.h data/user.cpp
     data/usermanager.h data/usermanager.cpp
 
@@ -242,6 +243,9 @@ qt_add_executable(family-assistant
     data/abstractannouncementevent.h data/abstractannouncementevent.cpp
     data/announcementeventwait.h data/announcementeventwait.cpp
     data/announcementeventplay.h data/announcementeventplay.cpp
+    qml/Home.qml
+    qml/home/DateTime.qml
+    qml/home/HomeWidget.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

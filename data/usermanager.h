@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QObject>
-#include <QQmlListProperty>
 #include <easyqt/singleton.h>
 
 class Kid;

@@ -6,41 +6,87 @@
             "occurences": [
                 {
                     "days": [
-                        "Friday",
-                        "Tuesday",
+                        "Wednesday",
                         "Thursday",
-                        "Monday",
-                        "Wednesday"
+                        "Tuesday",
+                        "Friday",
+                        "Monday"
                     ],
                     "times": [
-                        "08:00",
-                        "20:30"
+                        "20:30",
+                        "08:05"
                     ]
                 },
                 {
                     "days": [
-                        "Sunday",
-                        "Saturday"
+                        "Saturday",
+                        "Sunday"
                     ],
                     "times": [
-                        "21:30",
+                        "22:00",
                         "10:00"
                     ]
                 }
             ],
             "reward": 4,
-            "uuid": "6ae4e41b-3a29-45ec-9912-821a68e5cb19"
+            "uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a",
+            "affected_kid_uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a"
         },
         {
+            "desc": "Brosser ses dents",
+            "icon": "toothbrush",
+            "occurences": [
+                {
+                    "days": [
+                        "Tuesday"
+                    ],
+                    "times": [
+                        "20:30",
+                        "10:00"
+                    ]
+                },
+                {
+                    "days": [
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Monday"
+                    ],
+                    "times": [
+                        "20:30",
+                        "08:05"
+                    ]
+                },
+                {
+                    "days": [
+                        "Saturday",
+                        "Sunday"
+                    ],
+                    "times": [
+                        "22:00",
+                        "10:00"
+                    ]
+                }
+            ],
+            "reward": 4,
+            "uuid": "6ae4e41b-3a29-45ec-9912-821a68e5cb19",
+            "affected_kid_uuid": "ddcfc4d3-cabb-4143-8b51-4afec4580150"
+        },
+        {
+            "announcements": [
+                -25,
+                -15,
+                -5
+            ],
             "desc": "Ranger son cartable",
             "icon": "school-bag",
             "occurences": [
                 {
                     "days": [
-                        "Friday",
+                        "Wednesday",
                         "Tuesday",
-                        "Monday",
-                        "Wednesday"
+                        "Friday",
+                        "Monday"
                     ],
                     "times": [
                         "15:00"
@@ -55,16 +101,57 @@
                     ]
                 }
             ],
-            "reward": 2,
-            "uuid": "4039ae28-e575-485c-850f-bbfe3991d714"
+            "reward": 5,
+            "uuid": "4039ae28-e575-485c-850f-bbfe3991d714",
+            "affected_kid_uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a"
         },
         {
-            "affected_kid_uuid": "ddcfc4d3-cabb-4143-8b51-4afec4580150",
+            "announcements": [
+                -25,
+                -15,
+                -5
+            ],
+            "desc": "Ranger son cartable",
+            "icon": "school-bag",
+            "occurences": [
+                {
+                    "days": [
+                        "Wednesday",
+                        "Friday",
+                        "Thursday"
+                    ],
+                    "times": [
+                        "17:00"
+                    ]
+                },
+                {
+                    "days": [
+                        "Monday"
+                    ],
+                    "times": [
+                        "18:00"
+                    ]
+                },
+                {
+                    "days": [
+                        "Saturday"
+                    ],
+                    "times": [
+                        "13:00"
+                    ]
+                }
+            ],
+            "reward": 5,
+            "uuid": "4039ae28-e575-485c-850f-bbfe3991d714",
+            "affected_kid_uuid": "ddcfc4d3-cabb-4143-8b51-4afec4580150"
+        },
+        {
+            "affected_kid_uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a",
             "desc": "Passer l'aspirateur",
             "icon": "vacuum",
             "occurences": [
             ],
-            "reward": 18,
+            "reward": 25,
             "uuid": "1f0d258f-d17b-48c8-8981-227d5471b28a"
         },
         {
@@ -72,10 +159,11 @@
             "icon": "laundry",
             "occurences": [
             ],
-            "reward": 10,
+            "reward": 15,
             "uuid": "9e60a75e-f6d2-468e-98d1-d5dac7964800"
         },
         {
+            "affected_kid_uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a",
             "desc": "Ranger ses livres",
             "icon": "bookshelf",
             "occurences": [
@@ -90,24 +178,24 @@
             "occurences": [
                 {
                     "days": [
-                        "Friday",
-                        "Tuesday",
+                        "Wednesday",
                         "Thursday",
+                        "Tuesday",
+                        "Friday",
                         "Sunday",
-                        "Monday",
-                        "Wednesday"
+                        "Monday"
                     ],
                     "times": [
-                        "20:00"
+                        "20:30"
                     ]
                 },
                 {
                     "days": [
-                        "Sunday",
-                        "Saturday"
+                        "Saturday",
+                        "Sunday"
                     ],
                     "times": [
-                        "14:00"
+                        "15:00"
                     ]
                 }
             ],
@@ -121,24 +209,24 @@
             "occurences": [
                 {
                     "days": [
-                        "Friday",
-                        "Tuesday",
+                        "Wednesday",
                         "Thursday",
+                        "Tuesday",
+                        "Friday",
                         "Sunday",
-                        "Monday",
-                        "Wednesday"
+                        "Monday"
                     ],
                     "times": [
-                        "18:30"
+                        "19:30"
                     ]
                 },
                 {
                     "days": [
-                        "Sunday",
-                        "Saturday"
+                        "Saturday",
+                        "Sunday"
                     ],
                     "times": [
-                        "12:30"
+                        "14:00"
                     ]
                 }
             ],
@@ -152,13 +240,13 @@
             "occurences": [
                 {
                     "days": [
-                        "Friday",
-                        "Tuesday",
-                        "Thursday",
-                        "Sunday",
                         "Saturday",
-                        "Monday",
-                        "Wednesday"
+                        "Wednesday",
+                        "Thursday",
+                        "Tuesday",
+                        "Friday",
+                        "Sunday",
+                        "Monday"
                     ],
                     "times": [
                         "20:30"
@@ -169,34 +257,36 @@
             "uuid": "0228b8a9-26ee-498e-a921-22c98ea6b89b"
         },
         {
+            "activation_delay": 300,
             "affected_kid_uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a",
             "desc": "Vider la litière",
             "icon": "litter-box",
             "occurences": [
                 {
                     "days": [
-                        "Friday",
-                        "Tuesday",
-                        "Thursday",
-                        "Sunday",
                         "Saturday",
-                        "Monday",
-                        "Wednesday"
+                        "Wednesday",
+                        "Thursday",
+                        "Tuesday",
+                        "Friday",
+                        "Sunday",
+                        "Monday"
                     ],
                     "times": [
                         "21:00"
                     ]
                 }
             ],
-            "reward": 6,
+            "reward": 8,
             "uuid": "f452f306-9380-4bc7-99bf-90b490bdfb65"
         },
         {
+            "affected_kid_uuid": "ddcfc4d3-cabb-4143-8b51-4afec4580150",
             "desc": "Ranger sa chambre",
             "icon": "workplace",
             "occurences": [
             ],
-            "reward": 25,
+            "reward": 200,
             "uuid": "b4946271-d260-463d-842d-489d160437ba"
         }
     ],
@@ -214,53 +304,53 @@
         {
             "fingerprint": 7,
             "name": "Léonis",
+            "points": 145,
             "pronounced_name": "Léoniss",
-            "points": 100,
-            "screen_time": 3,
+            "screen_time": 80,
             "tasks": [
                 {
-                    "due_timestamp": "2026-02-12 19:30",
-                    "task_uuid": "0228b8a9-26ee-498e-a921-22c98ea6b89b"
+                    "due_timestamp": "2026-09-16 18:30",
+                    "task_uuid": "6ae4e41b-3a29-45ec-9912-821a68e5cb19"
                 },
                 {
-                    "due_timestamp": "2026-02-12 18:00",
-                    "task_uuid": "6ae4e41b-3a29-45ec-9912-821a68e5cb19"
+                    "due_timestamp": "2026-09-16 18:30",
+                    "task_uuid": "0228b8a9-26ee-498e-a921-22c98ea6b89b"
                 }
             ],
             "theme": {
-                "background": "City",
-                "font": "Ubuntu",
-                "point": "StarCoin",
+                "background": "Console",
+                "font": "DottyShadow",
+                "point": "Poop",
                 "points_storage": "Treasure",
-                "text_style": "Black"
+                "text_style": "RainbowAnimated"
             },
             "uuid": "ddcfc4d3-cabb-4143-8b51-4afec4580150"
         },
         {
-            "fingerprint": 5,
+            "fingerprint": 9,
             "name": "Clélie",
-            "points": 500,
-            "screen_time": 3,
+            "points": 1032,
+            "screen_time": 1579,
             "tasks": [
                 {
-                    "due_timestamp": "2026-02-12 19:30",
+                    "due_timestamp": "2026-09-16 18:30",
+                    "task_uuid": "6ae4e41b-3a29-45ec-9912-821a68e5cb19"
+                },
+                {
+                    "due_timestamp": "2026-09-16 18:30",
                     "task_uuid": "0228b8a9-26ee-498e-a921-22c98ea6b89b"
                 },
                 {
-                    "due_timestamp": "2026-02-12 20:00",
+                    "due_timestamp": "2026-09-16 19:00",
                     "task_uuid": "f452f306-9380-4bc7-99bf-90b490bdfb65"
-                },
-                {
-                    "due_timestamp": "2026-02-12 20:30",
-                    "task_uuid": "6ae4e41b-3a29-45ec-9912-821a68e5cb19"
                 }
             ],
             "theme": {
                 "background": "Flowers",
-                "font": "Ubuntu",
-                "point": "StarCoin",
+                "font": "Agreloy",
+                "point": "Rainbow",
                 "points_storage": "Treasure",
-                "text_style": "Black"
+                "text_style": "White"
             },
             "uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a"
         }

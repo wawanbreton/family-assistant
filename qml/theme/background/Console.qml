@@ -4,7 +4,7 @@ import "../../components"
 
 Rectangle
 {
-    readonly property int cost: 250
+    readonly property int cost: 300
 
     id: root
     color: "#eeeeee"

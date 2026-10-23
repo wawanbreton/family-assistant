@@ -91,8 +91,9 @@ Item
     {
         kid: root.kid
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 16
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottomMargin: 32
+        anchors.right: parent.right
+        anchors.rightMargin: 16
     }
 
     Component

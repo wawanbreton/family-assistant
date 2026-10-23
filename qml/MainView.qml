@@ -28,6 +28,13 @@ Item
         Settings {}
     }
 
+    Component
+    {
+        id: componentHome
+
+        Home {}
+    }
+
     Connections
     {
         target: access
@@ -49,7 +56,8 @@ Item
         anchors.fill: parent
     }
 
-    Component.onCompleted: setMainItem(componentKidsTasks, {})
+    // Component.onCompleted: setMainItem(componentKidsTasks, {})
+    Component.onCompleted: setMainItem(componentHome, {})
 
     function setMainItem(component: var, arguments)
     {
@@ -64,7 +72,11 @@ Item
 
     function setView(view: string)
     {
-        if(view === "children")
+        if(view === "home")
+        {
+            setMainItem(componentHome);
+        }
+        else if(view === "children")
         {
             setMainItem(componentKidsTasks);
         }

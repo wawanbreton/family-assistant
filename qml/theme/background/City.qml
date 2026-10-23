@@ -7,6 +7,7 @@ import "../../components"
 SkyWithClouds
 {
     id: root
+    clip: true
 
     readonly property int cost: 200
     maximumCloudsY: height / 2
