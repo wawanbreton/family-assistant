@@ -64,6 +64,19 @@
 <a href="https://www.flaticon.com/free-icons/booster" title="booster icons">Booster icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/alien" title="alien icons">Alien icons created by smalllikeart - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/explosion" title="explosion icons">Explosion icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/rain" title="rain icons">Rain icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/thunderstorm" title="thunderstorm icons">Thunderstorm icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/snowy" title="snowy icons">Snowy icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/cloudy" title="cloudy icons">Cloudy icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/rain" title="rain icons">Rain icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/foggy" title="foggy icons">Foggy icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/drizzle" title="drizzle icons">Drizzle icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/mist" title="mist icons">Mist icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/summer" title="summer icons">Summer icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/half-moon" title="half moon icons">Half moon icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/cloudy-day" title="cloudy day icons">Cloudy day icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/thunder" title="thunder icons">Thunder icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/cloudy-night" title="cloudy night icons">Cloudy night icons created by Magnific - Flaticon</a>
 
 https://www.dafont.com/super-playful.font
 https://www.dafont.com/super-crafty.font

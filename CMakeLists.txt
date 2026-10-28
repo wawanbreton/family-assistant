@@ -54,11 +54,17 @@ qt_add_executable(family-assistant
 
     # CPP source files
     main.cpp
+    data/abstractannouncementevent.h data/abstractannouncementevent.cpp
     data/accessmanager.h data/accessmanager.cpp
     data/activetask.h data/activetask.cpp
+    data/announcementeventplay.h data/announcementeventplay.cpp
+    data/announcementeventwait.h data/announcementeventwait.cpp
     data/announcementmanager.h data/announcementmanager.cpp
+    data/constants.h
+    data/daymode.h
     data/dayofweek.h
     data/duetask.h data/duetask.cpp
+    data/forecastdata.h data/forecastdata.cpp
     data/kid.h data/kid.cpp
     data/metamanager.h data/metamanager.cpp
     data/preferenceentry.h
@@ -74,6 +80,7 @@ qt_add_executable(family-assistant
     data/timeaccessor.h data/timeaccessor.cpp
     data/user.h data/user.cpp
     data/usermanager.h data/usermanager.cpp
+    data/weatheraccessor.h data/weatheraccessor.cpp
 
     hardware/hardware.h hardware/hardware.cpp
     hardware/backlightmanager.cpp hardware/backlightmanager.h
@@ -132,6 +139,11 @@ qt_add_executable(family-assistant
     qml/components/TextOutline.qml
     qml/components/UniqueItemContainer.qml
     qml/components/VerticalTabView.qml
+
+    qml/Home.qml
+    qml/home/DateTime.qml
+    qml/home/HomeWidget.qml
+    qml/home/WeatherForecast.qml
 
     qml/rewards/Backgrounds.qml
     qml/rewards/NameTexts.qml
@@ -240,12 +252,7 @@ qt_add_executable(family-assistant
     qml/theme/text_style/RainbowAnimated.qml
 
     ${EXTRA_SOURCES}
-    data/abstractannouncementevent.h data/abstractannouncementevent.cpp
-    data/announcementeventwait.h data/announcementeventwait.cpp
-    data/announcementeventplay.h data/announcementeventplay.cpp
-    qml/Home.qml
-    qml/home/DateTime.qml
-    qml/home/HomeWidget.qml
+    qml/components/HugeText.qml
 )
 
 qt6_add_resources(family-assistant "family-assistant"

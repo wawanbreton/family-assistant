@@ -28,7 +28,7 @@ Item
             Layout.preferredWidth: 2
         }
 
-        HomeWidget
+        WeatherForecast
         {
             Layout.rowSpan: 2
             Layout.verticalStretchFactor: 7

@@ -18,6 +18,8 @@ public:
 
     int getInt(const PreferenceEntry::Enum entry) const;
 
+    double getDouble(const PreferenceEntry::Enum entry) const;
+
     QList<int> getIntList(const PreferenceEntry::Enum entry) const;
 
     QVariant getValue(const PreferenceEntry::Enum entry) const;

@@ -33,6 +33,11 @@ int Preferences::getInt(const PreferenceEntry::Enum entry) const
     return easyqt::Preferences::getTypedValue<int>(static_cast<int>(entry));
 }
 
+double Preferences::getDouble(const PreferenceEntry::Enum entry) const
+{
+    return easyqt::Preferences::getTypedValue<double>(static_cast<int>(entry));
+}
+
 QList<int> Preferences::getIntList(const PreferenceEntry::Enum entry) const
 {
     return easyqt::Preferences::getTypedValue<QList<int>>(static_cast<int>(entry));

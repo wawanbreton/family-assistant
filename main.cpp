@@ -18,6 +18,7 @@
 #include "data/themecategory.h"
 #include "data/timeaccessor.h"
 #include "data/usermanager.h"
+#include "data/weatheraccessor.h"
 #include "easyqt/datastorage.h"
 #include "easyqt/resourcetype.h"
 #include "hardware/hardware.h"
@@ -103,6 +104,7 @@ int main(int argc, char* argv[])
         engine.rootContext()->setContextProperty("tasks_scheduler", TaskScheduler::access());
         engine.rootContext()->setContextProperty("hardware", Hardware::access());
         engine.rootContext()->setContextProperty("time", TimeAccessor::access());
+        engine.rootContext()->setContextProperty("weather", WeatherAccessor::access());
         engine.rootContext()->setContextProperty("access", AccessManager::access());
         engine.rootContext()->setContextProperty("DataStorage", easyqt::DataStorage::access());
         engine.rootContext()->setContextProperty("Theme", &global_theme);

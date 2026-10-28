@@ -13,6 +13,7 @@
 #include "data/taskscheduler.h"
 #include "data/timeaccessor.h"
 #include "data/usermanager.h"
+#include "data/weatheraccessor.h"
 #include "hardware/hardware.h"
 
 
@@ -32,6 +33,7 @@ MetaManager::MetaManager(QObject* parent, const bool skip_voice_engine)
     AccessManager::init(this);
     AnnouncementManager::init(this, skip_voice_engine);
     TimeAccessor::init(this);
+    WeatherAccessor::init(this);
 
     data_file_path_ = easyqt::DataStorage::configFile("config.json");
 

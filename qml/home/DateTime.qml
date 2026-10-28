@@ -11,11 +11,10 @@ HomeWidget
         anchors.bottomMargin: 26
         spacing: -10
 
-        BaseText
+        HugeText
         {
             id: textTime
             text: time.time
-            font.pointSize: 88
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
         }

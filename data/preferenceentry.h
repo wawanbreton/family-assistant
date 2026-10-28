@@ -30,6 +30,9 @@ public:
         ScreenTimePenaltyDelay,           // When screen time is over, a penalty point is taken every <delay> seconds
         ScreenTimeOverPreannouncements,   // When screen time is (almost) due, vocal announcements are made at these
                                           // times. This is a list of negative (or null) ints, in minutes.
+        WeatherLatitude,                  // Latitude of the position for weather forecast
+        WeatherLongitude,                 // Longitude of the position for weather forecast
+        WeatherAPIKey,                    // OpenWeatherMap API key
     };
 
     ENUM_TOSTRING()
