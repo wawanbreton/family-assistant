@@ -1,5 +1,7 @@
 #include "announcementmanager.h"
 
+#include <QAudioDevice>
+#include <QMediaDevices>
 #include <QTimer>
 #include <easyqt/datastorage.h>
 #include <piper.h>
@@ -13,11 +15,39 @@ SINGLETON_IMPL_WITH_1_PARAM(AnnouncementManager, const bool skip_voice_engine, s
 
 AnnouncementManager::AnnouncementManager(QObject* parent, const bool skip_voice_engine)
     : QObject{ parent }
+    , output_device_(QMediaDevices::defaultAudioOutput())
 {
     Preferences::access()->registerPreference(PreferenceEntry::AnnouncementRepeats, QMetaType::Int, 3);
     Preferences::access()->registerPreference(PreferenceEntry::AnnouncementFirstVolume, QMetaType::Double, 1.0);
     Preferences::access()->registerPreference(PreferenceEntry::AnnouncementLastVolume, QMetaType::Double, 1.0);
+    Preferences::access()->registerPreference(PreferenceEntry::AnnouncementAudioDevice, QMetaType::QString, "");
     repeat_ = Preferences::get()->getInt(PreferenceEntry::AnnouncementRepeats);
+
+    const QString announcement_audio_device_name
+        = Preferences::get()->getString(PreferenceEntry::AnnouncementAudioDevice).trimmed();
+    if (! announcement_audio_device_name.isEmpty())
+    {
+        bool output_device_found = false;
+        for (const QAudioDevice& device : QMediaDevices::audioOutputs())
+        {
+            if (device.description().trimmed() == announcement_audio_device_name)
+            {
+                output_device_ = device;
+                output_device_found = true;
+            }
+        }
+
+        if (output_device_found)
+        {
+            qInfo() << "Playing announcements on" << output_device_.description();
+        }
+        else
+        {
+            qWarning() << "Output device" << announcement_audio_device_name << "was not found, using default"
+                       << output_device_.description();
+        }
+    }
+
 
     if (skip_voice_engine)
     {
@@ -75,8 +105,11 @@ void AnnouncementManager::addAnnouncement(
 
         const double announcement_factor
             = actual_repeat == 1 ? 0.5 : (static_cast<double>(index) / (actual_repeat - 1));
-        events_queue_
-            << new AnnouncementEventPlay(text, std::lerp(first_volume, last_volume, announcement_factor), this);
+        events_queue_ << new AnnouncementEventPlay(
+            text,
+            std::lerp(first_volume, last_volume, announcement_factor),
+            output_device_,
+            this);
     }
 
     if (start_next_event)

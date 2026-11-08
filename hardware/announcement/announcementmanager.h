@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QAudioDevice>
 #include <QQueue>
 #include <chrono>
 #include <easyqt/singleton.h>
@@ -32,4 +33,5 @@ private:
     QQueue<AbstractAnnouncementEvent*> events_queue_;
     struct piper_synthesizer* voice_synthesizer_{ nullptr };
     int repeat_{ 1 };
+    QAudioDevice output_device_;
 };

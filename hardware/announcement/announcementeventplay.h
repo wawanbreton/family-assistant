@@ -4,12 +4,18 @@
 
 #include "data/abstractannouncementevent.h"
 
+class QAudioDevice;
+
 class AnnouncementEventPlay : public AbstractAnnouncementEvent
 {
     Q_OBJECT
 
 public:
-    explicit AnnouncementEventPlay(const QString& text, const double volume, QObject* parent = nullptr);
+    explicit AnnouncementEventPlay(
+        const QString& text,
+        const double volume,
+        const QAudioDevice& device,
+        QObject* parent = nullptr);
 
     void start() override;
 
@@ -26,4 +32,5 @@ private:
     const QString text_;
     const double volume_;
     QString wav_filepath_;
+    const QAudioDevice& device_;
 };

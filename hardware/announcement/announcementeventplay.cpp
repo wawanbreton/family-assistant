@@ -16,10 +16,15 @@
 #include "hardware/announcement/announcementmanager.h"
 
 
-AnnouncementEventPlay::AnnouncementEventPlay(const QString& text, const double volume, QObject* parent)
+AnnouncementEventPlay::AnnouncementEventPlay(
+    const QString& text,
+    const double volume,
+    const QAudioDevice& device,
+    QObject* parent)
     : AbstractAnnouncementEvent{ parent }
     , text_(text)
     , volume_(volume)
+    , device_(device)
 {
     const QByteArray text_hash = QCryptographicHash::hash(text_.toUtf8(), QCryptographicHash::Md5).toHex();
     const QDir wav_files_dir = easyqt::DataStorage::cacheDir().filePath("announcement-wavs");
@@ -55,6 +60,7 @@ void AnnouncementEventPlay::playAnnouncement()
     auto player = new QMediaPlayer(this);
     auto audio_output = new QAudioOutput(this);
     connect(player, &QMediaPlayer::mediaStatusChanged, this, &AnnouncementEventPlay::onMediaPlayerStatusChanged);
+    audio_output->setDevice(device_);
     audio_output->setVolume(volume_);
     player->setAudioOutput(audio_output);
     player->setSource(QUrl::fromLocalFile(wav_filepath_));

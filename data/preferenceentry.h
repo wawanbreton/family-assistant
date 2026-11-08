@@ -29,12 +29,13 @@ public:
         AnnouncementRepeats,              // When a vocal announcement is made, it is repeated N times
         AnnouncementFirstVolume,          // Volume of the first announcement, [0-1], default 1
         AnnouncementLastVolume,           // Volume of the last announcement, [0-1], default 1
-        ScreenTimePenaltyDelay,           // When screen time is over, a penalty point is taken every <delay> seconds
-        ScreenTimeOverPreannouncements,   // When screen time is (almost) due, vocal announcements are made at these
-                                          // times. This is a list of negative (or null) ints, in minutes.
-        WeatherLatitude,                  // Latitude of the position for weather forecast
-        WeatherLongitude,                 // Longitude of the position for weather forecast
-        WeatherAPIKey,                    // OpenWeatherMap API key
+        AnnouncementAudioDevice, // Name of the audio device the announcements should be made with, empty for default
+        ScreenTimePenaltyDelay,  // When screen time is over, a penalty point is taken every <delay> seconds
+        ScreenTimeOverPreannouncements, // When screen time is (almost) due, vocal announcements are made at these
+                                        // times. This is a list of negative (or null) ints, in minutes.
+        WeatherLatitude,                // Latitude of the position for weather forecast
+        WeatherLongitude,               // Longitude of the position for weather forecast
+        WeatherAPIKey,                  // OpenWeatherMap API key
     };
 
     ENUM_TOSTRING()
