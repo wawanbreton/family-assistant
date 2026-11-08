@@ -81,6 +81,7 @@ qt_add_executable(family-assistant
 
     hardware/hardware.h hardware/hardware.cpp
     hardware/backlightmanager.cpp hardware/backlightmanager.h
+    hardware/backlightstate.h
 
     hardware/announcement/announcementeventplay.h hardware/announcement/announcementeventplay.cpp
     hardware/announcement/announcementeventwait.h hardware/announcement/announcementeventwait.cpp
@@ -98,6 +99,10 @@ qt_add_executable(family-assistant
     hardware/fingerprintreader/fingerprintreaderheader.h hardware/fingerprintreader/fingerprintreaderheader.cpp
     hardware/fingerprintreader/fingerprintreaderinterface.h hardware/fingerprintreader/fingerprintreaderinterface.cpp
     hardware/fingerprintreader/fingerprintreaderresultcodes.h
+
+    hardware/music/musicmanager.h hardware/music/musicmanager.cpp
+    hardware/music/playlist.h hardware/music/playlist.cpp
+    hardware/music/song.h
 
     # Shaders
     ${SHADER_FILES}
@@ -131,6 +136,7 @@ qt_add_executable(family-assistant
     qml/components/ConfirmButton.qml
     qml/components/CornerButton.qml
     qml/components/Glow.qml
+    qml/components/HugeText.qml
     qml/components/LargeText.qml
     qml/components/ProgressBar.qml
     qml/components/RandomMirror.qml
@@ -253,8 +259,6 @@ qt_add_executable(family-assistant
     qml/theme/text_style/RainbowAnimated.qml
 
     ${EXTRA_SOURCES}
-    qml/components/HugeText.qml
-    hardware/backlightstate.h
 )
 
 qt6_add_resources(family-assistant "family-assistant"
