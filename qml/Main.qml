@@ -26,7 +26,7 @@ Window
 
         onButtonClicked: (id) =>
         {
-            mainView.setView(id);
+            mainView.view = id;
         }
     }
 

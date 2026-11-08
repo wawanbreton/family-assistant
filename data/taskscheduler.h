@@ -14,7 +14,7 @@ class TaskScheduler : public QObject
 {
     Q_OBJECT
     SINGLETON(TaskScheduler)
-    Q_PROPERTY(QList<ActiveTask*> tasks READ getTasks NOTIFY tasksChanged)
+    Q_PROPERTY(QList<ActiveTask*> tasks READ getTasks CONSTANT)
 
 public:
     void load(const QJsonObject& json_object);
@@ -28,9 +28,6 @@ public:
     ActiveTask* findTask(const QUuid& uuid) const;
 
     Q_INVOKABLE void appendCasualTask(const ActiveTask* task);
-
-signals:
-    void tasksChanged();
 
 private:
     void spawnDueTasks(bool force_reset_screen_time);

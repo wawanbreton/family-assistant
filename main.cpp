@@ -21,6 +21,7 @@
 #include "data/weatheraccessor.h"
 #include "easyqt/datastorage.h"
 #include "easyqt/resourcetype.h"
+#include "hardware/backlightstate.h"
 #include "hardware/hardware.h"
 
 
@@ -63,6 +64,7 @@ int main(int argc, char* argv[])
         qmlRegisterType<TaskState>("FamilyAssistant", 1, 0, "TaskState");
         qmlRegisterType<ScreenTimeState>("FamilyAssistant", 1, 0, "ScreenTimeState");
         qmlRegisterType<ThemeCategory>("FamilyAssistant", 1, 0, "ThemeCategory");
+        qmlRegisterType<BacklightState>("FamilyAssistant", 1, 0, "BacklightState");
         qmlRegisterType<easyqt::ResourceType>("FamilyAssistant", 1, 0, "ResourceType");
 
         MetaManager::init(&app, commands_line_parser.isSet(option_no_announces));

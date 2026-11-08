@@ -4,12 +4,14 @@
 #include <easyqt/communication/core/abstractcommunicationinterface.h>
 #include <easyqt/singleton.h>
 
+class BacklightManager;
 class FingerprintReaderInterface;
 
 class Hardware : public QObject
 {
     Q_OBJECT
     SINGLETON(Hardware)
+    Q_PROPERTY(BacklightManager* power MEMBER power_manager_ CONSTANT)
 
 public:
     bool hasFingerprintReader() const;
@@ -50,4 +52,5 @@ protected:
 
 private:
     FingerprintReaderInterface* fingerprint_{ nullptr };
+    BacklightManager* const power_manager_;
 };

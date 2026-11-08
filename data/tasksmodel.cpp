@@ -122,3 +122,16 @@ const QList<DueTask*>& TasksModel::getTasks() const
 {
     return tasks_;
 }
+
+bool TasksModel::hasActiveTask() const
+{
+    for (const DueTask* task : tasks_)
+    {
+        if (task->getState() == TaskState::InProgress || task->getState() == TaskState::CloseToEnd)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}

@@ -20,10 +20,10 @@ SINGLETON_DESTRUCTOR_IMPL(Hardware)
 
 Hardware::Hardware(QObject* parent)
     : QObject{ parent }
+    , power_manager_(new BacklightManager(this))
 {
-    auto power_manager = new BacklightManager(this);
-    connect(power_manager, &BacklightManager::setBacklight, this, &Hardware::setBacklight);
-    qApp->installEventFilter(power_manager);
+    connect(power_manager_, &BacklightManager::setBacklight, this, &Hardware::setBacklight);
+    qApp->installEventFilter(power_manager_);
 
     QString port_name;
     for (const QSerialPortInfo& port_info : QSerialPortInfo::availablePorts())

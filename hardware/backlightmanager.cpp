@@ -9,7 +9,6 @@
 
 BacklightManager::BacklightManager(QObject* parent)
     : QObject(parent)
-    , state_(State::Awake)
     , timer_awake_(new QTimer(this))
     , timer_day_(new QTimer(this))
     , day_start_(7, 0, 0)
@@ -42,23 +41,23 @@ bool BacklightManager::eventFilter(QObject* receiver, QEvent* event)
     {
         switch (state_)
         {
-            case State::Awake:
+            case BacklightState::Awake:
                 timer_awake_->start();
                 break;
-            case State::Asleep:
+            case BacklightState::Asleep:
             {
                 if (event->type() == QEvent::MouseButtonPress)
                 {
-                    state_ = State::WakingUp;
+                    setBacklightState(BacklightState::WakingUp);
                     updateTargetBacklight();
                 }
                 return true;
             }
-            case State::WakingUp:
+            case BacklightState::WakingUp:
             {
                 if (event->type() == QEvent::MouseButtonRelease)
                 {
-                    state_ = State::Awake;
+                    setBacklightState(BacklightState::Awake);
                     timer_awake_->start();
                 }
                 return true;
@@ -69,11 +68,20 @@ bool BacklightManager::eventFilter(QObject* receiver, QEvent* event)
     return QObject::eventFilter(receiver, event);
 }
 
+void BacklightManager::setBacklightState(const BacklightState::Enum state)
+{
+    if (state != state_)
+    {
+        state_ = state;
+        emit backlightStateChanged(state_);
+    }
+}
+
 void BacklightManager::onTimeoutAwake()
 {
-    if (state_ == State::Awake)
+    if (state_ == BacklightState::Awake)
     {
-        state_ = State::Asleep;
+        setBacklightState(BacklightState::Asleep);
         updateTargetBacklight();
     }
 }
@@ -102,7 +110,7 @@ void BacklightManager::onTimeoutDay()
 
 void BacklightManager::updateTargetBacklight()
 {
-    const bool target_backlight_on = state_ != State::Asleep;
+    const bool target_backlight_on = state_ != BacklightState::Asleep;
     const auto now = QTime::currentTime();
     const bool is_day = now >= day_start_ && now < day_end_;
 
@@ -130,9 +138,10 @@ void BacklightManager::updateTargetBacklight()
         backlight_animation_ = new QVariantAnimation(this);
         backlight_animation_->setStartValue(startValue);
         backlight_animation_->setEndValue(static_cast<qreal>(target_backlight_value_percent));
-        backlight_animation_->setDuration(Preferences::get()->getInt(
-            target_backlight_on ? PreferenceEntry::BacklightWakeUpAnimationDuration
-                                : PreferenceEntry::BacklightSleepAnimationDuration));
+        backlight_animation_->setDuration(
+            Preferences::get()->getInt(
+                target_backlight_on ? PreferenceEntry::BacklightWakeUpAnimationDuration
+                                    : PreferenceEntry::BacklightSleepAnimationDuration));
         backlight_animation_->setEasingCurve(target_backlight_on ? QEasingCurve::OutCubic : QEasingCurve::InQuad);
         connect(
             backlight_animation_.data(),

@@ -7,12 +7,12 @@
 #include <easyqt/json.h>
 #include <easyqt/parser.h>
 
-#include "data/announcementmanager.h"
 #include "data/duetask.h"
 #include "data/preferences.h"
 #include "data/taskscheduler.h"
 #include "data/tasksmodel.h"
 #include "data/theme.h"
+#include "hardware/announcement/announcementmanager.h"
 
 
 using namespace std::chrono_literals;

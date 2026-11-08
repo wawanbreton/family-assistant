@@ -6,9 +6,12 @@
 #include <QTimer>
 #include <QVariantAnimation>
 
+#include "hardware/backlightstate.h"
+
 class BacklightManager : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(BacklightState::Enum backlightState MEMBER state_ NOTIFY backlightStateChanged)
 
 public:
     explicit BacklightManager(QObject* parent = nullptr);
@@ -16,17 +19,13 @@ public:
     virtual bool eventFilter(QObject* receiver, QEvent* event);
 
 signals:
+    void backlightStateChanged(BacklightState::Enum state);
+
     void setBacklight(qreal power_percent);
 
 private:
-    enum class State
-    {
-        Asleep,
-        WakingUp,
-        Awake
-    };
+    void setBacklightState(const BacklightState::Enum state);
 
-private:
     void onTimeoutAwake();
 
     void onTimeoutDay();
@@ -34,7 +33,7 @@ private:
     void updateTargetBacklight();
 
 private:
-    State state_{ State::Awake };
+    BacklightState::Enum state_{ BacklightState::Awake };
     QTimer* const timer_awake_;
     QTimer* const timer_day_;
     int backlight_value_percent_{ -1 };

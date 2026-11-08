@@ -4,9 +4,9 @@
 #include <easyqt/datastorage.h>
 #include <piper.h>
 
-#include "data/announcementeventplay.h"
-#include "data/announcementeventwait.h"
 #include "data/preferences.h"
+#include "hardware/announcement/announcementeventplay.h"
+#include "hardware/announcement/announcementeventwait.h"
 
 
 SINGLETON_IMPL_WITH_1_PARAM(AnnouncementManager, const bool skip_voice_engine, skip_voice_engine)

@@ -6,6 +6,7 @@ import "components"
 Item
 {
     id: root
+    property string view: ""
 
     Component
     {
@@ -56,21 +57,9 @@ Item
         anchors.fill: parent
     }
 
-    // Component.onCompleted: setMainItem(componentKidsTasks, {})
-    Component.onCompleted: setMainItem(componentHome, {})
+    Component.onCompleted: root.view = "children"
 
-    function setMainItem(component: var, arguments)
-    {
-        var item = component.createObject(null, arguments);
-        uniqueContainer.setItem(item);
-    }
-
-    function displayRewards(kid: var)
-    {
-        access.tryLogKidIn(kid);
-    }
-
-    function setView(view: string)
+    onViewChanged:
     {
         if(view === "home")
         {
@@ -84,5 +73,16 @@ Item
         {
             access.tryLogAdminIn();
         }
+    }
+
+    function setMainItem(component: var, arguments)
+    {
+        var item = component.createObject(null, arguments);
+        uniqueContainer.setItem(item);
+    }
+
+    function displayRewards(kid: var)
+    {
+        access.tryLogKidIn(kid);
     }
 }

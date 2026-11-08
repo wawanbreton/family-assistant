@@ -13,7 +13,7 @@
 #include <easyqt/qobject_helper.h>
 #include <piper.h>
 
-#include "data/announcementmanager.h"
+#include "hardware/announcement/announcementmanager.h"
 
 
 AnnouncementEventPlay::AnnouncementEventPlay(const QString& text, QObject* parent)

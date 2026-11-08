@@ -34,4 +34,51 @@ Rectangle
         }
     }
 
+    Connections
+    {
+        target: hardware.power
+
+        function onBacklightStateChanged()
+        {
+            root.autoChangeScreen();
+        }
+    }
+
+    Instantiator
+    {
+        model: user_manager.kids
+
+        delegate: Connections
+        {
+            required property QtObject modelData
+
+            target: modelData.tasks
+
+            function onChanged()
+            {
+                root.autoChangeScreen();
+            }
+        }
+    }
+
+    function autoChangeScreen()
+    {
+        if(hardware.power.backlightState === BacklightState.Asleep)
+        {
+            var has_active_task = false;
+            for(let kid of user_manager.kids)
+            {
+                if(kid.tasks.hasActiveTask())
+                {
+                    has_active_task = true;
+                }
+            }
+
+            root.buttonClicked(has_active_task ? "children" : "home");
+        }
+        else
+        {
+            root.buttonClicked("children");
+        }
+    }
 }

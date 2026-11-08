@@ -57,9 +57,6 @@ qt_add_executable(family-assistant
     data/abstractannouncementevent.h data/abstractannouncementevent.cpp
     data/accessmanager.h data/accessmanager.cpp
     data/activetask.h data/activetask.cpp
-    data/announcementeventplay.h data/announcementeventplay.cpp
-    data/announcementeventwait.h data/announcementeventwait.cpp
-    data/announcementmanager.h data/announcementmanager.cpp
     data/constants.h
     data/daymode.h
     data/dayofweek.h
@@ -84,6 +81,10 @@ qt_add_executable(family-assistant
 
     hardware/hardware.h hardware/hardware.cpp
     hardware/backlightmanager.cpp hardware/backlightmanager.h
+
+    hardware/announcement/announcementeventplay.h hardware/announcement/announcementeventplay.cpp
+    hardware/announcement/announcementeventwait.h hardware/announcement/announcementeventwait.cpp
+    hardware/announcement/announcementmanager.h hardware/announcement/announcementmanager.cpp
 
     hardware/fingerprintreader/commands/addfingerprintcommand.h hardware/fingerprintreader/commands/addfingerprintcommand.cpp
     hardware/fingerprintreader/commands/basefingerprintcommand.h hardware/fingerprintreader/commands/basefingerprintcommand.cpp
@@ -253,6 +254,7 @@ qt_add_executable(family-assistant
 
     ${EXTRA_SOURCES}
     qml/components/HugeText.qml
+    hardware/backlightstate.h
 )
 
 qt6_add_resources(family-assistant "family-assistant"

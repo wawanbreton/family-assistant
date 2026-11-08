@@ -32,6 +32,8 @@ public:
 
     const QList<DueTask*>& getTasks() const;
 
+    Q_INVOKABLE bool hasActiveTask() const;
+
 signals:
     void changed();
 

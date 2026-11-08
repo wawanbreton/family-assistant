@@ -7,11 +7,11 @@
 #include <easyqt/json.h>
 #include <easyqt/qobject_helper.h>
 
-#include "data/announcementmanager.h"
 #include "data/duetask.h"
 #include "data/kid.h"
 #include "data/preferences.h"
 #include "data/usermanager.h"
+#include "hardware/announcement/announcementmanager.h"
 
 
 SINGLETON_IMPL(TaskScheduler)

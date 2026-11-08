@@ -8,12 +8,12 @@
 #include <easyqt/logger.h>
 
 #include "data/accessmanager.h"
-#include "data/announcementmanager.h"
 #include "data/preferences.h"
 #include "data/taskscheduler.h"
 #include "data/timeaccessor.h"
 #include "data/usermanager.h"
 #include "data/weatheraccessor.h"
+#include "hardware/announcement/announcementmanager.h"
 #include "hardware/hardware.h"
 
 
