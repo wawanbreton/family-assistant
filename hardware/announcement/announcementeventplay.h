@@ -9,7 +9,7 @@ class AnnouncementEventPlay : public AbstractAnnouncementEvent
     Q_OBJECT
 
 public:
-    explicit AnnouncementEventPlay(const QString& text, QObject* parent = nullptr);
+    explicit AnnouncementEventPlay(const QString& text, const double volume, QObject* parent = nullptr);
 
     void start() override;
 
@@ -24,5 +24,6 @@ private:
 
 private:
     const QString text_;
+    const double volume_;
     QString wav_filepath_;
 };

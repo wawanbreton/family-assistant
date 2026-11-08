@@ -15,25 +15,30 @@ AnnouncementManager::AnnouncementManager(QObject* parent, const bool skip_voice_
     : QObject{ parent }
 {
     Preferences::access()->registerPreference(PreferenceEntry::AnnouncementRepeats, QMetaType::Int, 3);
+    Preferences::access()->registerPreference(PreferenceEntry::AnnouncementFirstVolume, QMetaType::Double, 1.0);
+    Preferences::access()->registerPreference(PreferenceEntry::AnnouncementLastVolume, QMetaType::Double, 1.0);
     repeat_ = Preferences::get()->getInt(PreferenceEntry::AnnouncementRepeats);
 
     if (skip_voice_engine)
     {
-        return;
+        qWarning() << "Announcements are disabled";
     }
+    else
+    {
+        QTimer::singleShot(0, this, [this] { addAnnouncement("Bienvenue dans l'assistant familial !", 1); });
 
-    QTimer::singleShot(0, this, [this] { addAnnouncement("Bienvenue dans l'assistant familial !", 1); });
-
-    const QString voice = "fr_FR-siwis-medium";
-    const QString voice_filepath
-        = easyqt::DataStorage::resourceFile(QString("%1.onnx").arg(voice), easyqt::ResourceType::Voice);
-    const QString voice_desc_filepath
-        = easyqt::DataStorage::resourceFile(QString("%1.onnx.json").arg(voice), easyqt::ResourceType::Voice);
-    const QString espeak_data_path = easyqt::DataStorage::resourceFile("espeak-ng-data", easyqt::ResourceType::Voice);
-    voice_synthesizer_ = piper_create(
-        voice_filepath.toStdString().c_str(),
-        voice_desc_filepath.toStdString().c_str(),
-        espeak_data_path.toStdString().c_str());
+        const QString voice = "fr_FR-siwis-medium";
+        const QString voice_filepath
+            = easyqt::DataStorage::resourceFile(QString("%1.onnx").arg(voice), easyqt::ResourceType::Voice);
+        const QString voice_desc_filepath
+            = easyqt::DataStorage::resourceFile(QString("%1.onnx.json").arg(voice), easyqt::ResourceType::Voice);
+        const QString espeak_data_path
+            = easyqt::DataStorage::resourceFile("espeak-ng-data", easyqt::ResourceType::Voice);
+        voice_synthesizer_ = piper_create(
+            voice_filepath.toStdString().c_str(),
+            voice_desc_filepath.toStdString().c_str(),
+            espeak_data_path.toStdString().c_str());
+    }
 }
 
 AnnouncementManager::~AnnouncementManager()
@@ -58,13 +63,20 @@ void AnnouncementManager::addAnnouncement(
 
     const bool start_next_event = events_queue_.empty();
 
+    const double first_volume = Preferences::get()->getDouble(PreferenceEntry::AnnouncementFirstVolume);
+    const double last_volume = Preferences::get()->getDouble(PreferenceEntry::AnnouncementLastVolume);
+
     for (quint8 index = 0; index < actual_repeat; ++index)
     {
         if (index > 0)
         {
             events_queue_ << new AnnouncementEventWait(delay, this);
         }
-        events_queue_ << new AnnouncementEventPlay(text, this);
+
+        const double announcement_factor
+            = actual_repeat == 1 ? 0.5 : (static_cast<double>(index) / (actual_repeat - 1));
+        events_queue_
+            << new AnnouncementEventPlay(text, std::lerp(first_volume, last_volume, announcement_factor), this);
     }
 
     if (start_next_event)
