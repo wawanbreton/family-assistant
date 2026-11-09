@@ -5,7 +5,7 @@ project(family-assistant VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.7 REQUIRED COMPONENTS Quick ShaderTools SerialPort Multimedia)
+find_package(Qt6 6.7 REQUIRED COMPONENTS Quick ShaderTools SerialPort Multimedia Network Xml)
 find_package(easyqt REQUIRED)
 
 include(ExternalProject)
@@ -101,7 +101,7 @@ qt_add_executable(family-assistant
     hardware/fingerprintreader/fingerprintreaderresultcodes.h
 
     hardware/music/musicmanager.h hardware/music/musicmanager.cpp
-    hardware/music/playlist.h hardware/music/playlist.cpp
+    hardware/music/dlnaplaylist.h hardware/music/dlnaplaylist.cpp
     hardware/music/song.h
 
     # Shaders
@@ -295,6 +295,8 @@ target_link_libraries(family-assistant
     Qt6::Quick
     Qt6::SerialPort
     Qt6::Multimedia
+    Qt6::Network
+    Qt6::Xml
     easyqt::easyqt
     piper
 )

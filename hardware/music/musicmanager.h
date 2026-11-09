@@ -2,24 +2,23 @@
 
 #include <QMediaPlayer>
 #include <QObject>
+#include <easyqt/singleton.h>
 
 #include "hardware/music/song.h"
 
-class Playlist;
+class DlnaPlaylist;
 
 class MusicManager : public QObject
 {
+    SINGLETON(MusicManager)
     Q_OBJECT
     Q_PROPERTY(bool playing READ getPlaying NOTIFY playingChanged)
     Q_PROPERTY(QString artist READ getArtist NOTIFY songChanged)
     Q_PROPERTY(QString title READ getTitle NOTIFY songChanged)
     Q_PROPERTY(bool hasPrevious READ getHasPrevious NOTIFY hasPreviousChanged)
-    Q_PROPERTY(qreal volumeBathroom READ getVolumeBathroom WRITE setVolumeBathroom NOTIFY volumeBathroomChanged)
-    Q_PROPERTY(qreal volumeLivingRoom READ getVolumeLivingRoom WRITE setVolumeLivingRoom NOTIFY volumeLivingRoomChanged)
+    Q_PROPERTY(qreal volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
 
 public:
-    explicit MusicManager(QObject* parent = nullptr);
-
     bool getPlaying() const;
 
     const QString& getArtist() const;
@@ -62,5 +61,5 @@ private:
     bool playing_{ false };
     QMediaPlayer* player_{ nullptr };
     Song song_;
-    Playlist* playlist_{ nullptr };
+    DlnaPlaylist* playlist_{ nullptr };
 };

@@ -36,6 +36,8 @@ public:
         WeatherLatitude,                // Latitude of the position for weather forecast
         WeatherLongitude,               // Longitude of the position for weather forecast
         WeatherAPIKey,                  // OpenWeatherMap API key
+        DlnaDeviceDescriptionUrl,       // URL of the DLNA media server device description
+        DlnaMainMusicPath, // Path to the DLNA folder containing music data, or empty to browse all the folders
     };
 
     ENUM_TOSTRING()
