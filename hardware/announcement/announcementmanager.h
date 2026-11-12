@@ -5,13 +5,15 @@
 #include <chrono>
 #include <easyqt/singleton.h>
 
+#include "hardware/audiomanager.h"
+
 using namespace std::chrono_literals;
 
 struct piper_synthesizer;
 
 class AbstractAnnouncementEvent;
 
-class AnnouncementManager : public QObject
+class AnnouncementManager : public AudioManager
 {
     Q_OBJECT
     SINGLETON_WITH_1_PARAM(AnnouncementManager, const bool skip_voice_engine)
@@ -33,5 +35,4 @@ private:
     QQueue<AbstractAnnouncementEvent*> events_queue_;
     struct piper_synthesizer* voice_synthesizer_{ nullptr };
     int repeat_{ 1 };
-    QAudioDevice output_device_;
 };

@@ -25,6 +25,7 @@
 #include "easyqt/resourcetype.h"
 #include "hardware/backlightstate.h"
 #include "hardware/hardware.h"
+#include "hardware/music/musicmanager.h"
 
 
 int main(int argc, char* argv[])
@@ -75,6 +76,8 @@ int main(int argc, char* argv[])
     }
     else
     {
+        srand(QDateTime::currentMSecsSinceEpoch());
+
         qmlRegisterType<TaskState>("FamilyAssistant", 1, 0, "TaskState");
         qmlRegisterType<ScreenTimeState>("FamilyAssistant", 1, 0, "ScreenTimeState");
         qmlRegisterType<ThemeCategory>("FamilyAssistant", 1, 0, "ThemeCategory");
@@ -119,6 +122,7 @@ int main(int argc, char* argv[])
         engine.rootContext()->setContextProperty("user_manager", UserManager::access());
         engine.rootContext()->setContextProperty("tasks_scheduler", TaskScheduler::access());
         engine.rootContext()->setContextProperty("hardware", Hardware::access());
+        engine.rootContext()->setContextProperty("music", MusicManager::access());
         engine.rootContext()->setContextProperty("time", TimeAccessor::access());
         engine.rootContext()->setContextProperty("weather", WeatherAccessor::access());
         engine.rootContext()->setContextProperty("access", AccessManager::access());

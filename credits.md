@@ -77,6 +77,7 @@
 <a href="https://www.flaticon.com/free-icons/cloudy-day" title="cloudy day icons">Cloudy day icons created by Magnific - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/thunder" title="thunder icons">Thunder icons created by Magnific - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/cloudy-night" title="cloudy night icons">Cloudy night icons created by Magnific - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/music-note" title="music note icons">Music note icons created by Magnific - Flaticon</a>
 
 https://www.dafont.com/super-playful.font
 https://www.dafont.com/super-crafty.font

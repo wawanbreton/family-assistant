@@ -80,8 +80,9 @@ qt_add_executable(family-assistant
     data/weatheraccessor.h data/weatheraccessor.cpp
 
     hardware/hardware.h hardware/hardware.cpp
-    hardware/backlightmanager.cpp hardware/backlightmanager.h
+    hardware/backlightmanager.h hardware/backlightmanager.cpp
     hardware/backlightstate.h
+    hardware/audiomanager.h hardware/audiomanager.cpp
 
     hardware/announcement/announcementeventplay.h hardware/announcement/announcementeventplay.cpp
     hardware/announcement/announcementeventwait.h hardware/announcement/announcementeventwait.cpp
@@ -150,6 +151,8 @@ qt_add_executable(family-assistant
     qml/Home.qml
     qml/home/DateTime.qml
     qml/home/HomeWidget.qml
+    qml/home/Music.qml
+    qml/home/MusicButton.qml
     qml/home/WeatherForecast.qml
 
     qml/rewards/Backgrounds.qml

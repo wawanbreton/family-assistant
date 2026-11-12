@@ -12,6 +12,8 @@
 
 #include "data/preferences.h"
 
+#define DISPLAY_DEBUG 0
+
 using namespace std::chrono_literals;
 
 
@@ -173,7 +175,7 @@ void DlnaPlaylist::onGetDeviceDescriptionFinished(QNetworkReply* reply)
 
     auto* timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &DlnaPlaylist::updateSongs);
-    timer->start(10s);
+    timer->start(1min);
 }
 
 void DlnaPlaylist::browseNextContainer()
@@ -191,7 +193,9 @@ void DlnaPlaylist::browseNextContainer()
 
 void DlnaPlaylist::browseContainer(const Container& container)
 {
+#if DISPLAY_DEBUG
     qDebug() << "Browse container" << container.name << container.id << container.depth;
+#endif
 
     QDomDocument object_id_doc;
     QDomElement object_id_element = object_id_doc.createElement("ObjectID");
@@ -280,7 +284,9 @@ void DlnaPlaylist::onGetBrowseContainerFinished(QNetworkReply* reply, const Cont
                         continue;
                     }
 
+#if DISPLAY_DEBUG
                     qDebug() << "Enqueue listing of" << id << title;
+#endif
                     discovered_containers.enqueue({ .name = title, .id = id, .depth = sub_containers_depth });
                 }
             }
@@ -322,7 +328,9 @@ void DlnaPlaylist::onGetBrowseContainerFinished(QNetworkReply* reply, const Cont
 
 void DlnaPlaylist::mergeSongs(const QMap<QString, Song>& new_songs)
 {
+#if DISPLAY_DEBUG
     qDebug() << "merge list of" << new_songs.size() << "songs";
+#endif
 
     {
         QMutableMapIterator<QString, SongEntry> iterator(songs_);

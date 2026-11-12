@@ -38,6 +38,9 @@ public:
         WeatherAPIKey,                  // OpenWeatherMap API key
         DlnaDeviceDescriptionUrl,       // URL of the DLNA media server device description
         DlnaMainMusicPath, // Path to the DLNA folder containing music data, or empty to browse all the folders
+        MusicAudioDevice,  // Name of the audio device the music should be played with, empty for default
+        MusicMinVolume,    // Minimum volume to play the music, [0-1], default 0
+        MusicMaxVolume,    // Minimum volume to play the music, [0-1], default 1
     };
 
     ENUM_TOSTRING()
