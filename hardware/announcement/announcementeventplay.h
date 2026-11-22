@@ -2,7 +2,7 @@
 
 #include <QMediaPlayer>
 
-#include "data/abstractannouncementevent.h"
+#include "hardware/announcement/abstractannouncementevent.h"
 
 class QAudioDevice;
 

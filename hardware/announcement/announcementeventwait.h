@@ -1,6 +1,6 @@
 #pragma once
 
-#include "data/abstractannouncementevent.h"
+#include "hardware/announcement/abstractannouncementevent.h"
 
 class AnnouncementEventWait : public AbstractAnnouncementEvent
 {

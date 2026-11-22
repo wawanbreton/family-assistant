@@ -54,7 +54,6 @@ qt_add_executable(family-assistant
 
     # CPP source files
     main.cpp
-    data/abstractannouncementevent.h data/abstractannouncementevent.cpp
     data/accessmanager.h data/accessmanager.cpp
     data/activetask.h data/activetask.cpp
     data/constants.h
@@ -84,6 +83,7 @@ qt_add_executable(family-assistant
     hardware/backlightstate.h
     hardware/audiomanager.h hardware/audiomanager.cpp
 
+    hardware/announcement/abstractannouncementevent.h hardware/announcement/abstractannouncementevent.cpp
     hardware/announcement/announcementeventplay.h hardware/announcement/announcementeventplay.cpp
     hardware/announcement/announcementeventwait.h hardware/announcement/announcementeventwait.cpp
     hardware/announcement/announcementmanager.h hardware/announcement/announcementmanager.cpp
