@@ -10,6 +10,7 @@ class User : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(QString pronounced_name READ getPronouncedName NOTIFY nameChanged)
 
 public:
     explicit User(QObject* parent = nullptr);

@@ -2,5 +2,5 @@ import QtQuick 2.15
 
 BaseText
 {
-    font.pointSize: 88
+    fontSize: 88
 }

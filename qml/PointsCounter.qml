@@ -6,6 +6,8 @@ RowLayout
 {
     property var kid
     property alias points: textNbPoints.text
+    property int iconSize: 60
+    property alias textSize: textNbPoints.fontSize
 
     id: root
     spacing: 16
@@ -14,7 +16,7 @@ RowLayout
     {
         id: pointImage
         Layout.alignment: Qt.AlignVCenter
-        Layout.preferredWidth: 60
+        Layout.preferredWidth: root.iconSize
         Layout.preferredHeight: Layout.preferredWidth
         kid: root.kid
     }

@@ -74,9 +74,9 @@
         },
         {
             "announcements": [
-                -25,
-                -15,
-                -5
+                -25,-24,-23,-22,-21,-20,-19,-18,-17,-16,
+                -15,-14,-13,-12,-11,-10,-9,-8,-7,-6,
+                -5,-4,-3,-2,-1
             ],
             "desc": "Ranger son cartable",
             "icon": "school-bag",
@@ -86,10 +86,12 @@
                         "Wednesday",
                         "Tuesday",
                         "Friday",
-                        "Monday"
+                        "Monday",
+                        "Saturday",
+                        "Sunday"
                     ],
                     "times": [
-                        "15:00"
+                        "15:30"
                     ]
                 },
                 {
@@ -353,6 +355,14 @@
                 "text_style": "White"
             },
             "uuid": "3bec04e1-134c-4acf-ae8b-cfd03658ee1a"
+        }
+    ],
+    "special_rewards": [
+        {
+            "name": "Banane au chocolat",
+            "pronounced_name": "une banane au chocolat",
+            "cost": 100,
+            "icon": "banana_with_chocolate"
         }
     ]
 }

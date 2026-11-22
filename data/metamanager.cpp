@@ -9,6 +9,7 @@
 
 #include "data/accessmanager.h"
 #include "data/preferences.h"
+#include "data/specialrewardsmodel.h"
 #include "data/taskscheduler.h"
 #include "data/timeaccessor.h"
 #include "data/usermanager.h"
@@ -36,6 +37,7 @@ MetaManager::MetaManager(QObject* parent, const bool skip_voice_engine)
     TimeAccessor::init(this);
     WeatherAccessor::init(this);
     MusicManager::init(this);
+    SpecialRewardsModel::init(this);
 
     data_file_path_ = easyqt::DataStorage::configFile("config.json");
 
@@ -57,6 +59,7 @@ void MetaManager::load(const QString& file_path)
         QJsonObject json_object = doc.object();
         TaskScheduler::access()->load(json_object);
         UserManager::access()->load(json_object);
+        SpecialRewardsModel::access()->load(json_object);
     }
     else
     {

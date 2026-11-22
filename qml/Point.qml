@@ -5,6 +5,7 @@ import "components"
 ChangeableImage
 {
     property var kid
+    property alias size: root.width
 
     id: root
     width: 60

@@ -71,9 +71,10 @@ Item
         {
             title: "Spécial"
 
-            Text
+            SpecialRewards
             {
-                text: "My Other item"
+                kid: root.kid
+                onPointsSpent: (amount, button, callback) => root.transferPoints(amount, button, callback)
             }
         }
     }

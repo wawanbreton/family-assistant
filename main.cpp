@@ -14,6 +14,7 @@
 #include "data/kid.h"
 #include "data/metamanager.h"
 #include "data/screentimestate.h"
+#include "data/specialrewardsmodel.h"
 #include "data/taskscheduler.h"
 #include "data/taskstate.h"
 #include "data/theme.h"
@@ -23,6 +24,7 @@
 #include "data/weatheraccessor.h"
 #include "easyqt/datastorage.h"
 #include "easyqt/resourcetype.h"
+#include "hardware/announcement/announcementmanager.h"
 #include "hardware/backlightstate.h"
 #include "hardware/hardware.h"
 #include "hardware/music/musicmanager.h"
@@ -123,8 +125,10 @@ int main(int argc, char* argv[])
         engine.rootContext()->setContextProperty("tasks_scheduler", TaskScheduler::access());
         engine.rootContext()->setContextProperty("hardware", Hardware::access());
         engine.rootContext()->setContextProperty("music", MusicManager::access());
+        engine.rootContext()->setContextProperty("announcement", AnnouncementManager::access());
         engine.rootContext()->setContextProperty("time", TimeAccessor::access());
         engine.rootContext()->setContextProperty("weather", WeatherAccessor::access());
+        engine.rootContext()->setContextProperty("special_rewards", SpecialRewardsModel::access());
         engine.rootContext()->setContextProperty("access", AccessManager::access());
         engine.rootContext()->setContextProperty("DataStorage", easyqt::DataStorage::access());
         engine.rootContext()->setContextProperty("Theme", &global_theme);

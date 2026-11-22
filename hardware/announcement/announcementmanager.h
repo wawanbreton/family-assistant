@@ -19,7 +19,7 @@ class AnnouncementManager : public AudioManager
     SINGLETON_WITH_1_PARAM(AnnouncementManager, const bool skip_voice_engine)
 
 public:
-    void addAnnouncement(
+    Q_INVOKABLE void addAnnouncement(
         const QString& text,
         const std::optional<quint8> repeat = std::nullopt,
         const std::chrono::seconds delay = 2s);

@@ -66,6 +66,8 @@ qt_add_executable(family-assistant
     data/preferenceentry.h
     data/preferences.h data/preferences.cpp
     data/screentimestate.h
+    data/specialrewardsmodel.h data/specialrewardsmodel.cpp
+    data/specialreward.h data/specialreward.cpp
     data/task.h data/task.cpp
     data/taskoccurences.h
     data/taskscheduler.h data/taskscheduler.cpp
@@ -160,6 +162,7 @@ qt_add_executable(family-assistant
     qml/rewards/Points.qml
     qml/rewards/RewardsTab.qml
     qml/rewards/ScreenTime.qml
+    qml/rewards/SpecialRewards.qml
     qml/rewards/ThemeItemSelector.qml
 
     qml/settings/TaskControl.qml
