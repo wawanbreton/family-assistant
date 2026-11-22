@@ -35,9 +35,8 @@ Item
             Layout.preferredWidth: 1
         }
 
-        HomeWidget
+        Music
         {
-            id: music
             Layout.preferredHeight: 1
         }
     }

@@ -5,7 +5,7 @@ project(family-assistant VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.7 REQUIRED COMPONENTS Quick ShaderTools SerialPort Multimedia)
+find_package(Qt6 6.7 REQUIRED COMPONENTS Quick ShaderTools SerialPort Multimedia Network Xml)
 find_package(easyqt REQUIRED)
 
 include(ExternalProject)
@@ -54,7 +54,6 @@ qt_add_executable(family-assistant
 
     # CPP source files
     main.cpp
-    data/abstractannouncementevent.h data/abstractannouncementevent.cpp
     data/accessmanager.h data/accessmanager.cpp
     data/activetask.h data/activetask.cpp
     data/constants.h
@@ -80,8 +79,11 @@ qt_add_executable(family-assistant
     data/weatheraccessor.h data/weatheraccessor.cpp
 
     hardware/hardware.h hardware/hardware.cpp
-    hardware/backlightmanager.cpp hardware/backlightmanager.h
+    hardware/backlightmanager.h hardware/backlightmanager.cpp
+    hardware/backlightstate.h
+    hardware/audiomanager.h hardware/audiomanager.cpp
 
+    hardware/announcement/abstractannouncementevent.h hardware/announcement/abstractannouncementevent.cpp
     hardware/announcement/announcementeventplay.h hardware/announcement/announcementeventplay.cpp
     hardware/announcement/announcementeventwait.h hardware/announcement/announcementeventwait.cpp
     hardware/announcement/announcementmanager.h hardware/announcement/announcementmanager.cpp
@@ -98,6 +100,10 @@ qt_add_executable(family-assistant
     hardware/fingerprintreader/fingerprintreaderheader.h hardware/fingerprintreader/fingerprintreaderheader.cpp
     hardware/fingerprintreader/fingerprintreaderinterface.h hardware/fingerprintreader/fingerprintreaderinterface.cpp
     hardware/fingerprintreader/fingerprintreaderresultcodes.h
+
+    hardware/music/musicmanager.h hardware/music/musicmanager.cpp
+    hardware/music/dlnaplaylist.h hardware/music/dlnaplaylist.cpp
+    hardware/music/song.h
 
     # Shaders
     ${SHADER_FILES}
@@ -131,6 +137,7 @@ qt_add_executable(family-assistant
     qml/components/ConfirmButton.qml
     qml/components/CornerButton.qml
     qml/components/Glow.qml
+    qml/components/HugeText.qml
     qml/components/LargeText.qml
     qml/components/ProgressBar.qml
     qml/components/RandomMirror.qml
@@ -144,6 +151,8 @@ qt_add_executable(family-assistant
     qml/Home.qml
     qml/home/DateTime.qml
     qml/home/HomeWidget.qml
+    qml/home/Music.qml
+    qml/home/MusicButton.qml
     qml/home/WeatherForecast.qml
 
     qml/rewards/Backgrounds.qml
@@ -253,8 +262,6 @@ qt_add_executable(family-assistant
     qml/theme/text_style/RainbowAnimated.qml
 
     ${EXTRA_SOURCES}
-    qml/components/HugeText.qml
-    hardware/backlightstate.h
 )
 
 qt6_add_resources(family-assistant "family-assistant"
@@ -291,6 +298,8 @@ target_link_libraries(family-assistant
     Qt6::Quick
     Qt6::SerialPort
     Qt6::Multimedia
+    Qt6::Network
+    Qt6::Xml
     easyqt::easyqt
     piper
 )

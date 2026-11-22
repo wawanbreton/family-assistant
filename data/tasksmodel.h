@@ -37,6 +37,8 @@ public:
 signals:
     void changed();
 
+    void activeTaskChanged();
+
 private:
     QList<DueTask*> tasks_;
 };

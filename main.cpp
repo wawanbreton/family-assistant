@@ -3,7 +3,9 @@
 #else
 #include <QGuiApplication>
 #endif
+#include <QAudioDevice>
 #include <QCommandLineParser>
+#include <QMediaDevices>
 #include <QPalette>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -23,6 +25,7 @@
 #include "easyqt/resourcetype.h"
 #include "hardware/backlightstate.h"
 #include "hardware/hardware.h"
+#include "hardware/music/musicmanager.h"
 
 
 int main(int argc, char* argv[])
@@ -45,6 +48,9 @@ int main(int argc, char* argv[])
     QCommandLineOption option_no_announces("no-announces", "Do not load the voice synthesis engine");
     commands_line_parser.addOption(option_no_announces);
 
+    QCommandLineOption option_list_audio_devices("list-audio-devices", "List available audio devices and exit");
+    commands_line_parser.addOption(option_list_audio_devices);
+
     QCommandLineOption option_reset_screen_time(
         "reset-screen-time",
         "Reset the kids screen time (requires reset tasks)");
@@ -59,8 +65,19 @@ int main(int argc, char* argv[])
     {
         commands_line_parser.showHelp();
     }
+    else if (commands_line_parser.isSet(option_list_audio_devices))
+    {
+        qInfo() << "Available audio devices:";
+        for (const QAudioDevice device : QMediaDevices::audioOutputs())
+        {
+            qInfo() << device.description() << (device.isDefault() ? "(default)" : "");
+        }
+        return 0;
+    }
     else
     {
+        srand(QDateTime::currentMSecsSinceEpoch());
+
         qmlRegisterType<TaskState>("FamilyAssistant", 1, 0, "TaskState");
         qmlRegisterType<ScreenTimeState>("FamilyAssistant", 1, 0, "ScreenTimeState");
         qmlRegisterType<ThemeCategory>("FamilyAssistant", 1, 0, "ThemeCategory");
@@ -105,6 +122,7 @@ int main(int argc, char* argv[])
         engine.rootContext()->setContextProperty("user_manager", UserManager::access());
         engine.rootContext()->setContextProperty("tasks_scheduler", TaskScheduler::access());
         engine.rootContext()->setContextProperty("hardware", Hardware::access());
+        engine.rootContext()->setContextProperty("music", MusicManager::access());
         engine.rootContext()->setContextProperty("time", TimeAccessor::access());
         engine.rootContext()->setContextProperty("weather", WeatherAccessor::access());
         engine.rootContext()->setContextProperty("access", AccessManager::access());

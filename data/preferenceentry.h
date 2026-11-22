@@ -27,12 +27,20 @@ public:
         BacklightWakeUpAnimationDuration, // In milliseconds
         WeeklyScreenTime,                 // In minutes
         AnnouncementRepeats,              // When a vocal announcement is made, it is repeated N times
-        ScreenTimePenaltyDelay,           // When screen time is over, a penalty point is taken every <delay> seconds
-        ScreenTimeOverPreannouncements,   // When screen time is (almost) due, vocal announcements are made at these
-                                          // times. This is a list of negative (or null) ints, in minutes.
-        WeatherLatitude,                  // Latitude of the position for weather forecast
-        WeatherLongitude,                 // Longitude of the position for weather forecast
-        WeatherAPIKey,                    // OpenWeatherMap API key
+        AnnouncementFirstVolume,          // Volume of the first announcement, [0-1], default 1
+        AnnouncementLastVolume,           // Volume of the last announcement, [0-1], default 1
+        AnnouncementAudioDevice, // Name of the audio device the announcements should be made with, empty for default
+        ScreenTimePenaltyDelay,  // When screen time is over, a penalty point is taken every <delay> seconds
+        ScreenTimeOverPreannouncements, // When screen time is (almost) due, vocal announcements are made at these
+                                        // times. This is a list of negative (or null) ints, in minutes.
+        WeatherLatitude,                // Latitude of the position for weather forecast
+        WeatherLongitude,               // Longitude of the position for weather forecast
+        WeatherAPIKey,                  // OpenWeatherMap API key
+        DlnaDeviceDescriptionUrl,       // URL of the DLNA media server device description
+        DlnaMainMusicPath, // Path to the DLNA folder containing music data, or empty to browse all the folders
+        MusicAudioDevice,  // Name of the audio device the music should be played with, empty for default
+        MusicMinVolume,    // Minimum volume to play the music, [0-1], default 0
+        MusicMaxVolume,    // Minimum volume to play the music, [0-1], default 1
     };
 
     ENUM_TOSTRING()

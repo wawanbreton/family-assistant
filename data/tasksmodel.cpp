@@ -9,6 +9,7 @@
 TasksModel::TasksModel(QObject* parent)
     : QAbstractListModel(parent)
 {
+    connect(this, &TasksModel::changed, this, &TasksModel::activeTaskChanged);
 }
 
 void TasksModel::load(const QJsonArray& json_array)
@@ -80,6 +81,7 @@ void TasksModel::append(DueTask* task)
     task->setParent(this);
     connect(task, &DueTask::accomplished, this, [this, task] { remove(task); });
     connect(task, &DueTask::announcementsChanged, this, &TasksModel::changed);
+    connect(task, &DueTask::stateChanged, this, &TasksModel::activeTaskChanged);
     tasks_.insert(insert_index, task);
     endInsertRows();
     emit changed();

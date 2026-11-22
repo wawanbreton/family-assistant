@@ -15,6 +15,7 @@
 #include "data/weatheraccessor.h"
 #include "hardware/announcement/announcementmanager.h"
 #include "hardware/hardware.h"
+#include "hardware/music/musicmanager.h"
 
 
 SINGLETON_IMPL_WITH_1_PARAM(MetaManager, const bool skip_voice_engine, skip_voice_engine)
@@ -34,6 +35,7 @@ MetaManager::MetaManager(QObject* parent, const bool skip_voice_engine)
     AnnouncementManager::init(this, skip_voice_engine);
     TimeAccessor::init(this);
     WeatherAccessor::init(this);
+    MusicManager::init(this);
 
     data_file_path_ = easyqt::DataStorage::configFile("config.json");
 

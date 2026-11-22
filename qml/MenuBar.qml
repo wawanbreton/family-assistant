@@ -54,7 +54,7 @@ Rectangle
 
             target: modelData.tasks
 
-            function onChanged()
+            function onActiveTaskChanged()
             {
                 root.autoChangeScreen();
             }
@@ -75,10 +75,6 @@ Rectangle
             }
 
             root.buttonClicked(has_active_task ? "children" : "home");
-        }
-        else
-        {
-            root.buttonClicked("children");
         }
     }
 }
